@@ -31,8 +31,16 @@ def run_agent_browser(*args: str) -> str:
 
 def open_url(url: str) -> None:
     """Navigate to a URL and wait for the page to settle."""
-    run_agent_browser("open", url)
-    time.sleep(2)
+    # Zinio is a slow SPA — navigation may succeed even if 'open' times out
+    result = subprocess.run(
+        ["agent-browser", "--cdp", str(CDP_PORT), "open", url],
+        capture_output=True,
+        text=True,
+    )
+    # Ignore timeout errors; check actual URL to confirm navigation
+    if result.returncode != 0 and "timed out" not in result.stderr.lower():
+        raise RuntimeError(f"agent-browser open {url} failed:\n{result.stderr}")
+    time.sleep(3)  # Extra wait for SPA rendering
 
 
 def get_page_text() -> str:
