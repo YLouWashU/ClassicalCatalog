@@ -102,7 +102,7 @@ pytest>=7.4.0
 
 ```
 MINIMAX_API_KEY=your_minimax_api_key
-MINIMAX_API_BASE=https://api.minimax.io/anthropic/v1/messages
+MINIMAX_API_BASE=https://api.minimax.io/anthropic
 SPOTIFY_CLIENT_ID=your_spotify_client_id
 SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
 LLM_MODEL=minimax/MiniMax-M2.7
