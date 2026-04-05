@@ -6,7 +6,7 @@
 
 **Architecture:** Four independent stages (extract → process → enrich → publish) connected by JSON files on disk. Each stage is re-runnable; a failed stage does not block subsequent ones. Status is tracked per-issue in `status.json`.
 
-**Tech Stack:** Python 3.11+, Pydantic v2, LiteLLM, Spotipy, Jinja2, chromium-browser (CDP via subprocess calls to `agent-browser`), pytest, GitHub Pages.
+**Tech Stack:** Python 3.11+, Pydantic v2, LiteLLM (with Minimax as the LLM provider), Spotipy, Jinja2, chromium-browser (CDP via subprocess calls to `agent-browser`), pytest, GitHub Pages.
 
 ---
 
@@ -101,10 +101,11 @@ pytest>=7.4.0
 - [ ] **Step 2: Write .env.example**
 
 ```
-ANTHROPIC_API_KEY=your_anthropic_api_key
+MINIMAX_API_KEY=your_minimax_api_key
+MINIMAX_GROUP_ID=your_minimax_group_id
 SPOTIFY_CLIENT_ID=your_spotify_client_id
 SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
-LLM_MODEL=claude-sonnet-4-6
+LLM_MODEL=minimax/abab6.5s-chat
 CDP_PORT=9222
 ```
 
@@ -308,7 +309,7 @@ CDP_PORT = int(os.environ.get("CDP_PORT", "9222"))
 CHROMIUM_BIN = os.environ.get("CHROMIUM_BIN", "chromium-browser")
 ZINIO_LIBRARY_URL = "https://www.zinio.com/gb/my-library"
 
-LLM_MODEL = os.environ.get("LLM_MODEL", "claude-sonnet-4-6")
+LLM_MODEL = os.environ.get("LLM_MODEL", "minimax/abab6.5s-chat")
 
 REVIEW_SECTIONS = [
     "recording_of_the_month",
