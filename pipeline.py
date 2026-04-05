@@ -12,9 +12,12 @@ Usage:
     python pipeline.py --issue 2021-11 --force  # re-run even if completed
 """
 import argparse
+import os
 import sys
 import subprocess
 from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).parent.resolve()
 
 STEPS = ["extract", "process", "enrich", "publish"]
 
@@ -33,7 +36,8 @@ def run_step(step: str, issue: str | None, force: bool) -> int:
     if force and step != "publish":  # publish always re-runs
         cmd = cmd + ["--force"]
     print(f"\n=== {step.upper()} ===")
-    result = subprocess.run(cmd)
+    env = {**os.environ, "PYTHONPATH": str(PROJECT_ROOT)}
+    result = subprocess.run(cmd, cwd=str(PROJECT_ROOT), env=env)
     return result.returncode
 
 
