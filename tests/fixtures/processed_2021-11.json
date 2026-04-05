@@ -1,0 +1,65 @@
+{
+  "issue": "2021-11",
+  "title": "Gramophone November 2021",
+  "sections": {
+    "recording_of_the_month": [
+      {
+        "composer": "Florence Price",
+        "work": "Symphonies Nos 1 & 3",
+        "performers": "Philadelphia Orchestra / Yannick Nézet-Séguin",
+        "label": "Deutsche Grammophon",
+        "catalog": "486 3452",
+        "badge": "recording_of_the_month",
+        "tldr": {
+          "en": "A landmark release: Nézet-Séguin and the Philadelphia Orchestra give the most complete and persuasive advocacy yet for Price's neglected symphonies, combining warmth, precision, and evident affection for music long overdue its place in the repertoire.",
+          "zh": "这是一张里程碑式的唱片：涅泽-塞甘与费城管弦乐团为普莱斯长期被忽视的交响曲提供了迄今最完整、最有说服力的诠释，将温暖、精准与对这些音乐的深厚情感完美融合。"
+        },
+        "comparison_recordings": [
+          {
+            "composer": "Florence Price",
+            "work": "Symphony No 1",
+            "performers": "Fort Smith Symphony / John Jeter",
+            "label": "Naxos",
+            "spotify_url": null,
+            "spotify_status": "not_checked"
+          }
+        ],
+        "spotify_url": null,
+        "spotify_status": "not_checked"
+      }
+    ],
+    "editors_choice": [],
+    "orchestral": [],
+    "chamber": [],
+    "instrumental": [],
+    "vocal": [],
+    "opera": [],
+    "reissues": [],
+    "features": [
+      {
+        "feature_title": "The Art Of Fugue",
+        "summary": {
+          "en": "Peter Quantrill examines two contrasting approaches to Bach's enigmatic final masterwork. Daniil Trifonov frames the work as a family portrait, weaving in music by Bach's sons and culminating in a liberated, dancing account of the contrapuncti. Filippo Gorini takes a more reverential path, bringing luminous tone and tactile sensitivity to a work he contextualises with fourteen original sonnets.\n\nBoth pianists illuminate different facets of a composition that resists definitive interpretation. Trifonov's completion of the unfinished final fugue is audacious yet humble; Gorini's solemnity occasionally tips into preciousness. Together, these two recordings make a compelling case for the work's inexhaustible richness.",
+          "zh": "彼得·坎特里尔考察了两种截然不同的巴赫晚期杰作诠释方式。特里福诺夫将这部作品呈现为一幅家族肖像，融入了巴赫儿子们的音乐，最终以活泼、舞蹈般的方式演绎对位曲群。菲利波·戈里尼则采取更为虔诚的路径，带来发光般的音色和触感细腻的演奏。\n\n两位钢琴家从不同角度照亮了这部抗拒任何定论诠释的作品。特里福诺夫对未完成赋格的补全既大胆又谦逊；戈里尼的庄重感有时略显矜持。两张录音共同展现了这部作品无穷无尽的丰富性。"
+        },
+        "recordings": [
+          {
+            "composer": "JS Bach",
+            "work": "Die Kunst der Fuge BWV1080",
+            "performers": "Daniil Trifonov pf",
+            "label": "Deutsche Grammophon",
+            "catalog": "483 8530",
+            "badge": null,
+            "tldr": {
+              "en": "Trifonov's imaginative programme frames The Art of Fugue within a Bach family portrait, and his liberated, dancing account of the contrapuncti is among the finest on record.",
+              "zh": "特里福诺夫富有想象力的曲目将《赋格的艺术》置于巴赫家族肖像的框架内，他那自由奔放、舞蹈般的对位曲诠释堪称录音史上最佳之一。"
+            },
+            "comparison_recordings": [],
+            "spotify_url": null,
+            "spotify_status": "not_checked"
+          }
+        ]
+      }
+    ]
+  }
+}

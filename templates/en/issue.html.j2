@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }} — Classical Catalog</title>
+  <style>
+    body { font-family: Georgia, serif; max-width: 860px; margin: 2rem auto; padding: 0 1rem; color: #222; }
+    h1 { font-size: 1.6rem; border-bottom: 2px solid #8B0000; padding-bottom: 0.5rem; }
+    h2 { font-size: 1.2rem; color: #8B0000; margin-top: 2rem; }
+    h3 { font-size: 1rem; margin: 1.2rem 0 0.3rem; }
+    .badge { display: inline-block; background: #8B0000; color: white; font-size: 0.75rem; padding: 2px 8px; border-radius: 3px; margin-left: 0.5rem; vertical-align: middle; }
+    .meta { color: #555; font-size: 0.9rem; margin-bottom: 0.4rem; }
+    .tldr { margin: 0.4rem 0 0.6rem; line-height: 1.6; }
+    .spotify-link a { color: #1DB954; font-weight: bold; text-decoration: none; }
+    .spotify-link a:hover { text-decoration: underline; }
+    .spotify-missing { color: #999; font-size: 0.85rem; }
+    .comparisons { margin-top: 0.5rem; padding-left: 1rem; border-left: 3px solid #ddd; }
+    .comparisons h4 { font-size: 0.9rem; color: #555; margin: 0.3rem 0; }
+    .comparison-item { font-size: 0.9rem; margin: 0.2rem 0; }
+    .feature { background: #f9f5f0; padding: 1rem 1.2rem; margin: 1.5rem 0; border-left: 4px solid #8B0000; }
+    .feature h2 { margin-top: 0; }
+    .feature-summary { line-height: 1.7; margin-bottom: 1rem; }
+    .lang-switch { float: right; font-size: 0.9rem; }
+    .lang-switch a { color: #8B0000; }
+    .back { font-size: 0.9rem; margin-bottom: 1rem; }
+    .back a { color: #8B0000; }
+    .recording { margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #eee; }
+  </style>
+</head>
+<body>
+  <span class="lang-switch"><a href="/zh/issues/{{ issue_key }}/index.html">中文</a></span>
+  <div class="back"><a href="/en/index.html">← All Issues</a></div>
+  <h1>{{ title }}</h1>
+
+  {% for section in sections %}
+  <h2>{{ section.label }}</h2>
+  {% for rec in section.recordings %}
+  <div class="recording">
+    <h3>
+      {{ rec.composer }} — {{ rec.work }}
+      {% if rec.badge == "recording_of_the_month" %}<span class="badge">Recording of the Month</span>{% endif %}
+      {% if rec.badge == "editors_choice" %}<span class="badge">Editor's Choice</span>{% endif %}
+    </h3>
+    <div class="meta">{{ rec.performers }}{% if rec.label %} · {{ rec.label }}{% endif %}{% if rec.catalog %} {{ rec.catalog }}{% endif %}</div>
+    <div class="tldr">{{ rec.tldr }}</div>
+    <div class="spotify-link">
+      {% if rec.spotify_url %}
+      <a href="{{ rec.spotify_url }}" target="_blank">▶ Listen on Spotify</a>
+      {% else %}
+      <span class="spotify-missing">Not on Spotify</span>
+      {% endif %}
+    </div>
+    {% if rec.comparison_recordings %}
+    <div class="comparisons">
+      <h4>Also consider:</h4>
+      {% for comp in rec.comparison_recordings %}
+      <div class="comparison-item">
+        {{ comp.composer }} — {{ comp.work }} · {{ comp.performers }}{% if comp.label %} ({{ comp.label }}){% endif %}
+        {% if comp.spotify_url %} · <a href="{{ comp.spotify_url }}" target="_blank" style="color:#1DB954">Spotify</a>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+  {% endfor %}
+
+  {% if features %}
+  <h2>Features</h2>
+  {% for feat in features %}
+  <div class="feature">
+    <h2>{{ feat.title }}</h2>
+    <div class="feature-summary">{{ feat.summary }}</div>
+    {% for rec in feat.recordings %}
+    <div class="recording">
+      <h3>{{ rec.composer }} — {{ rec.work }}</h3>
+      <div class="meta">{{ rec.performers }}{% if rec.label %} · {{ rec.label }}{% endif %}</div>
+      <div class="tldr">{{ rec.tldr }}</div>
+      <div class="spotify-link">
+        {% if rec.spotify_url %}
+        <a href="{{ rec.spotify_url }}" target="_blank">▶ Listen on Spotify</a>
+        {% else %}
+        <span class="spotify-missing">Not on Spotify</span>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endfor %}
+  {% endif %}
+</body>
+</html>
