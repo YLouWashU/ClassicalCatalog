@@ -102,7 +102,7 @@ pytest>=7.4.0
 
 ```
 MINIMAX_API_KEY=your_minimax_api_key
-MINIMAX_GROUP_ID=your_minimax_group_id
+MINIMAX_API_BASE=https://api.minimax.io/anthropic/v1/messages
 SPOTIFY_CLIENT_ID=your_spotify_client_id
 SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
 LLM_MODEL=minimax/MiniMax-M2.7
@@ -1228,6 +1228,7 @@ Expected: 4 tests pass.
 
 ```python
 import json
+import os
 import litellm
 from common.config import LLM_MODEL
 from common.models import Recording, ComparisonRecording, BilingualText, Feature
@@ -1300,6 +1301,8 @@ Return ONLY valid JSON, no markdown:
 def _call_llm(prompt: str) -> dict:
     response = litellm.completion(
         model=LLM_MODEL,
+        api_base=os.environ.get("MINIMAX_API_BASE"),
+        api_key=os.environ.get("MINIMAX_API_KEY"),
         messages=[{"role": "user", "content": prompt}],
         temperature=0.2,
     )
