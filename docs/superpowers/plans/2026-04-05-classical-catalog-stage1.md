@@ -105,7 +105,7 @@ MINIMAX_API_KEY=your_minimax_api_key
 MINIMAX_GROUP_ID=your_minimax_group_id
 SPOTIFY_CLIENT_ID=your_spotify_client_id
 SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
-LLM_MODEL=minimax/abab6.5s-chat
+LLM_MODEL=minimax/MiniMax-M2.7
 CDP_PORT=9222
 ```
 
@@ -309,7 +309,7 @@ CDP_PORT = int(os.environ.get("CDP_PORT", "9222"))
 CHROMIUM_BIN = os.environ.get("CHROMIUM_BIN", "chromium-browser")
 ZINIO_LIBRARY_URL = "https://www.zinio.com/gb/my-library"
 
-LLM_MODEL = os.environ.get("LLM_MODEL", "minimax/abab6.5s-chat")
+LLM_MODEL = os.environ.get("LLM_MODEL", "minimax/MiniMax-M2.7")
 
 REVIEW_SECTIONS = [
     "recording_of_the_month",
