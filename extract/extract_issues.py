@@ -65,12 +65,16 @@ def extract_issue(issue_id: str, issue_key: str, force: bool = False) -> None:
 def main():
     parser = argparse.ArgumentParser(description="Extract Gramophone issues from Zinio")
     parser.add_argument("--issue", help="Process specific issue (YYYY-MM)")
+    parser.add_argument("--issue-id", dest="issue_id", help="Zinio issue ID (bypasses library enumeration)")
     parser.add_argument("--force", action="store_true", help="Re-run even if completed")
     args = parser.parse_args()
 
     with BrowserSession():
-        if args.issue:
-            # Single issue — we need to find its issue_id from the library
+        if args.issue and args.issue_id:
+            # Fast path: issue_id provided directly
+            extract_issue(args.issue_id, args.issue, force=args.force)
+        elif args.issue:
+            # Single issue — find its issue_id from the library
             issues = list_all_issues()
             match = next((i for i in issues if i.issue_key == args.issue), None)
             if not match:
