@@ -1,9 +1,18 @@
+import socket
 import subprocess
 import time
-import signal
 import os
 from pathlib import Path
 from common.config import CHROMIUM_BIN, BROWSER_PROFILE_DIR, CDP_PORT
+
+
+def _is_cdp_port_open() -> bool:
+    """Return True if something is already listening on the CDP port."""
+    try:
+        with socket.create_connection(("localhost", CDP_PORT), timeout=1):
+            return True
+    except (ConnectionRefusedError, OSError):
+        return False
 
 
 def run_agent_browser(*args: str) -> str:
@@ -42,6 +51,9 @@ class BrowserSession:
         self._proc: subprocess.Popen | None = None
 
     def __enter__(self) -> "BrowserSession":
+        if _is_cdp_port_open():
+            # Chromium already running — connect to it, don't launch a new instance
+            return self
         BROWSER_PROFILE_DIR.mkdir(parents=True, exist_ok=True)
         self._proc = subprocess.Popen(
             [
