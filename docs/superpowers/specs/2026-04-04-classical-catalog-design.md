@@ -36,6 +36,8 @@ pipeline.py (chains all stages)
 - Jinja2 for HTML templating
 - GitHub Pages for hosting (push manually)
 
+**Bilingual support:** The site is published in both English (`docs/en/`) and Chinese (`docs/zh/`). All LLM-generated text (TLDRs, feature summaries) is produced in both languages in a single LLM call, with the response structured as `{"en": "...", "zh": "..."}` for each text field. UI strings in templates are translated separately per language.
+
 **Zinio auth:** Chromium profile saved to `~/Data/ClassicalCatalog/ZinioBrowser/` — log in once, reused on all subsequent runs.
 
 ---
@@ -69,8 +71,12 @@ ClassicalCatalog/
 │   └── html_renderer.py             # Jinja2 template rendering
 │
 ├── templates/
-│   ├── index.html.j2                # all-issues overview
-│   └── issue.html.j2                # per-issue recordings page
+│   ├── en/
+│   │   ├── index.html.j2            # all-issues overview (English)
+│   │   └── issue.html.j2            # per-issue recordings page (English)
+│   └── zh/
+│       ├── index.html.j2            # all-issues overview (Chinese)
+│       └── issue.html.j2            # per-issue recordings page (Chinese)
 │
 ├── docs/                            # GitHub Pages output
 └── requirements.txt
@@ -167,7 +173,7 @@ Read the printed TOC page from the magazine (not the Zinio sidebar). Features ar
         "label": "Deutsche Grammophon",
         "catalog": "...",
         "badge": "recording_of_the_month",
-        "tldr": "A landmark release ...",
+        "tldr": {"en": "A landmark release ...", "zh": "这是一张里程碑式的唱片..."},
         "comparison_recordings": [
           {
             "composer": "Florence Price",
@@ -182,7 +188,7 @@ Read the printed TOC page from the magazine (not the Zinio sidebar). Features ar
     "features": [
       {
         "feature_title": "Appreciating Florence Price",
-        "summary": "2-3 paragraph LLM-generated summary of the article ...",
+        "summary": {"en": "2-3 paragraph summary ...", "zh": "2-3段中文摘要..."},
         "recordings": [
           {
             "composer": "Florence Price",
@@ -258,9 +264,11 @@ For each recording in `processed.json` (primary + comparisons + feature recordin
 - Site can be published before enrichment is complete — missing Spotify links render as "not on Spotify"
 
 ### Stage 4 — Site Build
-Reads all available `enriched.json` (falls back to `processed.json` if enrich not yet run):
-- `docs/index.html` — all issues, newest first
-- `docs/issues/<YYYY-MM>/index.html` — per-issue page with all sections and recordings
+Reads all available `enriched.json` (falls back to `processed.json` if enrich not yet run). Runs two render passes — one per language:
+- `docs/en/index.html` and `docs/zh/index.html` — all issues, newest first
+- `docs/en/issues/<YYYY-MM>/index.html` and `docs/zh/issues/<YYYY-MM>/index.html` — per-issue pages
+
+Each render pass uses the language-specific templates and selects the appropriate `en` or `zh` value from bilingual text fields.
 
 ---
 
