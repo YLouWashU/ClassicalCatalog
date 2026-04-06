@@ -25,7 +25,7 @@ class BilingualText(BaseModel):
 class ComparisonRecording(BaseModel):
     composer: str
     work: str
-    performers: str
+    performers: str = ""
     label: Optional[str] = None
     spotify_url: Optional[str] = None
     spotify_status: SpotifyStatus = SpotifyStatus.not_checked
@@ -34,7 +34,7 @@ class ComparisonRecording(BaseModel):
 class Recording(BaseModel):
     composer: str
     work: str
-    performers: str
+    performers: str = ""
     label: Optional[str] = None
     catalog: Optional[str] = None
     badge: Optional[str] = None  # "recording_of_the_month", "editors_choice"

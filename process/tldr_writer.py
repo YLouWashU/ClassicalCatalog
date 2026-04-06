@@ -107,7 +107,7 @@ def analyze_review_section(
             ComparisonRecording(
                 composer=c.get("composer", ""),
                 work=c.get("work", ""),
-                performers=c.get("performers", ""),
+                performers=c.get("performers") or "",
                 label=c.get("label"),
             )
             for c in r.get("comparison_recordings", [])
