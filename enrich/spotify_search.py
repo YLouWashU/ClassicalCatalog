@@ -27,10 +27,10 @@ def search_recording(
     work: str,
     performers: str,
     sp: Spotify | None = None,
-) -> tuple[str | None, SpotifyStatus]:
+) -> tuple[str | None, str | None, SpotifyStatus]:
     """
     Search Spotify for a classical recording.
-    Returns (album_url, status).
+    Returns (album_url, album_image_url, status).
     """
     if sp is None:
         sp = get_spotify_client()
@@ -46,16 +46,18 @@ def search_recording(
     results = sp.search(q=query, type="album", limit=10)
     album = _pick_best_album(results, composer_clean, performer_last)
     if album:
-        return album["external_urls"]["spotify"], SpotifyStatus.found
+        image_url = album["images"][0]["url"] if album.get("images") else None
+        return album["external_urls"]["spotify"], image_url, SpotifyStatus.found
 
     # Strategy 2: composer + work only (broader)
     query2 = f"{composer_clean} {work_clean}"
     results2 = sp.search(q=query2, type="album", limit=20)
     album2 = _pick_best_album(results2, composer_clean, performer_last)
     if album2:
-        return album2["external_urls"]["spotify"], SpotifyStatus.found
+        image_url = album2["images"][0]["url"] if album2.get("images") else None
+        return album2["external_urls"]["spotify"], image_url, SpotifyStatus.found
 
-    return None, SpotifyStatus.not_found
+    return None, None, SpotifyStatus.not_found
 
 
 def _pick_best_album(results: dict, composer_last: str, performer_last: str) -> dict | None:
@@ -78,24 +80,26 @@ def _pick_best_album(results: dict, composer_last: str, performer_last: str) -> 
 
 
 def enrich_recording(recording: Recording, sp: Spotify | None = None) -> Recording:
-    """Add spotify_url and spotify_status to a recording in place."""
-    url, status = search_recording(
+    """Add spotify_url, album_image_url and spotify_status to a recording in place."""
+    url, image_url, status = search_recording(
         composer=recording.composer,
         work=recording.work,
         performers=recording.performers,
         sp=sp,
     )
     recording.spotify_url = url
+    recording.album_image_url = image_url
     recording.spotify_status = status
 
     for comp in recording.comparison_recordings:
-        comp_url, comp_status = search_recording(
+        comp_url, comp_image_url, comp_status = search_recording(
             composer=comp.composer,
             work=comp.work,
             performers=comp.performers,
             sp=sp,
         )
         comp.spotify_url = comp_url
+        comp.album_image_url = comp_image_url
         comp.spotify_status = comp_status
 
     return recording

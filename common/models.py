@@ -29,6 +29,7 @@ class ComparisonRecording(BaseModel):
     label: Optional[str] = None
     spotify_url: Optional[str] = None
     spotify_status: SpotifyStatus = SpotifyStatus.not_checked
+    album_image_url: Optional[str] = None
 
 
 class Recording(BaseModel):
@@ -42,6 +43,7 @@ class Recording(BaseModel):
     comparison_recordings: list[ComparisonRecording] = []
     spotify_url: Optional[str] = None
     spotify_status: SpotifyStatus = SpotifyStatus.not_checked
+    album_image_url: Optional[str] = None
 
 
 class Feature(BaseModel):

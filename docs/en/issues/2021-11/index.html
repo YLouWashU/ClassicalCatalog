@@ -4,533 +4,1820 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gramophone November 2021 — Classical Catalog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Georgia, serif; max-width: 860px; margin: 2rem auto; padding: 0 1rem; color: #222; }
-    h1 { font-size: 1.6rem; border-bottom: 2px solid #8B0000; padding-bottom: 0.5rem; }
-    h2 { font-size: 1.2rem; color: #8B0000; margin-top: 2rem; }
-    h3 { font-size: 1rem; margin: 1.2rem 0 0.3rem; }
-    .badge { display: inline-block; background: #8B0000; color: white; font-size: 0.75rem; padding: 2px 8px; border-radius: 3px; margin-left: 0.5rem; vertical-align: middle; }
-    .meta { color: #555; font-size: 0.9rem; margin-bottom: 0.4rem; }
-    .tldr { margin: 0.4rem 0 0.6rem; line-height: 1.6; }
-    .spotify-link a { color: #1DB954; font-weight: bold; text-decoration: none; }
-    .spotify-link a:hover { text-decoration: underline; }
-    .spotify-missing { color: #999; font-size: 0.85rem; }
-    .comparisons { margin-top: 0.5rem; padding-left: 1rem; border-left: 3px solid #ddd; }
-    .comparisons h4 { font-size: 0.9rem; color: #555; margin: 0.3rem 0; }
-    .comparison-item { font-size: 0.9rem; margin: 0.2rem 0; }
-    .feature { background: #f9f5f0; padding: 1rem 1.2rem; margin: 1.5rem 0; border-left: 4px solid #8B0000; }
-    .feature h2 { margin-top: 0; }
-    .feature-summary { line-height: 1.7; margin-bottom: 1rem; }
-    .lang-switch { float: right; font-size: 0.9rem; }
-    .lang-switch a { color: #8B0000; }
-    .back { font-size: 0.9rem; margin-bottom: 1rem; }
-    .back a { color: #8B0000; }
-    .recording { margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #eee; }
+    :root {
+      --bg:          #0d0b09;
+      --surface:     #161210;
+      --surface2:    #1e1a16;
+      --gold:        #c9a56a;
+      --gold-dim:    rgba(201,165,106,0.12);
+      --gold-border: rgba(201,165,106,0.25);
+      --cream:       #ede4d4;
+      --muted:       #7a6a58;
+      --border:      #2a2420;
+      --green:       #1DB954;
+      --text-body:   #cdc0b0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'EB Garamond', Georgia, serif;
+      background: var(--bg);
+      color: var(--cream);
+      min-height: 100vh;
+      font-size: 17px;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      background: #090706;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .back-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--gold); }
+
+    .lang-switch a {
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      border-bottom: 1px solid var(--gold-border);
+      padding-bottom: 1px;
+      transition: border-color 0.15s;
+    }
+    .lang-switch a:hover { border-color: var(--gold); }
+
+    .header-body {
+      padding: 1rem 2rem 0;
+    }
+
+    .issue-eyebrow {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      margin-bottom: 0.2rem;
+    }
+
+    .issue-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--cream);
+      letter-spacing: 0.01em;
+      line-height: 1.15;
+    }
+
+    /* ── Tabs ── */
+    .tabs-bar {
+      display: flex;
+      overflow-x: auto;
+      padding: 0 2rem;
+      margin-top: 0.9rem;
+      scrollbar-width: none;
+      gap: 0;
+    }
+    .tabs-bar::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--muted);
+      font-family: 'EB Garamond', serif;
+      font-size: 0.88rem;
+      letter-spacing: 0.06em;
+      padding: 0.55rem 1.1rem 0.55rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .tab-btn:hover { color: var(--cream); }
+    .tab-btn.active {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+    }
+
+    .tab-count {
+      font-size: 0.7rem;
+      background: var(--gold-dim);
+      color: var(--gold);
+      padding: 0.05rem 0.45rem;
+      border-radius: 999px;
+      font-style: normal;
+    }
+
+    /* ── Main content ── */
+    main {
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 5rem;
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── Recording card ── */
+    .recording-card {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 1.6rem;
+      padding: 1.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .recording-card:last-child { border-bottom: none; }
+    .recording-card.animate {
+      animation: cardIn 0.35s ease both;
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .art-col { position: relative; }
+
+    .album-art {
+      width: 130px;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 3px;
+      display: block;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+    .album-art:hover {
+      transform: scale(1.04);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 0 1px var(--gold-border);
+    }
+
+    .art-placeholder {
+      width: 130px;
+      height: 130px;
+      background: var(--surface2);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--border);
+      font-size: 2.5rem;
+    }
+
+    .card-content {}
+
+    .card-badges {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+      min-height: 1.4rem;
+    }
+
+    .badge-rotm {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: var(--gold);
+      color: #0d0b09;
+      padding: 2px 9px;
+      border-radius: 2px;
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    .badge-ec {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border: 1px solid var(--gold-border);
+      color: var(--gold);
+      padding: 2px 9px;
+      border-radius: 2px;
+    }
+
+    .card-composer {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      margin-bottom: 0.2rem;
+    }
+
+    .card-work {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1.2;
+      margin-bottom: 0.35rem;
+    }
+
+    .card-performers {
+      font-size: 0.92rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .card-tldr {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--text-body);
+      margin-bottom: 1rem;
+    }
+
+    /* ── Spotify buttons ── */
+    .card-actions {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+      margin-bottom: 0.9rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-app {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--green);
+      color: #000;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.38rem 1rem;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
+      transition: filter 0.15s;
+    }
+    .btn-app:hover { filter: brightness(1.12); }
+    .btn-app svg { width: 12px; height: 12px; fill: #000; }
+
+    .btn-web {
+      display: inline-flex;
+      align-items: center;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      border: 1px solid var(--border);
+      padding: 0.38rem 0.85rem;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .btn-web:hover { color: var(--cream); border-color: var(--muted); }
+
+    .no-spotify {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* ── Comparisons ── */
+    .comparisons {
+      border-top: 1px solid var(--border);
+      padding-top: 0.8rem;
+    }
+
+    .comp-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .comp-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.35rem 0;
+    }
+
+    .comp-art {
+      width: 38px;
+      height: 38px;
+      object-fit: cover;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .comp-art-placeholder {
+      width: 38px;
+      height: 38px;
+      background: var(--surface2);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .comp-text { flex: 1; min-width: 0; }
+
+    .comp-work {
+      font-size: 0.9rem;
+      color: var(--cream);
+      line-height: 1.3;
+    }
+
+    .comp-meta {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: 0.1rem;
+    }
+
+    .comp-spotify {
+      color: var(--green);
+      text-decoration: none;
+      font-size: 0.8rem;
+      margin-left: 0.4rem;
+      opacity: 0.8;
+      transition: opacity 0.15s;
+    }
+    .comp-spotify:hover { opacity: 1; }
+
+    /* ── Features ── */
+    .feature-block {
+      background: var(--surface);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 4px 4px 0;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .feature-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 0.75rem;
+    }
+
+    .feature-summary {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text-body);
+      font-style: italic;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.25rem;
+    }
+
+    .feature-recordings .recording-card {
+      grid-template-columns: 90px 1fr;
+    }
+    .feature-recordings .album-art,
+    .feature-recordings .art-placeholder {
+      width: 90px;
+      height: 90px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .recording-card { grid-template-columns: 80px 1fr; gap: 1rem; }
+      .album-art, .art-placeholder { width: 80px; height: 80px; }
+      .header-body { padding: 0.75rem 1rem 0; }
+      .header-top { padding: 0.6rem 1rem; }
+      .tabs-bar { padding: 0 1rem; }
+      main { padding: 1.5rem 1rem 4rem; }
+    }
   </style>
 </head>
 <body>
-  <span class="lang-switch"><a href="../../../zh/issues/2021-11/index.html">中文</a></span>
-  <div class="back"><a href="../../index.html">← All Issues</a></div>
-  <h1>Gramophone November 2021</h1>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="../../index.html" class="back-link">← All Issues</a>
+    <span class="lang-switch"><a href="../../../zh/issues/2021-11/index.html">中文</a></span>
+  </div>
+  <div class="header-body">
+    <div class="issue-eyebrow">Gramophone</div>
+    <h1 class="issue-title">Gramophone November 2021</h1>
+  </div>
+  <nav class="tabs-bar" role="tablist" aria-label="Sections">
+    
+    <button class="tab-btn active"
+            data-tab="tab-recording_of_the_month"
+            role="tab"
+            aria-selected="true">
+      Recording of the Month<span class="tab-count">1</span>
+    </button>
+    
+    <button class="tab-btn"
+            data-tab="tab-editors_choice"
+            role="tab"
+            aria-selected="false">
+      Editor&#39;s Choice<span class="tab-count">5</span>
+    </button>
+    
+    <button class="tab-btn"
+            data-tab="tab-orchestral"
+            role="tab"
+            aria-selected="false">
+      Orchestral<span class="tab-count">2</span>
+    </button>
+    
+    <button class="tab-btn"
+            data-tab="tab-chamber"
+            role="tab"
+            aria-selected="false">
+      Chamber<span class="tab-count">2</span>
+    </button>
+    
+    <button class="tab-btn"
+            data-tab="tab-instrumental"
+            role="tab"
+            aria-selected="false">
+      Instrumental<span class="tab-count">3</span>
+    </button>
+    
+    <button class="tab-btn"
+            data-tab="tab-vocal"
+            role="tab"
+            aria-selected="false">
+      Vocal<span class="tab-count">3</span>
+    </button>
+    
+    <button class="tab-btn"
+            data-tab="tab-opera"
+            role="tab"
+            aria-selected="false">
+      Opera<span class="tab-count">1</span>
+    </button>
+    
+    
+    <button class="tab-btn"
+            data-tab="tab-features"
+            role="tab"
+            aria-selected="false">
+      Features<span class="tab-count">2</span>
+    </button>
+    
+  </nav>
+</header>
+
+<main>
 
   
-  <h2>Recording of the Month</h2>
-  
-  <div class="recording">
-    <h3>
-      Florence Price — Symphonies No. 1 &amp; No. 3
-      <span class="badge">Recording of the Month</span>
-      
-    </h3>
-    <div class="meta">Philadelphia Orchestra / Yannick Nézet-Séguin · DG F D 486 1900</div>
-    <div class="tldr">Yannick Nézet-Séguin and the Philadelphia Orchestra deliver transformative performances of Florence Price&#39;s First and Third Symphonies, revealing an original musical voice of great honesty, emotional depth, and defiant joy that transcends her Dvořákian models.</div>
-    <div class="spotify-link">
-      
-      <a href="https://open.spotify.com/album/4XjLUGkC8E9BXFamKyDCgE" target="_blank">▶ Listen on Spotify</a>
-      
-    </div>
+  <div class="tab-panel active"
+       id="tab-recording_of_the_month"
+       role="tabpanel">
     
-    <div class="comparisons">
-      <h4>Also consider:</h4>
+    
       
-      <div class="comparison-item">
-        Dvořák — Symphony No. 9 &#39;From the New World&#39; · 
-         · <a href="https://open.spotify.com/album/7En0QelaesFgXH73AB8EDI" target="_blank" style="color:#1DB954">Spotify</a>
+    
+    <div class="recording-card animate" style="animation-delay:0.0s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b27338c943a97f2d4d502942aedf" alt="Symphonies No. 1 &amp; No. 3" loading="lazy">
+        
       </div>
-      
-      <div class="comparison-item">
-        Charles Ives — Symphony No. 2 · 
-         · <a href="https://open.spotify.com/album/5QEbidLwtazOxoMaFiReEb" target="_blank" style="color:#1DB954">Spotify</a>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+          <span class="badge-rotm">Recording of the Month</span>
+          
+        </div>
+        <div class="card-composer">Florence Price</div>
+        <h2 class="card-work">Symphonies No. 1 &amp; No. 3</h2>
+        <div class="card-performers">
+          Philadelphia Orchestra / Yannick Nézet-Séguin &middot; DG &middot; F D 486 1900
+        </div>
+        <div class="card-tldr">Yannick Nézet-Séguin and the Philadelphia Orchestra deliver transformative performances of Florence Price&#39;s First and Third Symphonies, revealing an original musical voice of great honesty, emotional depth, and defiant joy that transcends her Dvořákian models.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:4XjLUGkC8E9BXFamKyDCgE" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/4XjLUGkC8E9BXFamKyDCgE" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">Also consider</div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b2739d8fe69e86978f01dbaf2d91" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Dvořák — Symphony No. 9 &#39;From the New World&#39;
+                
+                <a href="spotify:album:7En0QelaesFgXH73AB8EDI" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                
+              </div>
+            </div>
+          </div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b273985a686a6bc98ca9ab4aead8" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Charles Ives — Symphony No. 2
+                
+                <a href="spotify:album:4alRpnBnC9u3q9hoDsK9P3" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        
+
       </div>
-      
-    </div>
-    
-  </div>
-  
-  
-  <h2>Editor&#39;s Choice</h2>
-  
-  <div class="recording">
-    <h3>
-      Florence Price — Symphonies Nos 1 &amp; 3
-      
-      <span class="badge">Editor's Choice</span>
-    </h3>
-    <div class="meta">Philadelphia Orchestra / Yannick Nézet‑Séguin · DG</div>
-    <div class="tldr">Florence Price’s First and Third Symphonies receive a triumphant performance from the Philadelphia Orchestra under Yannick Nézet‑Séguin, showcasing sumptuous detail and a striking thematic sweep. The recording brings out the music’s beauty and depth, making a compelling case for this long‑neglected composer.</div>
-    <div class="spotify-link">
-      
-      <a href="https://open.spotify.com/album/4XjLUGkC8E9BXFamKyDCgE" target="_blank">▶ Listen on Spotify</a>
-      
-    </div>
-    
-  </div>
-  
-  <div class="recording">
-    <h3>
-      Bartók, Beethoven, Berg — Violin Concertos
-      
-      <span class="badge">Editor's Choice</span>
-    </h3>
-    <div class="meta">Frank Peter Zimmermann (violin); Berlin Philharmonic Orchestra / Berliner Philharmoniker</div>
-    <div class="tldr">Frank Peter Zimmermann delivers a riveting account of four major violin concertos, combining technical brilliance with profound musical insight. The Berlin Philharmonic provides superb orchestral support, making this a standout collection.</div>
-    <div class="spotify-link">
-      
-      <a href="https://open.spotify.com/album/4qjgi2IEJYuLikphdJx3Vr" target="_blank">▶ Listen on Spotify</a>
-      
-    </div>
-    
-  </div>
-  
-  <div class="recording">
-    <h3>
-      Bruckner — Symphony No 4, &#39;Romantic&#39;
-      
-      <span class="badge">Editor's Choice</span>
-    </h3>
-    <div class="meta">Vienna Philharmonic Orchestra / Christian Thielemann · Sony Classical</div>
-    <div class="tldr">Christian Thielemann’s deep familiarity with Bruckner’s Fourth Symphony shines through in a magisterial reading that balances grandeur and subtlety. The Vienna Philharmonic’s lush playing enhances a recording that feels both timeless and fresh.</div>
-    <div class="spotify-link">
-      
-      <a href="https://open.spotify.com/album/3Vd1gykRyouIhUtd5YZPaK" target="_blank">▶ Listen on Spotify</a>
-      
-    </div>
-    
-  </div>
-  
-  <div class="recording">
-    <h3>
-      Barber, Rachmaninov — &#39;Muse&#39; (cello and piano works)
-      
-      <span class="badge">Editor's Choice</span>
-    </h3>
-    <div class="meta">Sheku Kanneh‑Mason (cello); Isata Kanneh‑Mason (piano) · Decca</div>
-    <div class="tldr">Siblings Sheku and Isata Kanneh‑Mason present a personal, deeply engaging programme of Barber and Rachmaninov, revealing an intensely musical rapport honed over years. Their performances are both intimate and expressive, making the disc a joy to hear.</div>
-    <div class="spotify-link">
-      
-      <a href="https://open.spotify.com/album/7in6H0b3WgI5zb7Xh2OU74" target="_blank">▶ Listen on Spotify</a>
-      
     </div>
     
   </div>
   
-  <div class="recording">
-    <h3>
-      Dvořák, Kurtág — String Quintet No 3, &#39;American&#39;; String Quartets
+  <div class="tab-panel"
+       id="tab-editors_choice"
+       role="tabpanel">
+    
+    
       
-      <span class="badge">Editor's Choice</span>
-    </h3>
-    <div class="meta">Parker Quartet with Kim Kashkashian (viola) · ECM New Series</div>
-    <div class="tldr">The Parker Quartet, joined by violist Kim Kashkashian, delivers striking chamber playing in Dvořák’s expressive American Quintet and Kurtág’s intimate quartets. The performances are both energetic and nuanced, highlighting the contrast between the two composers.</div>
-    <div class="spotify-link">
+    
+    <div class="recording-card animate" style="animation-delay:0.0s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b27338c943a97f2d4d502942aedf" alt="Symphonies Nos 1 &amp; 3" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+          <span class="badge-ec">Editor's Choice</span>
+          
+        </div>
+        <div class="card-composer">Florence Price</div>
+        <h2 class="card-work">Symphonies Nos 1 &amp; 3</h2>
+        <div class="card-performers">
+          Philadelphia Orchestra / Yannick Nézet‑Séguin &middot; DG
+        </div>
+        <div class="card-tldr">Florence Price’s First and Third Symphonies receive a triumphant performance from the Philadelphia Orchestra under Yannick Nézet‑Séguin, showcasing sumptuous detail and a striking thematic sweep. The recording brings out the music’s beauty and depth, making a compelling case for this long‑neglected composer.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:4XjLUGkC8E9BXFamKyDCgE" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/4XjLUGkC8E9BXFamKyDCgE" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
       
-      <a href="https://open.spotify.com/album/1XDnER9axX7T2bpg0grNjB" target="_blank">▶ Listen on Spotify</a>
+    
+    <div class="recording-card animate" style="animation-delay:0.06s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b273fa8bb3f18643a833e171261a" alt="Violin Concertos" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+          <span class="badge-ec">Editor's Choice</span>
+          
+        </div>
+        <div class="card-composer">Bartók, Beethoven, Berg</div>
+        <h2 class="card-work">Violin Concertos</h2>
+        <div class="card-performers">
+          Frank Peter Zimmermann (violin); Berlin Philharmonic Orchestra / Berliner Philharmoniker
+        </div>
+        <div class="card-tldr">Frank Peter Zimmermann delivers a riveting account of four major violin concertos, combining technical brilliance with profound musical insight. The Berlin Philharmonic provides superb orchestral support, making this a standout collection.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:4qjgi2IEJYuLikphdJx3Vr" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/4qjgi2IEJYuLikphdJx3Vr" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
       
+    
+    <div class="recording-card animate" style="animation-delay:0.12s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b273129d498fb5aaedb70ad14c89" alt="Symphony No 4, &#39;Romantic&#39;" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+          <span class="badge-ec">Editor's Choice</span>
+          
+        </div>
+        <div class="card-composer">Bruckner</div>
+        <h2 class="card-work">Symphony No 4, &#39;Romantic&#39;</h2>
+        <div class="card-performers">
+          Vienna Philharmonic Orchestra / Christian Thielemann &middot; Sony Classical
+        </div>
+        <div class="card-tldr">Christian Thielemann’s deep familiarity with Bruckner’s Fourth Symphony shines through in a magisterial reading that balances grandeur and subtlety. The Vienna Philharmonic’s lush playing enhances a recording that feels both timeless and fresh.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:3Vd1gykRyouIhUtd5YZPaK" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/3Vd1gykRyouIhUtd5YZPaK" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.18s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b27324af03887f46850ce031af15" alt="&#39;Muse&#39; (cello and piano works)" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+          <span class="badge-ec">Editor's Choice</span>
+          
+        </div>
+        <div class="card-composer">Barber, Rachmaninov</div>
+        <h2 class="card-work">&#39;Muse&#39; (cello and piano works)</h2>
+        <div class="card-performers">
+          Sheku Kanneh‑Mason (cello); Isata Kanneh‑Mason (piano) &middot; Decca
+        </div>
+        <div class="card-tldr">Siblings Sheku and Isata Kanneh‑Mason present a personal, deeply engaging programme of Barber and Rachmaninov, revealing an intensely musical rapport honed over years. Their performances are both intimate and expressive, making the disc a joy to hear.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:7in6H0b3WgI5zb7Xh2OU74" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/7in6H0b3WgI5zb7Xh2OU74" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.24s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b2732931bc42074d02a125de3589" alt="String Quintet No 3, &#39;American&#39;; String Quartets" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+          <span class="badge-ec">Editor's Choice</span>
+          
+        </div>
+        <div class="card-composer">Dvořák, Kurtág</div>
+        <h2 class="card-work">String Quintet No 3, &#39;American&#39;; String Quartets</h2>
+        <div class="card-performers">
+          Parker Quartet with Kim Kashkashian (viola) &middot; ECM New Series
+        </div>
+        <div class="card-tldr">The Parker Quartet, joined by violist Kim Kashkashian, delivers striking chamber playing in Dvořák’s expressive American Quintet and Kurtág’s intimate quartets. The performances are both energetic and nuanced, highlighting the contrast between the two composers.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:1XDnER9axX7T2bpg0grNjB" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/1XDnER9axX7T2bpg0grNjB" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+
+      </div>
     </div>
     
   </div>
   
-  
-  <h2>Orchestral</h2>
-  
-  <div class="recording">
-    <h3>
-      Bartók, Beethoven, Berg — Bartók Violin Concertos Nos 1 &amp; 2, Beethoven Violin Concerto Op 61, Berg Violin Concerto
+  <div class="tab-panel"
+       id="tab-orchestral"
+       role="tabpanel">
+    
+    
       
-      
-    </h3>
-    <div class="meta">Frank Peter Zimmermann (violin); Berlin Philharmonic Orchestra / Alan Gilbert, Daniel Harding, Kirill Petrenko · Berliner Philharmoniker BPHR210151</div>
-    <div class="tldr">Frank Peter Zimmermann delivers masterly performances across four violin concertos with the Berlin Philharmonic, recorded live between 2016-2020. The Berg concerto under Petrenko combines extraordinary musical refinement with tragic depth, while the Beethoven is a joyous yet rigorously argued account. Both Bartók concertos shine, with the First particularly praised for its silken tone and hypnotic shaping.</div>
-    <div class="spotify-link">
-      
-      <a href="https://open.spotify.com/album/34mfmGEv2FM9RLoHrYhoon" target="_blank">▶ Listen on Spotify</a>
-      
+    
+    <div class="recording-card animate" style="animation-delay:0.0s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b273e31161a6672511187daa1617" alt="Bartók Violin Concertos Nos 1 &amp; 2, Beethoven Violin Concerto Op 61, Berg Violin Concerto" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Bartók, Beethoven, Berg</div>
+        <h2 class="card-work">Bartók Violin Concertos Nos 1 &amp; 2, Beethoven Violin Concerto Op 61, Berg Violin Concerto</h2>
+        <div class="card-performers">
+          Frank Peter Zimmermann (violin); Berlin Philharmonic Orchestra / Alan Gilbert, Daniel Harding, Kirill Petrenko &middot; Berliner Philharmoniker &middot; BPHR210151
+        </div>
+        <div class="card-tldr">Frank Peter Zimmermann delivers masterly performances across four violin concertos with the Berlin Philharmonic, recorded live between 2016-2020. The Berg concerto under Petrenko combines extraordinary musical refinement with tragic depth, while the Beethoven is a joyous yet rigorously argued account. Both Bartók concertos shine, with the First particularly praised for its silken tone and hypnotic shaping.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:34mfmGEv2FM9RLoHrYhoon" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/34mfmGEv2FM9RLoHrYhoon" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">Also consider</div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b273776ae96242acca77f5d8b6eb" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Beethoven — Violin Concerto Op 61
+                
+                <a href="spotify:album:77FzBKOQlfepn2NRCfK0lP" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Zimmermann, English Chamber Orchestra, Tate &middot; EMI/Warner
+              </div>
+            </div>
+          </div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b27374c7a6991eb3d24f8d56c7e2" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Berg — Violin Concerto
+                
+                <a href="spotify:album:0O775luTGWcji1SV4aacya" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Zimmermann, Stuttgart Radio Symphony Orchestra, Gelmetti &middot; Warner
+              </div>
+            </div>
+          </div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b273a1a811345448aa22d3816453" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Bartók — Violin Concerto No 1
+                
+                <a href="spotify:album:0WQUf4mJRsz6M7ooF84dnu" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Stern under Bernstein &middot; Sony
+              </div>
+            </div>
+          </div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b27353edeee066cfeb4ff90ae576" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Bartók — Violin Concerto No 2
+                
+                <a href="spotify:album:2w1fPyerAZcHZLMfEClsga" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Menuhin with Dorati &middot; Mercury
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
     </div>
     
-    <div class="comparisons">
-      <h4>Also consider:</h4>
-      
-      <div class="comparison-item">
-        Beethoven — Violin Concerto Op 61 · Zimmermann, English Chamber Orchestra, Tate (EMI/Warner)
-         · <a href="https://open.spotify.com/album/77FzBKOQlfepn2NRCfK0lP" target="_blank" style="color:#1DB954">Spotify</a>
-      </div>
-      
-      <div class="comparison-item">
-        Berg — Violin Concerto · Zimmermann, Stuttgart Radio Symphony Orchestra, Gelmetti (Warner)
-         · <a href="https://open.spotify.com/album/0O775luTGWcji1SV4aacya" target="_blank" style="color:#1DB954">Spotify</a>
-      </div>
-      
-      <div class="comparison-item">
-        Bartók — Violin Concerto No 1 · Stern under Bernstein (Sony)
-         · <a href="https://open.spotify.com/album/0WQUf4mJRsz6M7ooF84dnu" target="_blank" style="color:#1DB954">Spotify</a>
-      </div>
-      
-      <div class="comparison-item">
-        Bartók — Violin Concerto No 2 · Menuhin with Dorati (Mercury)
-         · <a href="https://open.spotify.com/album/7EMBGD7iONQuA0obWEECpJ" target="_blank" style="color:#1DB954">Spotify</a>
-      </div>
-      
-    </div>
     
-  </div>
-  
-  <div class="recording">
-    <h3>
-      Beethoven, Mozart — Beethoven Symphony No 5 Op 67, Mozart Serenade No 10 &#39;Gran Partita&#39; K361
       
-      
-    </h3>
-    <div class="meta">Philharmonia Zurich / Nikolaus Harnoncourt · Prospero PROSP0020</div>
-    <div class="tldr">Harnoncourt&#39;s third recording of Beethoven&#39;s Fifth Symphony is described as &#39;life-affirming, fiery and beautifully shaped,&#39; a faster, lighter and more heroic interpretation than his previous attempts. The Mozart Gran Partita also receives high praise for its characterful theme and variations and the warmly blended Adagio. This live 2011 Zurich concert demonstrates Harnoncourt at his finest.</div>
-    <div class="spotify-link">
-      
-      <a href="https://open.spotify.com/album/1DgZ1qWpGuiNzd0a5ge7wn" target="_blank">▶ Listen on Spotify</a>
-      
-    </div>
     
-    <div class="comparisons">
-      <h4>Also consider:</h4>
-      
-      <div class="comparison-item">
-        Beethoven — Symphony No 5 Op 67 · Chamber Orchestra of Europe, Harnoncourt (Teldec/Warner)
-         · <a href="https://open.spotify.com/album/7rlxqGPPD528fqY8YC9ivh" target="_blank" style="color:#1DB954">Spotify</a>
+    <div class="recording-card animate" style="animation-delay:0.06s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b27386c7ac1559a0b376823a055c" alt="Beethoven Symphony No 5 Op 67, Mozart Serenade No 10 &#39;Gran Partita&#39; K361" loading="lazy">
+        
       </div>
-      
-      <div class="comparison-item">
-        Beethoven — Symphony No 5 Op 67 · Concentus Musicus Wien, Harnoncourt (Sony)
-         · <a href="https://open.spotify.com/album/7rlxqGPPD528fqY8YC9ivh" target="_blank" style="color:#1DB954">Spotify</a>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Beethoven, Mozart</div>
+        <h2 class="card-work">Beethoven Symphony No 5 Op 67, Mozart Serenade No 10 &#39;Gran Partita&#39; K361</h2>
+        <div class="card-performers">
+          Philharmonia Zurich / Nikolaus Harnoncourt &middot; Prospero &middot; PROSP0020
+        </div>
+        <div class="card-tldr">Harnoncourt&#39;s third recording of Beethoven&#39;s Fifth Symphony is described as &#39;life-affirming, fiery and beautifully shaped,&#39; a faster, lighter and more heroic interpretation than his previous attempts. The Mozart Gran Partita also receives high praise for its characterful theme and variations and the warmly blended Adagio. This live 2011 Zurich concert demonstrates Harnoncourt at his finest.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:1DgZ1qWpGuiNzd0a5ge7wn" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/1DgZ1qWpGuiNzd0a5ge7wn" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">Also consider</div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b273a4021e700f24a46a9e8fb0c3" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Beethoven — Symphony No 5 Op 67
+                
+                <a href="spotify:album:7rlxqGPPD528fqY8YC9ivh" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Chamber Orchestra of Europe, Harnoncourt &middot; Teldec/Warner
+              </div>
+            </div>
+          </div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b273a4021e700f24a46a9e8fb0c3" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Beethoven — Symphony No 5 Op 67
+                
+                <a href="spotify:album:7rlxqGPPD528fqY8YC9ivh" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Concentus Musicus Wien, Harnoncourt &middot; Sony
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        
+
       </div>
-      
-    </div>
-    
-  </div>
-  
-  
-  <h2>Chamber</h2>
-  
-  <div class="recording">
-    <h3>
-      Barber, Rachmaninov — Cello Sonata Op 6; Cello Sonata Op 19; songs (Muse)
-      
-      
-    </h3>
-    <div class="meta">Sheku Kanneh-Mason (vc) Isata Kanneh-Mason (pf) · Decca F 485 1630</div>
-    <div class="tldr">The Kanneh‑Mason siblings deliver an expressive, enterprising programme of Barber’s and Rachmaninov’s cello sonatas and songs, with some of the most beautiful cello playing in recent memory, making this the most musically daring of current releases.</div>
-    <div class="spotify-link">
-      
-      <a href="https://open.spotify.com/album/6hYcC80EgYG89s5F1IHfRe" target="_blank">▶ Listen on Spotify</a>
-      
-    </div>
-    
-    <div class="comparisons">
-      <h4>Also consider:</h4>
-      
-      <div class="comparison-item">
-        Barber — Cello Sonata Op 6 · Poltéra, Stott (BIS)
-         · <a href="https://open.spotify.com/album/6EjTrZN7iX1hQlTSglmV35" target="_blank" style="color:#1DB954">Spotify</a>
-      </div>
-      
-      <div class="comparison-item">
-        Rachmaninov — Cello Sonata Op 19 · Weilerstein, Barnatan (DECC)
-         · <a href="https://open.spotify.com/album/4StqdIskv8g0yRQnfaNqhg" target="_blank" style="color:#1DB954">Spotify</a>
-      </div>
-      
-    </div>
-    
-  </div>
-  
-  <div class="recording">
-    <h3>
-      Beethoven — Violin Sonatas No 8 Op 30 No 3, No 9 &#39;Kreutzer&#39; Op 47, No 10 Op 96
-      
-      
-    </h3>
-    <div class="meta">Frank Peter Zimmermann (vn) Martin Helmchen (pf) · BIS BIS2537</div>
-    <div class="tldr">Zimmermann and Helmchen’s Beethoven cycle burns with electric energy, taut interplay and poetic delicacy, delivering a thrilling, idiomatic account that ranks among the finest modern readings.</div>
-    <div class="spotify-link">
-      
-      <a href="https://open.spotify.com/album/1qYP2mkLF8ENfXeScS5jQc" target="_blank">▶ Listen on Spotify</a>
-      
-    </div>
-    
-  </div>
-  
-  
-  <h2>Instrumental</h2>
-  
-  <div class="recording">
-    <h3>
-      JS Bach — Six English Suites, BWV806-811
-      
-      
-    </h3>
-    <div class="meta">Sophie Yates (harpsichord) · Chandos CHSA0826</div>
-    <div class="tldr">Sophie Yates delivers an immaculately researched and vibrant traversal of Bach&#39;s Six English Suites on a replica 1624 Ruckers harpsichord, weaving them into a richly cross-referential cosmos while ensuring each prelude and dance movement possesses distinct, immediately evident character.</div>
-    <div class="spotify-link">
-      
-      <a href="https://open.spotify.com/album/52iQ4nczS2RUUhQX5IvZJe" target="_blank">▶ Listen on Spotify</a>
-      
-    </div>
-    
-    <div class="comparisons">
-      <h4>Also consider:</h4>
-      
-      <div class="comparison-item">
-        JS Bach — Six English Suites · Gustav Leonhardt
-         · <a href="https://open.spotify.com/album/15dxyLZp6h5AC8INmsoJu6" target="_blank" style="color:#1DB954">Spotify</a>
-      </div>
-      
-      <div class="comparison-item">
-        JS Bach — Six English Suites · Egarr
-         · <a href="https://open.spotify.com/album/2O2FbBBTpEOmxlTpsJiBNI" target="_blank" style="color:#1DB954">Spotify</a>
-      </div>
-      
-      <div class="comparison-item">
-        JS Bach — Six English Suites · Rousset
-         · <a href="https://open.spotify.com/album/3Bcig5Swn4x4KrHea3b2ab" target="_blank" style="color:#1DB954">Spotify</a>
-      </div>
-      
-      <div class="comparison-item">
-        JS Bach — Six English Suites · Suzuki
-         · <a href="https://open.spotify.com/album/4MD3pkefNWFJlKZWOvJrjb" target="_blank" style="color:#1DB954">Spotify</a>
-      </div>
-      
-      <div class="comparison-item">
-        JS Bach — Six English Suites · van Asperen
-         · <a href="https://open.spotify.com/album/2QHtSgiEI6QhzdJunbi71Q" target="_blank" style="color:#1DB954">Spotify</a>
-      </div>
-      
-      <div class="comparison-item">
-        JS Bach — Six English Suites · Jaccottet
-         · <a href="https://open.spotify.com/album/4TybBrrb2cjn3OQtwRmNL1" target="_blank" style="color:#1DB954">Spotify</a>
-      </div>
-      
-      <div class="comparison-item">
-        JS Bach — Six English Suites · Hantaï
-         · <a href="https://open.spotify.com/album/2qhE03wW7wLzakFss7Md2m" target="_blank" style="color:#1DB954">Spotify</a>
-      </div>
-      
-    </div>
-    
-  </div>
-  
-  <div class="recording">
-    <h3>
-      Bolcom/Chopin — Bolcom Twelve New Études with Chopin Mazurkas, Polonaises and Waltzes
-      
-      
-    </h3>
-    <div class="meta">Ran Dank (piano) · Avie AV2475</div>
-    <div class="tldr">Israeli-American pianist Ran Dank intersperses William Bolcom&#39;s Twelve New Études with Chopin works to create provocative and intriguing juxtapositions, proving himself both a stimulating programme-builder and a poetically expressive pianist in this distinctive and excellently engineered debut.</div>
-    <div class="spotify-link">
-      
-      <a href="https://open.spotify.com/album/3mgzDGCeXGjsdYAmIoa1T3" target="_blank">▶ Listen on Spotify</a>
-      
-    </div>
-    
-    <div class="comparisons">
-      <h4>Also consider:</h4>
-      
-      <div class="comparison-item">
-        Bolcom — Twelve New Études · Marc-André Hamelin (New World)
-         · <a href="https://open.spotify.com/album/6yhBpgtetMcFUmhYW8fqY9" target="_blank" style="color:#1DB954">Spotify</a>
-      </div>
-      
-    </div>
-    
-  </div>
-  
-  <div class="recording">
-    <h3>
-      Haydn — Piano Sonatas Vol 2 (HobXVI:20, 34, 51, 52)
-      
-      
-    </h3>
-    <div class="meta">Paul Lewis (piano) · Harmonia Mundi HMM90 2372</div>
-    <div class="tldr">Paul Lewis presents four strikingly different Haydn sonatas with imaginative programming bookended by quizzical moods, drawing out melancholy undertows, sweeping grandeur, and gnawing unease with complete naturalness while revealing every phrase&#39;s detail.</div>
-    <div class="spotify-link">
-      
-      <a href="https://open.spotify.com/album/7cNu8DkHS5fqmTrJGLEnjA" target="_blank">▶ Listen on Spotify</a>
-      
-    </div>
-    
-    <div class="comparisons">
-      <h4>Also consider:</h4>
-      
-      <div class="comparison-item">
-        Haydn — Sonatas · Brendel (Decca)
-         · <a href="https://open.spotify.com/album/7cNu8DkHS5fqmTrJGLEnjA" target="_blank" style="color:#1DB954">Spotify</a>
-      </div>
-      
-      <div class="comparison-item">
-        Haydn — HobXVI:20 · Bavouzet (Chandos)
-         · <a href="https://open.spotify.com/album/3YuNzmSSJPXEgupG3dfaye" target="_blank" style="color:#1DB954">Spotify</a>
-      </div>
-      
-      <div class="comparison-item">
-        Haydn — HobXVI:34 · Bavouzet (Chandos)
-         · <a href="https://open.spotify.com/album/3YuNzmSSJPXEgupG3dfaye" target="_blank" style="color:#1DB954">Spotify</a>
-      </div>
-      
-      <div class="comparison-item">
-        Haydn — HobXVI:34 · Hamelin (Hyperion)
-         · <a href="https://open.spotify.com/album/4C7dvdwtnqAmiAhN7kiD0C" target="_blank" style="color:#1DB954">Spotify</a>
-      </div>
-      
-      <div class="comparison-item">
-        Haydn — HobXVI:51 · Hamelin (Hyperion)
-         · <a href="https://open.spotify.com/album/7cNu8DkHS5fqmTrJGLEnjA" target="_blank" style="color:#1DB954">Spotify</a>
-      </div>
-      
-      <div class="comparison-item">
-        Haydn — HobXVI:52 · Hamelin (Hyperion)
-         · <a href="https://open.spotify.com/album/5FV5T6BMPTJvDoPKGtVnE1" target="_blank" style="color:#1DB954">Spotify</a>
-      </div>
-      
     </div>
     
   </div>
   
-  
-  <h2>Vocal</h2>
-  
-  <div class="recording">
-    <h3>
-      Various — Journey from Venice to Constantinople
+  <div class="tab-panel"
+       id="tab-chamber"
+       role="tabpanel">
+    
+    
       
+    
+    <div class="recording-card animate" style="animation-delay:0.0s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b2731bb219b02448904ff34897f8" alt="Cello Sonata Op 6; Cello Sonata Op 19; songs (Muse)" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Barber, Rachmaninov</div>
+        <h2 class="card-work">Cello Sonata Op 6; Cello Sonata Op 19; songs (Muse)</h2>
+        <div class="card-performers">
+          Sheku Kanneh-Mason (vc) Isata Kanneh-Mason (pf) &middot; Decca &middot; F 485 1630
+        </div>
+        <div class="card-tldr">The Kanneh‑Mason siblings deliver an expressive, enterprising programme of Barber’s and Rachmaninov’s cello sonatas and songs, with some of the most beautiful cello playing in recent memory, making this the most musically daring of current releases.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:6hYcC80EgYG89s5F1IHfRe" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/6hYcC80EgYG89s5F1IHfRe" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">Also consider</div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b273db2acee3e95246d1f9d2dffc" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Barber — Cello Sonata Op 6
+                
+                <a href="spotify:album:6EjTrZN7iX1hQlTSglmV35" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Poltéra, Stott &middot; BIS
+              </div>
+            </div>
+          </div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b273b7f86c9a3e09a34b9e8eff56" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Rachmaninov — Cello Sonata Op 19
+                
+                <a href="spotify:album:4StqdIskv8g0yRQnfaNqhg" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Weilerstein, Barnatan &middot; DECC
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
+    </div>
+    
+    
       
-    </h3>
-    <div class="meta">The Marian Consort, Illyria Consorts</div>
-    <div class="tldr">A vibrant anthology spanning sacred and secular music, performed with period‑evocative beauty that makes the musical journey from Venice to Constantinople both entertaining and deeply rewarding.</div>
-    <div class="spotify-link">
-      
-      <a href="https://open.spotify.com/album/0AW4fpLsKfXrFtfi8yXRYG" target="_blank">▶ Listen on Spotify</a>
-      
+    
+    <div class="recording-card animate" style="animation-delay:0.06s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b273a3f18335c4a6fab574157648" alt="Violin Sonatas No 8 Op 30 No 3, No 9 &#39;Kreutzer&#39; Op 47, No 10 Op 96" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Beethoven</div>
+        <h2 class="card-work">Violin Sonatas No 8 Op 30 No 3, No 9 &#39;Kreutzer&#39; Op 47, No 10 Op 96</h2>
+        <div class="card-performers">
+          Frank Peter Zimmermann (vn) Martin Helmchen (pf) &middot; BIS &middot; BIS2537
+        </div>
+        <div class="card-tldr">Zimmermann and Helmchen’s Beethoven cycle burns with electric energy, taut interplay and poetic delicacy, delivering a thrilling, idiomatic account that ranks among the finest modern readings.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:1qYP2mkLF8ENfXeScS5jQc" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/1qYP2mkLF8ENfXeScS5jQc" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+
+      </div>
     </div>
     
   </div>
   
-  <div class="recording">
-    <h3>
-      Nico Muhly — Album featuring Renée Fleming
+  <div class="tab-panel"
+       id="tab-instrumental"
+       role="tabpanel">
+    
+    
       
+    
+    <div class="recording-card animate" style="animation-delay:0.0s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b2738aa086a72092b316cabf8d77" alt="Six English Suites, BWV806-811" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">JS Bach</div>
+        <h2 class="card-work">Six English Suites, BWV806-811</h2>
+        <div class="card-performers">
+          Sophie Yates (harpsichord) &middot; Chandos &middot; CHSA0826
+        </div>
+        <div class="card-tldr">Sophie Yates delivers an immaculately researched and vibrant traversal of Bach&#39;s Six English Suites on a replica 1624 Ruckers harpsichord, weaving them into a richly cross-referential cosmos while ensuring each prelude and dance movement possesses distinct, immediately evident character.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:52iQ4nczS2RUUhQX5IvZJe" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/52iQ4nczS2RUUhQX5IvZJe" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">Also consider</div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b27331cb6b907510d1ad7af47c47" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                JS Bach — Six English Suites
+                
+                <a href="spotify:album:15dxyLZp6h5AC8INmsoJu6" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Gustav Leonhardt
+              </div>
+            </div>
+          </div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b273d35412f03b89963e3c504559" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                JS Bach — Six English Suites
+                
+                <a href="spotify:album:2O2FbBBTpEOmxlTpsJiBNI" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Egarr
+              </div>
+            </div>
+          </div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b273def0517117afa797c888c690" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                JS Bach — Six English Suites
+                
+                <a href="spotify:album:3Bcig5Swn4x4KrHea3b2ab" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Rousset
+              </div>
+            </div>
+          </div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b27334cbc5b1c1e39c3fce8999fe" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                JS Bach — Six English Suites
+                
+                <a href="spotify:album:4MD3pkefNWFJlKZWOvJrjb" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Suzuki
+              </div>
+            </div>
+          </div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b273b04c8f6246fb0c69a504ab0a" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                JS Bach — Six English Suites
+                
+                <a href="spotify:album:2QHtSgiEI6QhzdJunbi71Q" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                van Asperen
+              </div>
+            </div>
+          </div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b273c9919d3eb2da1826e5f0ff36" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                JS Bach — Six English Suites
+                
+                <a href="spotify:album:4TybBrrb2cjn3OQtwRmNL1" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Jaccottet
+              </div>
+            </div>
+          </div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b2734b16137e6873a1da78ff4d5d" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                JS Bach — Six English Suites
+                
+                <a href="spotify:album:2qhE03wW7wLzakFss7Md2m" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Hantaï
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
+    </div>
+    
+    
       
-    </h3>
-    <div class="meta">Renée Fleming, Nico Muhly</div>
-    <div class="tldr">Nico Muhly’s vivid, rapturous compositions showcase Renée Fleming’s radiant soprano, delivering an imaginative programme with a subtle environmental message that impresses with its emotional depth.</div>
-    <div class="spotify-link">
+    
+    <div class="recording-card animate" style="animation-delay:0.06s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b27323255140767b6d821e07c00f" alt="Bolcom Twelve New Études with Chopin Mazurkas, Polonaises and Waltzes" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Bolcom/Chopin</div>
+        <h2 class="card-work">Bolcom Twelve New Études with Chopin Mazurkas, Polonaises and Waltzes</h2>
+        <div class="card-performers">
+          Ran Dank (piano) &middot; Avie &middot; AV2475
+        </div>
+        <div class="card-tldr">Israeli-American pianist Ran Dank intersperses William Bolcom&#39;s Twelve New Études with Chopin works to create provocative and intriguing juxtapositions, proving himself both a stimulating programme-builder and a poetically expressive pianist in this distinctive and excellently engineered debut.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:3mgzDGCeXGjsdYAmIoa1T3" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/3mgzDGCeXGjsdYAmIoa1T3" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">Also consider</div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b2732ca77d90826b69186099c73d" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Bolcom — Twelve New Études
+                
+                <a href="spotify:album:6yhBpgtetMcFUmhYW8fqY9" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Marc-André Hamelin &middot; New World
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
+    </div>
+    
+    
       
-      <a href="https://open.spotify.com/album/0bKfxZxRs3laie3LVyzBRn" target="_blank">▶ Listen on Spotify</a>
-      
+    
+    <div class="recording-card animate" style="animation-delay:0.12s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b27335f1e2f8d6c9f9268addf766" alt="Piano Sonatas Vol 2 (HobXVI:20, 34, 51, 52)" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Haydn</div>
+        <h2 class="card-work">Piano Sonatas Vol 2 (HobXVI:20, 34, 51, 52)</h2>
+        <div class="card-performers">
+          Paul Lewis (piano) &middot; Harmonia Mundi &middot; HMM90 2372
+        </div>
+        <div class="card-tldr">Paul Lewis presents four strikingly different Haydn sonatas with imaginative programming bookended by quizzical moods, drawing out melancholy undertows, sweeping grandeur, and gnawing unease with complete naturalness while revealing every phrase&#39;s detail.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:7cNu8DkHS5fqmTrJGLEnjA" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/7cNu8DkHS5fqmTrJGLEnjA" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">Also consider</div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b27335f1e2f8d6c9f9268addf766" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Haydn — Sonatas
+                
+                <a href="spotify:album:7cNu8DkHS5fqmTrJGLEnjA" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Brendel &middot; Decca
+              </div>
+            </div>
+          </div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b2738661dc17b0f800328e9923e6" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Haydn — HobXVI:20
+                
+                <a href="spotify:album:3YuNzmSSJPXEgupG3dfaye" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Bavouzet &middot; Chandos
+              </div>
+            </div>
+          </div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b2738661dc17b0f800328e9923e6" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Haydn — HobXVI:34
+                
+                <a href="spotify:album:3YuNzmSSJPXEgupG3dfaye" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Bavouzet &middot; Chandos
+              </div>
+            </div>
+          </div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b273999e3f784cd5ba03c26ebde7" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Haydn — HobXVI:34
+                
+                <a href="spotify:album:5FV5T6BMPTJvDoPKGtVnE1" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Hamelin &middot; Hyperion
+              </div>
+            </div>
+          </div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b27335f1e2f8d6c9f9268addf766" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Haydn — HobXVI:51
+                
+                <a href="spotify:album:7cNu8DkHS5fqmTrJGLEnjA" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Hamelin &middot; Hyperion
+              </div>
+            </div>
+          </div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b27372064454169c315d073ea40b" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Haydn — HobXVI:52
+                
+                <a href="spotify:album:4C7dvdwtnqAmiAhN7kiD0C" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Hamelin &middot; Hyperion
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
     </div>
     
   </div>
   
-  <div class="recording">
-    <h3>
-      Bartók, Brahms, Mussorgsky — Nostalgia
+  <div class="tab-panel"
+       id="tab-vocal"
+       role="tabpanel">
+    
+    
       
+    
+    <div class="recording-card animate" style="animation-delay:0.0s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b2737b805e0270430ae24c5bacee" alt="Journey from Venice to Constantinople" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Various</div>
+        <h2 class="card-work">Journey from Venice to Constantinople</h2>
+        <div class="card-performers">
+          The Marian Consort, Illyria Consorts
+        </div>
+        <div class="card-tldr">A vibrant anthology spanning sacred and secular music, performed with period‑evocative beauty that makes the musical journey from Venice to Constantinople both entertaining and deeply rewarding.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:0AW4fpLsKfXrFtfi8yXRYG" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/0AW4fpLsKfXrFtfi8yXRYG" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
       
-    </h3>
-    <div class="meta">Magdalena Kožená, Yefim Bronfman · Pentatone PTC5186</div>
-    <div class="tldr">Kožená and Bronfman interweave folk‑tinted songs from Bartók, Brahms and Mussorgsky with tender intimacy, sharp humor and virtuoso pianism, making this a captivating and cohesive programme.</div>
-    <div class="spotify-link">
+    
+    <div class="recording-card animate" style="animation-delay:0.06s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b2732d60701d3ddc90a489d72843" alt="Album featuring Renée Fleming" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Nico Muhly</div>
+        <h2 class="card-work">Album featuring Renée Fleming</h2>
+        <div class="card-performers">
+          Renée Fleming, Nico Muhly
+        </div>
+        <div class="card-tldr">Nico Muhly’s vivid, rapturous compositions showcase Renée Fleming’s radiant soprano, delivering an imaginative programme with a subtle environmental message that impresses with its emotional depth.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:0bKfxZxRs3laie3LVyzBRn" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/0bKfxZxRs3laie3LVyzBRn" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
       
-      <a href="https://open.spotify.com/album/6GYx2aVBqStODbh2KRYIYA" target="_blank">▶ Listen on Spotify</a>
-      
+    
+    <div class="recording-card animate" style="animation-delay:0.12s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b27399997adbfd0dbfeffa62f7b4" alt="Nostalgia" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Bartók, Brahms, Mussorgsky</div>
+        <h2 class="card-work">Nostalgia</h2>
+        <div class="card-performers">
+          Magdalena Kožená, Yefim Bronfman &middot; Pentatone &middot; PTC5186
+        </div>
+        <div class="card-tldr">Kožená and Bronfman interweave folk‑tinted songs from Bartók, Brahms and Mussorgsky with tender intimacy, sharp humor and virtuoso pianism, making this a captivating and cohesive programme.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:6GYx2aVBqStODbh2KRYIYA" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/6GYx2aVBqStODbh2KRYIYA" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+
+      </div>
     </div>
     
   </div>
   
-  
-  <h2>Opera</h2>
-  
-  <div class="recording">
-    <h3>
-      Glass — Akhnaten
+  <div class="tab-panel"
+       id="tab-opera"
+       role="tabpanel">
+    
+    
       
-      
-    </h3>
-    <div class="meta">Anthony Roth Costanzo, J&#39;Nai Bridges, Dísella Lárusdóttir, Zachary James, Metropolitan Opera Chorus and Orchestra / Karen Kamensek · Orange Mountain OMM0154 (or OMM5011 for video)</div>
-    <div class="tldr">Anthony Roth Costanzo delivers an outstanding performance as the titular pharaoh, commanding the stage with a gleaming golden countertenor that entwines seductively with J&#39;Nai Bridges&#39;s luscious Nefertiti. Phelim McDermott&#39;s hypnotic production—featuring magnificent costumes, outstanding lighting, and mesmerizing juggling synchronized to Glass&#39;s repetitive arpeggios—transports viewers into ancient Egyptian ritual. This is an outstanding document of an outstanding production, now captured for posterity by Orange Mountain.</div>
-    <div class="spotify-link">
-      
-      <a href="https://open.spotify.com/album/5xE7mkPZfZa8eu5A1DxzhG" target="_blank">▶ Listen on Spotify</a>
-      
+    
+    <div class="recording-card animate" style="animation-delay:0.0s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b273499040d0b899af4cf9e774c0" alt="Akhnaten" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Glass</div>
+        <h2 class="card-work">Akhnaten</h2>
+        <div class="card-performers">
+          Anthony Roth Costanzo, J&#39;Nai Bridges, Dísella Lárusdóttir, Zachary James, Metropolitan Opera Chorus and Orchestra / Karen Kamensek &middot; Orange Mountain &middot; OMM0154 (or OMM5011 for video)
+        </div>
+        <div class="card-tldr">Anthony Roth Costanzo delivers an outstanding performance as the titular pharaoh, commanding the stage with a gleaming golden countertenor that entwines seductively with J&#39;Nai Bridges&#39;s luscious Nefertiti. Phelim McDermott&#39;s hypnotic production—featuring magnificent costumes, outstanding lighting, and mesmerizing juggling synchronized to Glass&#39;s repetitive arpeggios—transports viewers into ancient Egyptian ritual. This is an outstanding document of an outstanding production, now captured for posterity by Orange Mountain.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:5xE7mkPZfZa8eu5A1DxzhG" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/5xE7mkPZfZa8eu5A1DxzhG" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+
+      </div>
     </div>
     
   </div>
-  
   
 
   
-  <h2>Features</h2>
-  
-  <div class="feature">
-    <h2>Icons Willem Mengelberg</h2>
-    <div class="feature-summary">This article celebrates the 150th anniversary of Dutch conductor Willem Mengelberg&#39;s birth, presenting him as a legendary &#39;icon of icons&#39; in the conducting world. Mengelberg (1871-1951) is described as physically diminutive but magnetically commanding, known for his verbose rehearsals and Romantic musical approach. His extensive recorded legacy is praised for its emotional intensity and idiosyncratic phrasing. The article highlights his close relationship with Mahler, noting how his 1939 Concertgebouw broadcast of the Fourth Symphony closely echoes Mahler&#39;s own conducting style. Mengelberg&#39;s dramatic interpretations extended to Bach&#39;s St Matthew Passion, which he transformed into what the author describes as a &#39;full-blown opera,&#39; and his work with the New York Philharmonic, where he shared the podium with his rival Arturo Toscanini. His career ended controversially after World War II due to his conduct during the Nazi occupation of the Netherlands, though the article focuses primarily on his musical achievements and recordings. The author recommends several recordings including Tchaikovsky&#39;s Romeo and Juliet overture (1930), various Mahler works, and notably Richard Strauss&#39;s Ein Heldenleben as his essential recording.</div>
+  <div class="tab-panel"
+       id="tab-features"
+       role="tabpanel">
     
-    <div class="recording">
-      <h3>Richard Strauss — Ein Heldenleben</h3>
-      <div class="meta">Philharmonic-Symphony Orchestra of New York / Willem Mengelberg · Pristine Audio</div>
-      <div class="tldr">The essential recording: a 1928 account praised for Mengelberg&#39;s &#39;fanatical concern to get the cleanest attack&#39; combined with emboldened string choirs. Richard Osborne wrote in 1989 that this recording remained unchallenged.</div>
-      <div class="spotify-link">
+    <div class="feature-block">
+      <h2 class="feature-title">Icons Willem Mengelberg</h2>
+      <div class="feature-summary">This article celebrates the 150th anniversary of Dutch conductor Willem Mengelberg&#39;s birth, presenting him as a legendary &#39;icon of icons&#39; in the conducting world. Mengelberg (1871-1951) is described as physically diminutive but magnetically commanding, known for his verbose rehearsals and Romantic musical approach. His extensive recorded legacy is praised for its emotional intensity and idiosyncratic phrasing. The article highlights his close relationship with Mahler, noting how his 1939 Concertgebouw broadcast of the Fourth Symphony closely echoes Mahler&#39;s own conducting style. Mengelberg&#39;s dramatic interpretations extended to Bach&#39;s St Matthew Passion, which he transformed into what the author describes as a &#39;full-blown opera,&#39; and his work with the New York Philharmonic, where he shared the podium with his rival Arturo Toscanini. His career ended controversially after World War II due to his conduct during the Nazi occupation of the Netherlands, though the article focuses primarily on his musical achievements and recordings. The author recommends several recordings including Tchaikovsky&#39;s Romeo and Juliet overture (1930), various Mahler works, and notably Richard Strauss&#39;s Ein Heldenleben as his essential recording.</div>
+      <div class="feature-recordings">
         
-        <a href="https://open.spotify.com/album/6eaf0YYMOPwVmZe8QjCDuL" target="_blank">▶ Listen on Spotify</a>
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div class="art-col">
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b273c19c5c416cec26f25cc77a19" alt="Ein Heldenleben" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Richard Strauss</div>
+            <h3 class="card-work">Ein Heldenleben</h3>
+            <div class="card-performers">
+              Philharmonic-Symphony Orchestra of New York / Willem Mengelberg &middot; Pristine Audio
+            </div>
+            <div class="card-tldr">The essential recording: a 1928 account praised for Mengelberg&#39;s &#39;fanatical concern to get the cleanest attack&#39; combined with emboldened string choirs. Richard Osborne wrote in 1989 that this recording remained unchallenged.</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:6eaf0YYMOPwVmZe8QjCDuL" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                Open in Spotify
+              </a>
+              <a href="https://open.spotify.com/album/6eaf0YYMOPwVmZe8QjCDuL" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.06s">
+          <div class="art-col">
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b27357be410dae1bb65ff2a320d5" alt="Romeo and Juliet Overture" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Tchaikovsky</div>
+            <h3 class="card-work">Romeo and Juliet Overture</h3>
+            <div class="card-performers">
+              Concertgebouw Orchestra / Willem Mengelberg
+            </div>
+            <div class="card-tldr">Described as &#39;stupendous&#39; and &#39;incredibly moving&#39; by multiple critics, with &#39;whiplash intensity of the dual scenes&#39; and &#39;rapturously beautiful if idiosyncratic phrasing of the love music&#39;.</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:4Y5nLBzrgqH7U4bMQIt7XC" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                Open in Spotify
+              </a>
+              <a href="https://open.spotify.com/album/4Y5nLBzrgqH7U4bMQIt7XC" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.12s">
+          <div class="art-col">
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b273537d482f8b4fb334208c67d2" alt="Adagietto (Symphony No. 5)" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Mahler</div>
+            <h3 class="card-work">Adagietto (Symphony No. 5)</h3>
+            <div class="card-performers">
+              Concertgebouw Orchestra / Willem Mengelberg
+            </div>
+            <div class="card-tldr">A poignant though swift account at just over seven minutes, praised for its flexibility and emotional depth despite its brevity.</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:0YoGfbTUjWkljxkIEVqg7H" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                Open in Spotify
+              </a>
+              <a href="https://open.spotify.com/album/0YoGfbTUjWkljxkIEVqg7H" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+              
+            </div>
+          </div>
+        </div>
         
       </div>
     </div>
     
-    <div class="recording">
-      <h3>Tchaikovsky — Romeo and Juliet Overture</h3>
-      <div class="meta">Concertgebouw Orchestra / Willem Mengelberg</div>
-      <div class="tldr">Described as &#39;stupendous&#39; and &#39;incredibly moving&#39; by multiple critics, with &#39;whiplash intensity of the dual scenes&#39; and &#39;rapturously beautiful if idiosyncratic phrasing of the love music&#39;.</div>
-      <div class="spotify-link">
-        
-        <a href="https://open.spotify.com/album/4Y5nLBzrgqH7U4bMQIt7XC" target="_blank">▶ Listen on Spotify</a>
-        
-      </div>
-    </div>
-    
-    <div class="recording">
-      <h3>Mahler — Adagietto (Symphony No. 5)</h3>
-      <div class="meta">Concertgebouw Orchestra / Willem Mengelberg</div>
-      <div class="tldr">A poignant though swift account at just over seven minutes, praised for its flexibility and emotional depth despite its brevity.</div>
-      <div class="spotify-link">
-        
-        <a href="https://open.spotify.com/album/0YoGfbTUjWkljxkIEVqg7H" target="_blank">▶ Listen on Spotify</a>
+    <div class="feature-block">
+      <h2 class="feature-title">The Musician And The Score</h2>
+      <div class="feature-summary">This Gramophone feature profiles violinist Jack Liebeck discussing Eugène Ysaÿe&#39;s Violin Sonata No. 2 in A minor, one of six unaccompanied violin sonatas composed in July 1923. Liebeck, known as a collaborative musician and concerto soloist, explains his lifelong obsession with these works, which he finds more comfortable to play than solo Bach—admitting controversially that he finds Bach &#34;horribly written for the violin.&#34; The sonatas were written by a violinist for violinists, offering lyrical freedom and technical grace that fits the instrument naturally. The interview explores the dramatic structure of the Second Sonata, particularly the first movement &#34;Obsession,&#34; which begins with a Bach quotation and includes the Dies irae plainchant emerging from Bach-like passagework. Liebeck discusses his interpretive approach to the mournful second movement &#34;Malinconia,&#34; requiring a mute, describing how he seeks &#34;non-violin sounds&#34; like distant graveyards or breezes. The third movement &#34;Danse des ombres&#34; features pizzicato playing likened to piano technique, while the finale &#34;Les furies&#34; unleashes jagged double-stops and whirling string-crossing passages. Liebeck celebrates Ysaÿe as a &#34;mountainous, godlike figure&#34; whose music conjures fireworks, mystery, and magic—describing it as the violin equivalent of Jimi Hendrix: raw, cutting-edge, unashamed, and dramatic.</div>
+      <div class="feature-recordings">
         
       </div>
     </div>
     
   </div>
   
-  <div class="feature">
-    <h2>The Musician And The Score</h2>
-    <div class="feature-summary">This Gramophone feature profiles violinist Jack Liebeck discussing Eugène Ysaÿe&#39;s Violin Sonata No. 2 in A minor, one of six unaccompanied violin sonatas composed in July 1923. Liebeck, known as a collaborative musician and concerto soloist, explains his lifelong obsession with these works, which he finds more comfortable to play than solo Bach—admitting controversially that he finds Bach &#34;horribly written for the violin.&#34; The sonatas were written by a violinist for violinists, offering lyrical freedom and technical grace that fits the instrument naturally. The interview explores the dramatic structure of the Second Sonata, particularly the first movement &#34;Obsession,&#34; which begins with a Bach quotation and includes the Dies irae plainchant emerging from Bach-like passagework. Liebeck discusses his interpretive approach to the mournful second movement &#34;Malinconia,&#34; requiring a mute, describing how he seeks &#34;non-violin sounds&#34; like distant graveyards or breezes. The third movement &#34;Danse des ombres&#34; features pizzicato playing likened to piano technique, while the finale &#34;Les furies&#34; unleashes jagged double-stops and whirling string-crossing passages. Liebeck celebrates Ysaÿe as a &#34;mountainous, godlike figure&#34; whose music conjures fireworks, mystery, and magic—describing it as the violin equivalent of Jimi Hendrix: raw, cutting-edge, unashamed, and dramatic.</div>
-    
-  </div>
-  
-  
+
+</main>
+
+<script>
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+      tabPanels.forEach(p => p.classList.remove('active'));
+
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+
+      const panel = document.getElementById(btn.dataset.tab);
+      if (panel) {
+        panel.classList.add('active');
+        // Re-trigger animations
+        panel.querySelectorAll('.recording-card').forEach((card, i) => {
+          card.classList.remove('animate');
+          void card.offsetWidth; // reflow
+          card.style.animationDelay = (i * 0.06) + 's';
+          card.classList.add('animate');
+        });
+      }
+    });
+  });
+</script>
+
 </body>
 </html>

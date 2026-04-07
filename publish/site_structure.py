@@ -61,6 +61,7 @@ def build_issue_context(issue_key: str, lang: str) -> dict | None:
             "tldr": text(rec.tldr),
             "spotify_url": rec.spotify_url,
             "spotify_status": rec.spotify_status,
+            "album_image_url": getattr(rec, "album_image_url", None),
             "comparison_recordings": [
                 {
                     "composer": c.composer,
@@ -69,6 +70,7 @@ def build_issue_context(issue_key: str, lang: str) -> dict | None:
                     "label": c.label,
                     "spotify_url": c.spotify_url,
                     "spotify_status": c.spotify_status,
+                    "album_image_url": getattr(c, "album_image_url", None),
                 }
                 for c in rec.comparison_recordings
             ],

@@ -5,28 +5,98 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Classical Catalog — Gramophone Recommendations</title>
   <style>
-    body { font-family: Georgia, serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; color: #222; }
-    h1 { font-size: 1.8rem; border-bottom: 2px solid #8B0000; padding-bottom: 0.5rem; }
-    .lang-switch { float: right; font-size: 0.9rem; }
-    .lang-switch a { color: #8B0000; }
-    .issue-list { list-style: none; padding: 0; }
-    .issue-list li { padding: 0.75rem 0; border-bottom: 1px solid #ddd; }
-    .issue-list a { color: #8B0000; font-size: 1.1rem; text-decoration: none; }
-    .issue-list a:hover { text-decoration: underline; }
-    .count { color: #666; font-size: 0.9rem; margin-left: 0.5rem; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      background: #f5f0eb;
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
+    header {
+      background: #1a0a0a;
+      color: #f5f0eb;
+      padding: 2rem 2rem 1.5rem;
+    }
+    header h1 {
+      font-size: 2rem;
+      letter-spacing: 0.03em;
+      font-weight: normal;
+    }
+    header p {
+      margin-top: 0.4rem;
+      color: #c9a882;
+      font-size: 0.95rem;
+      font-style: italic;
+    }
+    .lang-switch {
+      float: right;
+      font-size: 0.85rem;
+      margin-top: 0.3rem;
+    }
+    .lang-switch a {
+      color: #c9a882;
+      text-decoration: none;
+      border-bottom: 1px solid #c9a882;
+    }
+    main {
+      max-width: 760px;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem;
+    }
+    h2 {
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #7a5c3a;
+      margin-bottom: 1rem;
+      font-weight: normal;
+    }
+    .issue-list {
+      list-style: none;
+    }
+    .issue-list li {
+      border-bottom: 1px solid #ddd;
+    }
+    .issue-list a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      color: #1a0a0a;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: color 0.15s;
+    }
+    .issue-list a:hover {
+      color: #8B0000;
+    }
+    .count {
+      color: #999;
+      font-size: 0.85rem;
+      font-style: italic;
+      flex-shrink: 0;
+      margin-left: 1rem;
+    }
   </style>
 </head>
 <body>
-  <span class="lang-switch"><a href="../zh/index.html">中文</a></span>
-  <h1>Gramophone Recommendations</h1>
-  <p>Curated recording recommendations from Gramophone magazine, with Spotify links.</p>
-  <ul class="issue-list">
-    
-    <li>
-      <a href="issues/2021-11/index.html">Gramophone November 2021</a>
-      <span class="count">20 recordings</span>
-    </li>
-    
-  </ul>
+  <header>
+    <span class="lang-switch"><a href="../zh/index.html">中文</a></span>
+    <h1>Classical Catalog</h1>
+    <p>Curated recording recommendations from Gramophone magazine, with Spotify links.</p>
+  </header>
+  <main>
+    <h2>Issues</h2>
+    <ul class="issue-list">
+      
+      <li>
+        <a href="issues/2021-11/index.html">
+          <span>Gramophone November 2021</span>
+          <span class="count">20 recordings</span>
+        </a>
+      </li>
+      
+    </ul>
+  </main>
 </body>
 </html>
