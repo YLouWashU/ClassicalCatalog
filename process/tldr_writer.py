@@ -77,7 +77,6 @@ def _call_llm(prompt: str) -> dict:
         messages=[{"role": "user", "content": prompt}],
         temperature=0.2,
         timeout=120,
-        num_retries=2,
     )
     content = response.choices[0].message.content.strip()
     # Strip markdown code fences if present
