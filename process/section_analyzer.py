@@ -20,7 +20,7 @@ def process_issue_dir(issue_dir: Path, issue_title: str) -> IssueSections:
             continue
 
         print(f"    [{section_key}] calling LLM...")
-        text = section_file.read_text(encoding="utf-8")
+        text = section_file.read_text(encoding="utf-8")[:15000]  # truncate to avoid LLM timeout
         recordings, total_reviewed = analyze_review_section(
             text=text,
             section_name=section_key.replace("_", " ").title(),
@@ -44,7 +44,7 @@ def process_issue_dir(issue_dir: Path, issue_title: str) -> IssueSections:
         for feature_file in sorted(features_dir.glob("*.txt")):
             title = feature_file.stem.replace("_", " ").title()
             print(f"    [feature: {title}] calling LLM...")
-            text = feature_file.read_text(encoding="utf-8")
+            text = feature_file.read_text(encoding="utf-8")[:10000]  # truncate to avoid LLM timeout
             feature = analyze_feature_section(
                 text=text,
                 feature_title=title,
