@@ -15,6 +15,8 @@ def _clean_query(text: str) -> str:
 def _extract_main_performer(performers: str) -> str:
     """Extract the primary performer name (before '/', ',', or 'Orchestra')."""
     # e.g. "Philadelphia Orchestra / Yannick Nézet-Séguin" -> "Nézet-Séguin"
+    # Strip instrument annotations like "(piano)", "(violin)" before splitting
+    performers = re.sub(r"\([^)]*\)", "", performers).strip()
     parts = re.split(r"[/,]", performers)
     # Prefer the conductor name (usually after /)
     if len(parts) > 1:

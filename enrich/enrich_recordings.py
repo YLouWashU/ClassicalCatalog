@@ -44,13 +44,19 @@ def enrich_issue(issue_key: str, force: bool = False) -> None:
             recordings = getattr(issue.sections, section_key, [])
             for rec in recordings:
                 print(f"    - {rec.composer}: {rec.work}")
-                enrich_recording(rec, sp=sp)
+                try:
+                    enrich_recording(rec, sp=sp)
+                except Exception as e:
+                    print(f"      [warn] Spotify search failed: {e}", file=sys.stderr)
 
         # Enrich feature recordings
         for feature in issue.sections.features:
             for rec in feature.recordings:
                 print(f"    - [feature] {rec.composer}: {rec.work}")
-                enrich_recording(rec, sp=sp)
+                try:
+                    enrich_recording(rec, sp=sp)
+                except Exception as e:
+                    print(f"      [warn] Spotify search failed: {e}", file=sys.stderr)
 
         (issue_dir / "enriched.json").write_text(
             issue.model_dump_json(indent=2), encoding="utf-8"
