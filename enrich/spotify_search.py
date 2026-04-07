@@ -38,7 +38,8 @@ def search_recording(
     work_clean = _clean_query(work)
     composer_clean = _clean_query(composer).split()[-1]  # use last name
     performer_clean = _extract_main_performer(performers)
-    performer_last = performer_clean.split()[-1]
+    performer_parts = performer_clean.split()
+    performer_last = performer_parts[-1] if performer_parts else ""
 
     # Strategy 1: composer + work + performer
     query = f"{composer_clean} {work_clean} {performer_last}"
