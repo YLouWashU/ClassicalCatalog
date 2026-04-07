@@ -28,6 +28,7 @@ def search_recording(
     composer: str,
     work: str,
     performers: str,
+    label: str | None = None,
     sp: Spotify | None = None,
 ) -> tuple[str | None, str | None, SpotifyStatus]:
     """
@@ -38,26 +39,43 @@ def search_recording(
         sp = get_spotify_client()
 
     work_clean = _clean_query(work)
-    composer_clean = _clean_query(composer).split()[-1]  # use last name
+    # Truncate work at "with" (secondary coupled works) then cap at 5 words
+    work_clean = re.split(r"\s+with\s+", work_clean, maxsplit=1, flags=re.IGNORECASE)[0].strip()
+    work_words = work_clean.split()
+    if len(work_words) > 5:
+        work_clean = " ".join(work_words[:5])
+    # Handle slash-separated composers like "Bolcom/Chopin" — take first name only
+    primary_composer = re.split(r"[/,]", composer)[0].strip()
+    composer_clean = _clean_query(primary_composer).split()[-1]  # use last name
     performer_clean = _extract_main_performer(performers)
     performer_parts = performer_clean.split()
     performer_last = performer_parts[-1] if performer_parts else ""
 
-    # Strategy 1: composer + work + performer
+    # Strategy 1: composer + work + performer (+ label if known)
     query = f"{composer_clean} {work_clean} {performer_last}"
+    if label:
+        query += f" {label}"
     results = sp.search(q=query, type="album", limit=10)
     album = _pick_best_album(results, composer_clean, performer_last)
     if album:
         image_url = album["images"][0]["url"] if album.get("images") else None
         return album["external_urls"]["spotify"], image_url, SpotifyStatus.found
 
-    # Strategy 2: composer + work only (broader)
-    query2 = f"{composer_clean} {work_clean}"
-    results2 = sp.search(q=query2, type="album", limit=20)
+    # Strategy 2: composer + work + performer (without label, broader)
+    query2 = f"{composer_clean} {work_clean} {performer_last}".strip()
+    results2 = sp.search(q=query2, type="album", limit=10)
     album2 = _pick_best_album(results2, composer_clean, performer_last)
     if album2:
         image_url = album2["images"][0]["url"] if album2.get("images") else None
         return album2["external_urls"]["spotify"], image_url, SpotifyStatus.found
+
+    # Strategy 3: composer + work only (most permissive)
+    query3 = f"{composer_clean} {work_clean}"
+    results3 = sp.search(q=query3, type="album", limit=10)
+    album3 = _pick_best_album(results3, composer_clean, performer_last)
+    if album3:
+        image_url = album3["images"][0]["url"] if album3.get("images") else None
+        return album3["external_urls"]["spotify"], image_url, SpotifyStatus.found
 
     return None, None, SpotifyStatus.not_found
 
@@ -65,20 +83,23 @@ def search_recording(
 def _pick_best_album(results: dict, composer_last: str, performer_last: str) -> dict | None:
     """
     Pick the best album from Spotify search results.
-    Prefer albums where the artist name contains the performer's last name.
+    Requires performer's last name to appear in artist names — avoids wrong matches.
+    Falls back to first result only when no specific performer is known.
     """
     albums = results.get("albums", {}).get("items", [])
-    composer_lower = composer_last.lower()
     performer_lower = performer_last.lower()
 
-    # First pass: exact performer match in artist name
+    # First pass: performer match in artist name
     for album in albums:
         artist_names = " ".join(a["name"].lower() for a in album["artists"])
-        if performer_lower in artist_names:
+        if performer_lower and performer_lower in artist_names:
             return album
 
-    # Second pass: any album — return first result
-    return albums[0] if albums else None
+    # Second pass: return first result only when no performer specified
+    if not performer_last:
+        return albums[0] if albums else None
+
+    return None  # Performer not matched — don't guess
 
 
 def enrich_recording(recording: Recording, sp: Spotify | None = None) -> Recording:
@@ -87,6 +108,7 @@ def enrich_recording(recording: Recording, sp: Spotify | None = None) -> Recordi
         composer=recording.composer,
         work=recording.work,
         performers=recording.performers,
+        label=recording.label,
         sp=sp,
     )
     recording.spotify_url = url
@@ -98,6 +120,7 @@ def enrich_recording(recording: Recording, sp: Spotify | None = None) -> Recordi
             composer=comp.composer,
             work=comp.work,
             performers=comp.performers,
+            label=comp.label,
             sp=sp,
         )
         comp.spotify_url = comp_url
