@@ -1,0 +1,2629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gramophone January 2019 — Classical Catalog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:          #0d0b09;
+      --surface:     #161210;
+      --surface2:    #1e1a16;
+      --gold:        #c9a56a;
+      --gold-dim:    rgba(201,165,106,0.12);
+      --gold-border: rgba(201,165,106,0.25);
+      --cream:       #ede4d4;
+      --muted:       #7a6a58;
+      --border:      #2a2420;
+      --green:       #1DB954;
+      --text-body:   #cdc0b0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'EB Garamond', Georgia, serif;
+      background: var(--bg);
+      color: var(--cream);
+      min-height: 100vh;
+      font-size: 17px;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      background: #090706;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .back-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--gold); }
+
+    .lang-switch a {
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      border-bottom: 1px solid var(--gold-border);
+      padding-bottom: 1px;
+      transition: border-color 0.15s;
+    }
+    .lang-switch a:hover { border-color: var(--gold); }
+
+    .header-body {
+      padding: 1rem 2rem 0;
+    }
+
+    .issue-eyebrow {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      margin-bottom: 0.2rem;
+    }
+
+    .issue-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--cream);
+      letter-spacing: 0.01em;
+      line-height: 1.15;
+    }
+
+    /* ── Tabs ── */
+    .tabs-bar {
+      display: flex;
+      overflow-x: auto;
+      padding: 0 2rem;
+      margin-top: 0.9rem;
+      scrollbar-width: none;
+      gap: 0;
+    }
+    .tabs-bar::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--muted);
+      font-family: 'EB Garamond', serif;
+      font-size: 0.88rem;
+      letter-spacing: 0.06em;
+      padding: 0.55rem 1.1rem 0.55rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .tab-btn:hover { color: var(--cream); }
+    .tab-btn.active {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+    }
+
+    .tab-count {
+      font-size: 0.7rem;
+      background: var(--gold-dim);
+      color: var(--gold);
+      padding: 0.05rem 0.45rem;
+      border-radius: 999px;
+      font-style: normal;
+    }
+
+    /* ── Main content ── */
+    main {
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 5rem;
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── Recording card ── */
+    .recording-card {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 1.6rem;
+      padding: 1.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .recording-card:last-child { border-bottom: none; }
+    .recording-card.animate {
+      animation: cardIn 0.35s ease both;
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .art-col { position: relative; }
+
+    .album-art {
+      width: 130px;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 3px;
+      display: block;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+    .album-art:hover {
+      transform: scale(1.04);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 0 1px var(--gold-border);
+    }
+
+    .art-placeholder {
+      width: 130px;
+      height: 130px;
+      background: var(--surface2);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--border);
+      font-size: 2.5rem;
+    }
+
+    .card-content {}
+
+    .card-badges {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+      min-height: 1.4rem;
+    }
+
+    .badge-rotm {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: var(--gold);
+      color: #0d0b09;
+      padding: 2px 9px;
+      border-radius: 2px;
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    .badge-ec {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border: 1px solid var(--gold-border);
+      color: var(--gold);
+      padding: 2px 9px;
+      border-radius: 2px;
+    }
+
+    .card-composer {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      margin-bottom: 0.2rem;
+    }
+
+    .card-work {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1.2;
+      margin-bottom: 0.35rem;
+    }
+
+    .card-performers {
+      font-size: 0.92rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .card-tldr {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--text-body);
+      margin-bottom: 1rem;
+    }
+
+    /* ── Spotify buttons ── */
+    .card-actions {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+      margin-bottom: 0.9rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-app {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--green);
+      color: #000;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.38rem 1rem;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
+      transition: filter 0.15s;
+    }
+    .btn-app:hover { filter: brightness(1.12); }
+    .btn-app svg { width: 12px; height: 12px; fill: #000; }
+
+    .btn-web {
+      display: inline-flex;
+      align-items: center;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      border: 1px solid var(--border);
+      padding: 0.38rem 0.85rem;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .btn-web:hover { color: var(--cream); border-color: var(--muted); }
+
+    .no-spotify {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* ── Comparisons ── */
+    .comparisons {
+      border-top: 1px solid var(--border);
+      padding-top: 0.8rem;
+    }
+
+    .comp-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .comp-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.35rem 0;
+    }
+
+    .comp-art {
+      width: 38px;
+      height: 38px;
+      object-fit: cover;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .comp-art-placeholder {
+      width: 38px;
+      height: 38px;
+      background: var(--surface2);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .comp-text { flex: 1; min-width: 0; }
+
+    .comp-work {
+      font-size: 0.9rem;
+      color: var(--cream);
+      line-height: 1.3;
+    }
+
+    .comp-meta {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: 0.1rem;
+    }
+
+    .comp-note {
+      font-size: 0.8rem;
+      color: #a09080;
+      font-style: italic;
+      margin-top: 0.15rem;
+      line-height: 1.4;
+    }
+
+    .comp-spotify {
+      color: var(--green);
+      text-decoration: none;
+      font-size: 0.8rem;
+      margin-left: 0.4rem;
+      opacity: 0.8;
+      transition: opacity 0.15s;
+    }
+    .comp-spotify:hover { opacity: 1; }
+
+    /* ── Features ── */
+    .feature-block {
+      background: var(--surface);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 4px 4px 0;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .feature-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 0.75rem;
+    }
+
+    .feature-summary {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text-body);
+      font-style: italic;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.25rem;
+    }
+
+    .feature-recordings .recording-card {
+      grid-template-columns: 90px 1fr;
+    }
+    .feature-recordings .album-art,
+    .feature-recordings .art-placeholder {
+      width: 90px;
+      height: 90px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .recording-card { grid-template-columns: 80px 1fr; gap: 1rem; }
+      .album-art, .art-placeholder { width: 80px; height: 80px; }
+      .header-body { padding: 0.75rem 1rem 0; }
+      .header-top { padding: 0.6rem 1rem; }
+      .tabs-bar { padding: 0 1rem; }
+      main { padding: 1.5rem 1rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="../../index.html" class="back-link">← All Issues</a>
+    <span class="lang-switch"><a href="../../../zh/issues/2019-01/index.html">中文</a></span>
+  </div>
+  <div class="header-body">
+    <div class="issue-eyebrow">Gramophone</div>
+    <h1 class="issue-title">Gramophone January 2019</h1>
+  </div>
+  <nav class="tabs-bar" role="tablist" aria-label="Sections">
+    
+    <button class="tab-btn active"
+            data-tab="tab-recording_of_the_month"
+            role="tab"
+            aria-selected="true">
+      Recording of the Month<span class="tab-count">1</span>
+    </button>
+    
+    <button class="tab-btn"
+            data-tab="tab-orchestral"
+            role="tab"
+            aria-selected="false">
+      Orchestral<span class="tab-count">5</span>
+    </button>
+    
+    <button class="tab-btn"
+            data-tab="tab-chamber"
+            role="tab"
+            aria-selected="false">
+      Chamber<span class="tab-count">5</span>
+    </button>
+    
+    <button class="tab-btn"
+            data-tab="tab-instrumental"
+            role="tab"
+            aria-selected="false">
+      Instrumental<span class="tab-count">6</span>
+    </button>
+    
+    <button class="tab-btn"
+            data-tab="tab-vocal"
+            role="tab"
+            aria-selected="false">
+      Vocal<span class="tab-count">3</span>
+    </button>
+    
+    <button class="tab-btn"
+            data-tab="tab-opera"
+            role="tab"
+            aria-selected="false">
+      Opera<span class="tab-count">3</span>
+    </button>
+    
+    <button class="tab-btn"
+            data-tab="tab-reissues"
+            role="tab"
+            aria-selected="false">
+      Reissues &amp; Archive<span class="tab-count">3</span>
+    </button>
+    
+    
+    <button class="tab-btn"
+            data-tab="tab-features"
+            role="tab"
+            aria-selected="false">
+      Features<span class="tab-count">12</span>
+    </button>
+    
+  </nav>
+</header>
+
+<main>
+
+  
+  <div class="tab-panel active"
+       id="tab-recording_of_the_month"
+       role="tabpanel">
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.0s">
+
+      <div class="art-col">
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+          <span class="badge-rotm">Recording of the Month</span>
+          
+        </div>
+        <div class="card-composer">Claudio Monteverdi</div>
+        <h2 class="card-work">Il ritorno d&#39;Ulisse in patria</h2>
+        <div class="card-performers">
+          Furio Zanasi (Ulisse), Lucile Richardot (Penelope), Krystian Adam (Telemaco), Hana Blazíková (Minerva/Fortuna), Gianluca Buratto (Tempo/Nettuno/Antinoo), et al; Monteverdi Choir; English Baroque Soloists / John Eliot Gardiner &middot; SDG (Solì Deo Gloria) &middot; SDG730
+        </div>
+        <div class="card-tldr">John Eliot Gardiner delivers a triumphant account of Monteverdi&#39;s late opera, recorded live during his worldwide 450th anniversary tour. This Reading Of The Month stands out for its extraordinary ability to absorb the work&#39;s extreme contrasts—from broad comedy to profound psychology—into a coherent whole. The English Baroque Soloists prove masterful, their instrumental inflections and colouring filling out the silhouette of the drama: the shy beauty of recorders supporting Penelope&#39;s aria, the frothy detail accompanying the suitors, the crisp authority of strings supporting Minerva. Furio Zanasi offers a smooth, patrician Ulisse who reveals unexpected ferocity, paired compellingly with Lucile Richardot&#39;s handsome, masculine Penelope. For the first time, listeners hear breath and husk alongside melody, creating a sense of exhilaration and risk. While more classically beautiful accounts exist, none captures quite so much life.</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Not on Spotify</span>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">Also consider</div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b27362690aadad4c445cdcd75c77" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Claudio Monteverdi — Il ritorno d&#39;Ulisse in patria
+                
+                <a href="spotify:album:2FB41OxIUJ4wALz61wBywQ" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+                
+                <a href="https://open.spotify.com/album/2FB41OxIUJ4wALz61wBywQ" class="btn-web" target="_blank" rel="noopener" title="Web Player">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Les Arts Florissants / René Jacobs &middot; Harmonia Mundi
+              </div>
+              
+              <div class="comp-note">Bernarda Fink&#39;s Penelope under Jacobs offers vocally pliant expressiveness even at her coolest, contrasting with Richardot&#39;s less lovely but dramatically compelling account.</div>
+              
+            </div>
+          </div>
+          
+          
+          <div class="comp-item">
+            
+            <div class="comp-art-placeholder"></div>
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Claudio Monteverdi — Il ritorno d&#39;Ulisse in patria
+                
+                
+              </div>
+              <div class="comp-meta">
+                Christine Rice (Penelope), with ensemble &middot; Harmonia Mundi
+              </div>
+              
+              <div class="comp-note">Rice&#39;s Penelope offers a glowing severity that represents a more traditionally beautiful vocal approach compared to Gardiner&#39;s more naturalistic ensemble.</div>
+              
+            </div>
+          </div>
+          
+          
+          <div class="comp-item">
+            
+            <div class="comp-art-placeholder"></div>
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Claudio Monteverdi — Il ritorno d&#39;Ulisse in patria
+                
+                
+              </div>
+              <div class="comp-meta">
+                Various ensembles
+              </div>
+              
+              <div class="comp-note">The reviewer notes there are more classically beautiful accounts available, but none with Gardiner&#39;s compelling dramatic life and proximity to musical detail.</div>
+              
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class="tab-panel"
+       id="tab-orchestral"
+       role="tabpanel">
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.0s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b2736d4f70d7a13f321117919f56" alt="The Golden Cockerel – Suite / The Firebird (1910 version)" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Rimsky-Korsakov / Stravinsky</div>
+        <h2 class="card-work">The Golden Cockerel – Suite / The Firebird (1910 version)</h2>
+        <div class="card-performers">
+          Royal Liverpool Philharmonic Orchestra / Vasily Petrenko &middot; Onyx &middot; ONYX4175
+        </div>
+        <div class="card-tldr">Vasily Petrenko continues his acclaimed Stravinsky ballet series with this inspired coupling of teacher and pupil&#39;s magical bird works. The Firebird emerges with craftsman-like precision: creeping basses, glassy sul ponticello violins evoke sinister nocturnal atmospheres, while the firebird herself flutters via splendidly articulated flute-playing, and the Khorovod and Berceuse are handled like porcelain. From the pinpoint trumpet cockcrow, Petrenko&#39;s Rimsky is equally exquisite—teasing clarinet solos, coiling woodwinds for the Queen of Shemakha, military bluster in the wedding procession. The warm but clear sound in Liverpool&#39;s Philharmonic Hall, combined with good notes and a striking cover, makes this an attractive release that reveals why this pairing should be more common. Petrenko homes in on fine details, like a craftsman working with gold leaf and the finest brushes, making familiar music sound freshly minted.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:5pHyYlTSpp8DEo3CzIwhY8" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/5pHyYlTSpp8DEo3CzIwhY8" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.06s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b273e61ae845fb79f7dbdbfbb07d" alt="Symphony No 3 &#39;Organ&#39;, Op 78 / Samson et Dalila – Bacchanale / Trois Tableaux symphoniques" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Saint-Saëns</div>
+        <h2 class="card-work">Symphony No 3 &#39;Organ&#39;, Op 78 / Samson et Dalila – Bacchanale / Trois Tableaux symphoniques</h2>
+        <div class="card-performers">
+          Utah Symphony Orchestra / Thierry Fischer, Paul Jacobs org &middot; Hyperion &middot; CDA68201
+        </div>
+        <div class="card-tldr">Thierry Fischer leads a superb, thoroughly enjoyable reading of Saint-Saëns&#39;s Organ Symphony. His masterly sense of pacing and architecture shines through—transitions are deftly maneuvered, from the opening Allegro moderato&#39;s seamless dissolution into the radiant Poco adagio, to the gradual surge toward the fortississimo climax. While Fischer&#39;s adagio tempo runs several notches below the metronome mark, it flows effortlessly. Abravanel Hall&#39;s organ integrates naturally with the orchestra, aided by engineering providing a natural concert-hall perspective. The recording captures surprising few blemishes for a live performance, compensated by palpable frisson. There&#39;s tremendous rhythmic vitality in the scherzo, while the finale has muscle and bite as well as glory and grandeur. Though Fischer could luxuriate more in the Bacchanale&#39;s sinuous exoticism, he inspires fiercely committed playing throughout. This stands as a reference recording for the work.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:0ctBl2XeNTWfwdvXUvJx7Y" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/0ctBl2XeNTWfwdvXUvJx7Y" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.12s">
+
+      <div class="art-col">
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Lyatoshynsky</div>
+        <h2 class="card-work">Symphony No 3 &#39;Peace Shall Defeat War&#39; / Grazhyna</h2>
+        <div class="card-performers">
+          Bournemouth Symphony Orchestra / Kirill Karabits &middot; Chandos &middot; CHSA5233
+        </div>
+        <div class="card-tldr">Boris Lyatoshynsky (1895-1968), Ukraine&#39;s slightly older contemporary of Shostakovich, receives excellent advocacy from Karabits and the Bournemouth players. The Third Symphony (1951), bearing its Soviet-era subtitle, is frequently bellicose but Lyatoshynsky possesses a very personal lyrical vein quite different from his famous peer—the glistening opening of the second movement is original and touching. Karabits really brings out the detail of the imaginative orchestration; what might seem sprawling is given carefully shaped rendition of great intensity. The final minutes, where the Ukrainian folk song returns amid brass and bells, represent a genuinely heartfelt victory. Grazhyna is a more romantic tone poem based on Mickiewicz&#39;s narrative poem of doomed love, performed with vigor and dedication. Outstanding engineering complements the playing. This excellent recording may finally bring this composer the Western success he deserves—an ideal introduction to his distinctive musical voice.</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Not on Spotify</span>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.18s">
+
+      <div class="art-col">
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Mozart</div>
+        <h2 class="card-work">Symphonies No 39, 40, 41 &#39;Jupiter&#39;</h2>
+        <div class="card-performers">
+          Ensemble Appassionato / Mathieu Herzog &middot; Naïve &middot; M2 V5457
+        </div>
+        <div class="card-tldr">Founded by Ébène Quartet founder Mathieu Herzog, Ensemble Appassionato makes its own debut with Mozart&#39;s last three symphonies—a bold statement of intent. Herzog seeks to reconcile different performance approaches, bridging Bruno Walter and Nikolaus Harnoncourt, while viewing the works through a Beethovenian lens with powerful orchestral tuttis. The outer movements of the Jupiter sprint away from the starting line, yet the musicians keep up brilliantly—the finale is as exciting as any on record. No 40 opens more suave than its Sturm und Drang might suggest, closer to debonair Abbado. The ensemble sound is one of the glories here: strings display corporate agility, woodwinds are perky, especially clarinets in Nos 39 and 40, and bass lines remain elastic and full of personality. Some second-half repeats are missing (damaging in the finales of Nos 39 and 41), and there are occasional ensemble slips. But this eccentric set, with its quirks one soon comes to love, offers genuinely individual, minutely considered performances.</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Not on Spotify</span>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.24s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b273b33d8cca1173db7fa35df1da" alt="Piano Concerto No 20, K466 / Piano Sonatas K281, K332" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Mozart</div>
+        <h2 class="card-work">Piano Concerto No 20, K466 / Piano Sonatas K281, K332</h2>
+        <div class="card-performers">
+          Seong-Jin Cho pf, Chamber Orchestra of Europe / Yannick Nézet-Séguin &middot; DG &middot; 483 5522GH
+        </div>
+        <div class="card-tldr">Chopin Competition winner Seong-Jin Cho (24) delivers conviction about Mozart that is apparent throughout these performances. He couldn&#39;t wish for a more empathetic conductor than Yannick Nézet-Séguin, while the COE combines traditional warmth with period-aware characterful wind and brass. The D minor Concerto opens with a keenly dramatic orchestral tutti, with irresistible bassoon-playing at 4&#39;02&#34;. Cho feels absolutely part of the ensemble, and moments like the dramatic outburst at 6&#39;44&#34; have real power. The Romanze receives careful treatment, though Brendel, Andsnes, or Pires offer more naturalness. The finale has fizzing urgency and Cho&#39;s filigree playing is impressive. K332 comes across most convincingly—a guileless approach to major-key writing contrasting well with driving minor-key passages, alive to shadows lurking beneath the Adagio&#39;s consoling exterior. The Chopin winner shows real promise in Mozart, with sensitive accompaniment making this a worthwhile addition to the catalogue despite occasional accentuation that can sound slightly forced.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:46WCq8QQ9gzZ4iEWjv2gQw" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/46WCq8QQ9gzZ4iEWjv2gQw" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">Also consider</div>
+          
+          
+          <div class="comp-item">
+            
+            <div class="comp-art-placeholder"></div>
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Mozart — Piano Concerto No 20, K466
+                
+                
+              </div>
+              <div class="comp-meta">
+                Alfred Brendel, Scottish Chamber Orchestra / Sir Charles Mackerras &middot; Philips
+              </div>
+              
+              <div class="comp-note">Brendel and Mackerras offer powerful yet refined readings without the occasional forced quality Cho exhibits</div>
+              
+            </div>
+          </div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b2731f866730b6105fcb7b3338a1" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Mozart — Piano Concerto No 20, K466
+                
+                <a href="spotify:album:6QYOjAYar9tcmTitjkWI9k" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+                
+                <a href="https://open.spotify.com/album/6QYOjAYar9tcmTitjkWI9k" class="btn-web" target="_blank" rel="noopener" title="Web Player">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Maria João Pires, Orchestra Mozart / Claudio Abbado &middot; DG
+              </div>
+              
+              <div class="comp-note">Pires and Abbado deliver an exquisitely haloed account revealing more subtleties in Mozart&#39;s argument</div>
+              
+            </div>
+          </div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b2738e3630f58198b839b433d6ec" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Mozart — Piano Sonata K281
+                
+                <a href="spotify:album:39E5TLqxXs6QttsbEDPvzZ" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+                
+                <a href="https://open.spotify.com/album/39E5TLqxXs6QttsbEDPvzZ" class="btn-web" target="_blank" rel="noopener" title="Web Player">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Mitsuko Uchida &middot; Philips
+              </div>
+              
+              <div class="comp-note">Uchida&#39;s unrivalled delicacy makes Cho sound somewhat contrived in comparison</div>
+              
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class="tab-panel"
+       id="tab-chamber"
+       role="tabpanel">
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.0s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b2736081303c3d68cd66bdb82759" alt="Viola Sonata (cello version)" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Rebecca Clarke</div>
+        <h2 class="card-work">Viola Sonata (cello version)</h2>
+        <div class="card-performers">
+          Natalie Clein vc Christian Ihle Hadland pf &middot; Hyperion &middot; CDA68253
+        </div>
+        <div class="card-tldr">Natalie Clein&#39;s interpretation of Clarke&#39;s Viola Sonata in its cello transcription reveals new depths of physicality and tonal range, from charcoal-black depths to muted pastels. Her collaboration with pianist Christian Ihle Hadland never stints on commitment, particularly in the impetuoso first movement. The surrounding Bridge and Vaughan Williams miniatures receive equally passionate readings, with Clein unafraid to let bow scrape string for visceral effect. Hadland proves equally thrilling, crafting climaxes that are sonorous without overwhelming his partner. The recording captures an intimate, natural acoustic that suits this music perfectly. This beautifully produced recital may be many listeners&#39; first encounter with the cello version, but it makes an indelible impression. Richard Bratby praises the &#39;beautifully controlled&#39; execution that serves Clarke&#39;s ardent musical narrative with poetry and passion.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:7yfPL7U4RSwr3bI9WKO0Ui" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/7yfPL7U4RSwr3bI9WKO0Ui" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.06s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b27349825849139a51ff25bf54ae" alt="Piano Trios, Vol 2 (Op 1 No 2; Op 70 No 2)" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Beethoven</div>
+        <h2 class="card-work">Piano Trios, Vol 2 (Op 1 No 2; Op 70 No 2)</h2>
+        <div class="card-performers">
+          Trio Con Brio Copenhagen &middot; Orchid Classics &middot; ORC100091
+        </div>
+        <div class="card-tldr">Trio Con Brio Copenhagen continues its Beethoven cycle with a beguiling program pairing the neglected G major Op 1 No 2 with the Ghost Trio&#39;s twin Op 70 No 2. The Copenhagen-based ensemble delivers brisk, buoyant readings with dance rhythms and understated wit—violinist Soo-Jin Hong&#39;s slide back into recapitulation proving particularly delightful. The ensemble is intimate and properly chamber-sized, with Orchid&#39;s recording capturing bell-like clarity in pianist Jens Elvekjaer&#39;s right hand. Their warm, slightly leisurely approach to first movements contrasts explosively with finale fireworks: &#39;explosive in Op 70 No 2; crackling with energy and precision&#39; in Op 1 No 2&#39;s Haydnesque moto perpetuo. Richard Bratby finds their forthcoming Archduke &#39;going to be well worth a listen.&#39;</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:2jil7H8Tul820IDx5w9kI7" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/2jil7H8Tul820IDx5w9kI7" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.12s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b273970529233ec05e6127f1d0a0" alt="String Quartets Nos 1 &amp; 2; Genesis I" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Górecki</div>
+        <h2 class="card-work">String Quartets Nos 1 &amp; 2; Genesis I</h2>
+        <div class="card-performers">
+          Tippett Quartet &middot; Naxos &middot; 8.573919
+        </div>
+        <div class="card-tldr">The Tippett Quartet proves Górecki&#39;s string quartets are &#39;fundamental to understanding his output,&#39; delivering renditions &#39;of equal stature&#39; to legendary performances by Kronos and the Royal String Quartet. Their reading negotiates between &#39;profoundest calm&#39; and material &#39;shockingly violent&#39; to those who know only the Third Symphony, plumbing &#39;the blackest depths of despair&#39; before scaling &#39;heights of luminous hope.&#39; The second quartet&#39;s massive 33-minute span receives all the nuance of extreme calm and intransigent violence, while the early Genesis I for string trio is performed &#39;with silken delicacy.&#39; Naxos&#39;s recording is &#39;as clear as a bell,&#39; and Ivan Moody declares this recording &#39;deserving of the very highest recommendation.&#39;</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:2VhTB6UeizrjqKjGrGrmuU" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/2VhTB6UeizrjqKjGrGrmuU" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">Also consider</div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b273a1e2ff92169796f4784cf734" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Górecki — String Quartets
+                
+                <a href="spotify:album:6ioE4gwAFeA5EuJBUwDwWU" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+                
+                <a href="https://open.spotify.com/album/6ioE4gwAFeA5EuJBUwDwWU" class="btn-web" target="_blank" rel="noopener" title="Web Player">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Royal String Quartet &middot; Hyperion
+              </div>
+              
+              <div class="comp-note">Hyperion recording praised as a benchmark against which the Tippett Quartet measures up</div>
+              
+            </div>
+          </div>
+          
+          
+          <div class="comp-item">
+            
+            <div class="comp-art-placeholder"></div>
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Górecki — String Quartets
+                
+                
+              </div>
+              <div class="comp-meta">
+                Kronos Quartet &middot; Nonesuch
+              </div>
+              
+              <div class="comp-note">Kronos Quartet&#39;s celebrated recordings, for whom Górecki composed these works, remain definitive</div>
+              
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
+    </div>
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.18s">
+
+      <div class="art-col">
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Schubert</div>
+        <h2 class="card-work">Arpeggione Sonata; songs</h2>
+        <div class="card-performers">
+          Anja Lechner vc Pablo Márquez gtr &middot; ECM New Series &middot; 481 7172
+        </div>
+        <div class="card-tldr">Anja Lechner and Pablo Márquez present Schubert&#39;s Arpeggione Sonata alongside songs, demonstrating the &#39;vocal inspiration&#39; underlying much of Schubert&#39;s instrumental music. The ECM disc titled &#39;Die Nacht&#39; creates a &#39;duly nocturnal&#39; atmosphere with gentler songs and rippling guitar accompaniments. The album reaches haunting heights with &#39;Der Leiermann,&#39; where Lechner&#39;s cello breaks the mood with an &#39;eerie ponticello drone.&#39; David Threasher notes this approach is &#39;predominantly lyrical,&#39; offering a dreamlike alternative to more dramatic interpretations. The recording showcases how Schubert&#39;s guitar writing—authentic precedent exists since he himself played the instrument—creates intimacy and textural clarity.</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Not on Spotify</span>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.24s">
+
+      <div class="art-col">
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Arlene Sierra</div>
+        <h2 class="card-work">Chamber Works (Avian Mirrors; Butterflies Remember a Mountain; Truel; etc.)</h2>
+        <div class="card-performers">
+          Nicola Benedetti vn Leonard Elschenbroich vc Alexei Grynyuk pf; Quattro Mani &middot; Bridge &middot; BRIDGE9506
+        </div>
+        <div class="card-tldr">Bridge Records&#39; third volume devoted to Arlene Sierra presents &#39;a wonderful chamber music issue that enthralls from first bar to last.&#39; The title trio Butterflies Remember a Mountain—written for Benedetti, Elschenbroich and Grynyuk—displays &#39;Japanese exquisiteness and restrained power&#39; across three movements. Sierra&#39;s first trio Truel offers combative &#39;duel between three players&#39; while Avian Mirrors provides &#39;fascinating non-Messiaenic triptych on birdsong.&#39; Guy Rickards notes &#39;all performances are first-rate&#39; and recording quality &#39;beautifully engineered&#39; despite three different locations. With Nicola Benedetti&#39;s international stature as an established star, this release introduces listeners to an American-British composer whose works, Rickards attests, &#39;linger long in the memory.&#39;</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Not on Spotify</span>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class="tab-panel"
+       id="tab-instrumental"
+       role="tabpanel">
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.0s">
+
+      <div class="art-col">
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Brahms</div>
+        <h2 class="card-work">Piano Pieces Opp. 116, 117, 118; Scherzo Op. 4</h2>
+        <div class="card-performers">
+          Garrick Ohlsson &middot; Hyperion &middot; CDA68226
+        </div>
+        <div class="card-tldr">Garrick Ohlsson brings his formidable technique and decades of experience to these late Brahms piano miniatures, delivering readings that feel like a throwback to an era when grand, expansive pianism was celebrated. The muscularity and textural fullness he brings to Op. 116&#39;s opening pieces showcase his commanding technique, while his account of the Scherzo Op. 4—a youthful work full of driving excitement and febrile quality—proves thrilling, with his easy virtuosity making him sound entirely at home. Though some may prefer leaner interpretations, Ohlsson&#39;s conviction throughout and his ability to convey gravitas in the Op. 118 pieces demonstrate why he remains one of the most respected Brahms interpreters of his generation. The recording captures his naturally full-blooded approach with great clarity.</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Not on Spotify</span>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">Also consider</div>
+          
+          
+          <div class="comp-item">
+            
+            <div class="comp-art-placeholder"></div>
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Brahms — Piano Pieces Opp. 117 &amp; 118
+                
+                
+              </div>
+              <div class="comp-meta">
+                Arcadi Volodos &middot; Sony Classical
+              </div>
+              
+              <div class="comp-note">Volodos remains the reviewer&#39;s supreme reference for Op. 117 and 118, offering magical key-changes and nuanced simplicity that others struggle to match.</div>
+              
+            </div>
+          </div>
+          
+          
+          <div class="comp-item">
+            
+            <div class="comp-art-placeholder"></div>
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Brahms — Piano Pieces Opp. 116 &amp; 118
+                
+                
+              </div>
+              <div class="comp-meta">
+                Jonathan Plowright &middot; BIS
+              </div>
+              
+              <div class="comp-note">Plowright excels in depth of sonority, colouristic subtlety, and brings more flexibility and inner-voice interest than Ohlsson in some movements.</div>
+              
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
+    </div>
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.06s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b2736c3f4010d4f081933affd0ee" alt="Beethoven Piano Sonata No. 32 Op. 111a; Liszt Années de pèlerinage – année 1: Suisse, S160b" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Beethoven/Liszt</div>
+        <h2 class="card-work">Beethoven Piano Sonata No. 32 Op. 111a; Liszt Années de pèlerinage – année 1: Suisse, S160b</h2>
+        <div class="card-performers">
+          Till Fellner &middot; ECM New Series &middot; 481 6837
+        </div>
+        <div class="card-tldr">Till Fellner&#39;s exceptional double-bill combines two live performances of remarkable self-effacement and probing depth. His approach to Liszt&#39;s Swiss Année strips away all showmanship to reveal pure musical essence—harmony, polyphony, and melodic contour do the work, never extraneous rubato or pianistic display. The result is a Liszt that emerges bold, direct, and overwhelmingly powerful, transforming the overused &#39;Vallée d&#39;Obermann&#39; into tears mopped up by a superhero on dry ground. His Op. 111 carries the same qualities: probity, depth, and sheer joy in the music. Fellner parts company with most colleagues to pursue a path leading to another level entirely, presenting what is on the page—plain, clear, concise—while evoking nature&#39;s terror and beauty with trembling authenticity. This is Beethoven and Liszt of breathtaking finesse and integrity.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:1uFw9unOQ4UnFRqixsuvWm" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/1uFw9unOQ4UnFRqixsuvWm" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.12s">
+
+      <div class="art-col">
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Couperin</div>
+        <h2 class="card-work">Pièces de clavecin – Ordres 3, 4, 11, 19, 20 &amp; 27 (&#39;Couperin l&#39;Alchimiste&#39;)</h2>
+        <div class="card-performers">
+          Bertrand Cuiller &middot; Harmonia Mundi &middot; 2 HMM90 2375/6
+        </div>
+        <div class="card-tldr">Bertrand Cuiller launches an ambitious new complete cycle of Couperin&#39;s solo harpsichord works with this theatrical-themed two-disc set, presenting six ordres with more or less specific allusions to the stage and theatrical persona. Cuiller&#39;s approach is robust and rollicking, dramatically alert to Couperin&#39;s occasional taste for spectacle—the extended theatrical sequence in the 11th ordre is even more muscular than Rousset&#39;s benchmark version. But it&#39;s in the delicate, nuanced, introspective moments that Cuiller really finds his voice: the &#39;Baccanales&#39; from the fourth ordre and &#39;La fine Madelon&#39; from the 20thordre are particularly appealing, played with improvisatory discovery. Using registration to create striking contrast between left and right-hand dialogue, Cuiller explores all of Couperin&#39;s multiple alter egos while maintaining that essential intimacy that defines the best harpsichord playing. This sets high expectations for the complete cycle.</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Not on Spotify</span>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">Also consider</div>
+          
+          
+          <div class="comp-item">
+            
+            <div class="comp-art-placeholder"></div>
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Couperin — Pièces de clavecin
+                
+                
+              </div>
+              <div class="comp-meta">
+                William Christov Rousset &middot; Harmonia Mundi
+              </div>
+              
+              <div class="comp-note">Rousset&#39;s version, which Cuiller studied under, provides the benchmark for muscular and demonstrative Couperin interpretation that Cuiller builds upon.</div>
+              
+            </div>
+          </div>
+          
+          
+          <div class="comp-item">
+            
+            <div class="comp-art-placeholder"></div>
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Couperin — Pièces de clavecin
+                
+                
+              </div>
+              <div class="comp-meta">
+                Kenneth Gilbert &middot; Harmonia Mundi
+              </div>
+              
+              <div class="comp-note">Gilbert&#39;s more sober and straightforward approach contrasts with Cuiller&#39;s younger, more dramatically adventurous intent.</div>
+              
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
+    </div>
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.18s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b2735d32ba19ccb551a9100e06fc" alt="The Organ Works (complete)" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Franck</div>
+        <h2 class="card-work">The Organ Works (complete)</h2>
+        <div class="card-performers">
+          Ben van Oosten &middot; Dabringhaus und Grimm &middot; MDG316 2080-2
+        </div>
+        <div class="card-tldr">Ben van Oosten&#39;s monumental four-disc traversal of Franck&#39;s complete organ works distinguishes itself primarily through the inclusion of 27 relatively unfamiliar pieces—posthumously published works and early compositions—that transform this from yet another mainstream survey into a genuine discovery. The five-minute Offertoire sur un Noël Breton is sheer delight, while the boisterous Sortie in D cannot fail to bring a spring to the step. Despite not rivaling Marie-Claire Alain or André Isoir for the major works, Oosten brings disarming eloquence to the Prélude, Fugue et Variation, and his expansive approach, aided by the generous acoustic of Saint-Ouen in Rouen and its historic Cavaillé-Coll organ, allows plenty of breathing space for Franck&#39;s hallmark pauses and sustained notes. For Franck enthusiasts, this is a must-have for the high-quality but largely obscure material alone.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:5TdQwckvVhTgqGvi1l4YOK" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/5TdQwckvVhTgqGvi1l4YOK" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">Also consider</div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b273af1df6cd903407c449ca388c" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Franck — Organ Works
+                
+                <a href="spotify:album:1TU3RIjYXPwdJFSNnyb5QA" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+                
+                <a href="https://open.spotify.com/album/1TU3RIjYXPwdJFSNnyb5QA" class="btn-web" target="_blank" rel="noopener" title="Web Player">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Marie-Claire Alain &middot; APEX
+              </div>
+              
+              <div class="comp-note">Alain&#39;s benchmark recording (26&#39;22&#34; for the Grand pièce symphonique versus Oosten&#39;s 28&#39;39&#34;) offers more concentrated excitement in the major works.</div>
+              
+            </div>
+          </div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b2738f006ddf59626cfbb913c159" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Franck — Organ Works
+                
+                <a href="spotify:album:0EHZanqf5oP4TCq7TGiPri" class="comp-spotify" title="Open in Spotify">▶</a>
+                
+                
+                <a href="https://open.spotify.com/album/0EHZanqf5oP4TCq7TGiPri" class="btn-web" target="_blank" rel="noopener" title="Web Player">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                André Isoir &middot; DOLC
+              </div>
+              
+              <div class="comp-note">Isoir&#39;s French tradition recording provides another essential reference for Franck&#39;s major organ works with impeccable scholarship and style.</div>
+              
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
+    </div>
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.24s">
+
+      <div class="art-col">
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Schubert</div>
+        <h2 class="card-work">Allegretto D915, Klavierstücke D946, March D606, Moments musicaux D780, Ungarische Melodie D817</h2>
+        <div class="card-performers">
+          Carlo Grante &middot; Music &amp; Arts &middot; CD1292
+        </div>
+        <div class="card-tldr">Carlo Grante&#39;s Schubert anthology stands out through his choice of a superbly maintained 1923 Bösendorfer Imperial, whose striking sonority stimulates closer listening to these familiar works. His Moments musicaux create an intimate atmosphere avoiding cloying preciousness—the first in C major offers warm lyricism of many layers and colours, while the famous &#39;Hungarian&#39; No. 3 in F minor is refreshingly straightforward. Grante&#39;s approach to the Drei Klavierstücke is more lyrical than dramatic, yet vividly portrays the pieces&#39; mercurial mood shifts and emotional urgency, observing Schubert&#39;s manuscript cut in No. 1. The Hungarian Melody has characteristic piquant hauteur, while a strong case is made for the little Allegretto in C minor. This thoughtful programme, recorded in Vienna in 2013, will delight connoisseurs and satisfy all lovers of Schubert who appreciate the unique tonal world that period instruments offer.</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Not on Spotify</span>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.3s">
+
+      <div class="art-col">
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Various (Belle Époque)</div>
+        <h2 class="card-work">Aubert Suite brève Op. 6; Chaminade Valse carnavalesque Op. 73; Debussy En blanc et noir; Hahn Le ruban dénoué; Koechlin Suite Op. 6</h2>
+        <div class="card-performers">
+          Ludmila Berlinskaya, Arthur Ancelle &middot; Melodiya &middot; MELCD100 2563
+        </div>
+        <div class="card-tldr">The Russian husband-and-wife duo of Ludmila Berlinskaya and Arthur Ancella follow their acclaimed Saint-Saëns/Liszt recording with this highly engaging programme of mainly French two-piano works from 1915, bookended by Chaminade&#39;s boisterous Valse carnavalesque and Debussy&#39;s profound En blanc et noir. The premiere recording of Louis Aubert&#39;s early Suite brève—characterized as &#39;involuntary anticipation of Ravel&#39;s neoclassic piano opuses&#39;—proves fascinating discovery, while Koechlin&#39;s genial early Suite Op. 6 demonstrates why he deserves more two-piano attention. Hahn&#39;s twelve waltzes in Le ruban dénoué offer bittersweet melancholy acknowledging the end of Belle Époque. The duo&#39;s consistently faster tempos than Tal and Groethuysen&#39;s benchmark Sony recording work effectively, and their bold, characterful approach to Debussy&#39;s war-referencing triptych matches their competitors in balance, voicing, and recorded sound quality.</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Not on Spotify</span>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">Also consider</div>
+          
+          
+          <div class="comp-item">
+            
+            <div class="comp-art-placeholder"></div>
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Various (1915) — Debussy En blanc et noir; Hahn Le ruban dénoué
+                
+                
+              </div>
+              <div class="comp-meta">
+                Tal &amp; Groethuysen &middot; Sony Classical
+              </div>
+              
+              <div class="comp-note">Tal and Groethuysen&#39;s &#39;1915&#39; disc serves as the benchmark comparison, offering slower, more nuanced readings that the Berlinskaya/Ancelle duo consistently differs from.</div>
+              
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class="tab-panel"
+       id="tab-vocal"
+       role="tabpanel">
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.0s">
+
+      <div class="art-col">
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Parry</div>
+        <h2 class="card-work">Twelve Sets of English Lyrics, Vol 3</h2>
+        <div class="card-performers">
+          Sarah Fox sop, Roderick Williams bar, Andrew West pf &middot; Somm &middot; SOMMCD272
+        </div>
+        <div class="card-tldr">This third and final volume of Parry&#39;s English Lyrics reveals yet more treasures from this remarkable song series. Sarah Fox delivers &#39;thrillingly commanding&#39; accounts of dramatic songs like &#39;When the sun&#39;s great orb&#39; and brings &#39;disarming wonder and expressive ardour&#39; to gentler works. Roderick Williams, described as &#39;at his lustrous, articulate best&#39;, inhabits the dreaming narrator&#39;s dialogue in &#39;Through the ivory gate&#39; with &#39;touching conviction&#39;. Andrew West provides &#39;splendid&#39; accompaniment throughout. The collection spans nine settings of poems by Parry&#39;s fellow Etonian John Sturgis, alongside gems like the ecstatic &#39;My heart is like a singing bird&#39; and the &#39;sublime&#39; &#39;From a City Window&#39; from Set 10. Jeremy Dibble&#39;s annotated essay and truthful recorded sound complete a &#39;joy from start to finish&#39; that followers of this valuable series can acquire with confidence.</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Not on Spotify</span>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.06s">
+
+      <div class="art-col">
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Caldara</div>
+        <h2 class="card-work">Brutus: Cantatas for Bass</h2>
+        <div class="card-performers">
+          Sergio Foresti bass, Stile Galante / Stefano Aresi &middot; Pan Classics &middot; PC10389
+        </div>
+        <div class="card-tldr">Sergio Foresti delivers a &#39;marvellous&#39; account of these six bass cantatas, demonstrating &#39;technical finesse&#39; alongside &#39;rhetorical sensibility&#39; that brings the political drama of Bruto a&#39; Romani vividly to life. His voice balances &#39;open-throated roar&#39; with &#39;articulate intimacy&#39; in the invocation to Astraea. The continuo trio—cellist Agnieszka Oszanca, theorbist Gabriele Palomba, and harpsichordist Andrea Friggi—provide &#39;emotionally aware accompaniments played with expressive variety and sensitivity&#39;. David Vickers praises the &#39;compelling juxtaposition&#39; of vocal qualities and the beautiful rendering of &#39;pathos-laden contrapuntal details&#39; in Il Dario. The pastoral cantatas A destar l&#39;alba col canto and Partenza amorosa showcase both Caldara&#39;s lyrical gifts and the ensemble&#39;s interpretive subtlety, with &#39;Onde, voi che mormorate&#39; highlighting their &#39;lyrical qualities&#39; at their finest.</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Not on Spotify</span>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.12s">
+
+      <div class="art-col">
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Various Composers</div>
+        <h2 class="card-work">War &amp; Peace 1618:1918</h2>
+        <div class="card-performers">
+          Dorothee Mields sop, Lautten Compagney / Wolfgang Katschner &middot; Deutsche Harmonia Mundi &middot; M 2 19075 86844-2
+        </div>
+        <div class="card-tldr">This &#39;beautifully conceived and constructed&#39; recital juxtaposes music from the Thirty Years&#39; War era with songs from World War I and Weimar cabaret, organized thematically rather than chronologically. Soprano Dorothee Mields is &#39;impeccable throughout&#39;, her &#39;pristine purity&#39; in early songs contrasting with the &#39;calculated exaggerations&#39; of Hanns Eisler&#39;s ironic compositions. The programme draws &#39;musical connections&#39; and creates &#39;maximum drama&#39; by colliding Schütz and Scheidt alongside Eisler and Friedrich Hollaender. Bo Wiget&#39;s arrangements bring &#39;contemporary irony into traditional songs and traditional instruments into wartime Berlin&#39;. The Satie Gymnopédies acquire &#39;homespun, hurdy-gurdy quality&#39; while Hollaender&#39;s darkly cynical songs feature a &#39;bluesy and sardonic&#39; cornett. Alexandra Coghlan calls it &#39;brilliant, unexpected&#39; but notes it &#39;cries out for the energy and audience interplay of a live performance&#39;.</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Not on Spotify</span>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class="tab-panel"
+       id="tab-opera"
+       role="tabpanel">
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.0s">
+
+      <div class="art-col">
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Bellini</div>
+        <h2 class="card-work">Norma</h2>
+        <div class="card-performers">
+          Sondra Radvanovsky (Norma), Joyce DiDonato (Adalgisa), Joseph Calleja (Pollione), Matthew Rose (Oroveso), Metropolitan Opera Chorus and Orchestra / Carlo Rizzi &middot; Erato &middot; F 2 9029 56297-6
+        </div>
+        <div class="card-tldr">The review praises Sondra Radvanovsky and Joyce DiDonato for delivering glorious performances as Bellini’s central characters, each at the height of their formidable powers. Radvanovsky’s voice grows in authority as the evening progresses – firm, focused, big and beautiful – and she brings grand, old‑school artistry to the role of Norma, while DiDonato’s Adalgisa is portrayed with gamine innocence, quick vibrato and imaginative bel canto style, producing a profoundly moving interpretation. Joseph Calleja’s Pollione, though bright and open, tires in his Act I scene, and Matthew Rose offers a noble Oroveso. Conductor Carlo Rizzi draws glorious playing from the Metropolitan Opera Orchestra, his love for the score evident in every bar. The production by David McVicar is criticised for over‑busy staging and over‑elaborate camera work, yet the central performances, conducting and orchestral splendour remain the main draw. Captured live in October 2017, this DVD provides excellent video and audio, making the set a standout for its combination of two world‑class singers, expert leadership and a vivid account of Bellini’s masterpiece.</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Not on Spotify</span>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.06s">
+
+      <div class="art-col">
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Campra</div>
+        <h2 class="card-work">L&#39;Europe galante</h2>
+        <div class="card-performers">
+          Caroline Mutel (Vénus/Une Espagnole/Olimpia/Roxane), Isabelle Druet (La Discorde/Doris/Une femme du Bal/Zaïde), Heather Newhouse (Une Grâce/Céphise/Une Espagnole/Une femme du Bal), Anders Dahlin (Philène/Dom Pedro/Octavio), Nicolas Courjal (Silvandre/Dom Carlos/Zuliman), Les Nouveaux Caractères / Sébastien d’Hérin &middot; Château de Versailles Spectacles &middot; CVS002
+        </div>
+        <div class="card-tldr">The first complete recording of Campra’s opéra‑ballet L&#39;Europe galante proves a revelatory discovery, filling a long‑standing gap in the discography. Sébastien d’Hérin directs Les Nouveaux Caractères with effervescent attention to detail, coaxing vivid colours from the orchestra while maintaining a buoyant pace. The cast – Caroline Mutel, Isabelle Druet, Heather Newhouse, Anders Dahlin, Nicolas Courjal – deliver polished, characterful singing, especially in the pastoral French entrée and the Spanish serenades, where silken soprano lines blend warmly with lower voices. The recording captures the playful spirit of the 1697 work, with tasteful percussion and crisp Baroque rhythms, though a few overloaded passages could have been reined in. For anyone interested in French Baroque opera, this disc offers an involving, sprightly performance that showcases Campra’s inventive choreography and melodic charm.</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Not on Spotify</span>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.12s">
+
+      <div class="art-col">
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Bellini, Donizetti, Spontini</div>
+        <h2 class="card-work">Spirito (bel canto scenes)</h2>
+        <div class="card-performers">
+          Marina Rebeka (soprano), Chorus and Orchestra of the Teatro Massimo, Palermo / Jader Bignamini &middot; Prima Classic &middot; PRIMA001
+        </div>
+        <div class="card-tldr">Latvian soprano Marina Rebeka launches her own label Prima Classic with a program of substantial bel‑canto scenes from Bellini, Donizetti and Spontini, displaying a formidable voice and artistry. Her instrument is large, dark‑toned and richly projected, placed far back in the throat with Italianate consonants; it commands a formidable top and navigates tight coloratura with surprising agility. Rebeka excels in moments of steely determination – her account of the prayer from Maria Stuarda builds impressively, while the finale of La vestale shows her grasp of stately drama. She receives idiomatic support from Jader Bignamini and the Teatro Massimo di Palermo forces, though the orchestral ensemble is occasionally scrappy. The disc also includes striking moments from Norma and Anna Bolena, showcasing her versatility. The program offers a powerful, if somewhat weighty, reading of bel‑canto repertoire that will appeal to fans of dramatic singing, and demonstrates her deep engagement with the composers’ dramatic intentions.</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Not on Spotify</span>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class="tab-panel"
+       id="tab-reissues"
+       role="tabpanel">
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.0s">
+
+      <div class="art-col">
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Jean-Philippe Rameau</div>
+        <h2 class="card-work">Orchestral Suites</h2>
+        <div class="card-performers">
+          Orchestra of the Eighteenth Century, Frans Brüggen &middot; Glossa &middot; GCD921125
+        </div>
+        <div class="card-tldr">Frans Brüggen&#39;s traversal of Rameau&#39;s orchestral suites with the Orchestra of the Eighteenth Century is a masterclass in Baroque vitality. Brüggen extracts an extraordinary range of colour from the period ensemble, from the swirling Overture to Les Boréades—propelled by crisp string articulation and a buoyant bass line—to the wild Contredanse en rondeau, whose folk‑like exuberance is balanced by a refined sense of swing. His reading balances rigour and joy, capturing the theatrical flair of the French Baroque while respecting the period’s dynamic contrast. The gaily swinging, richly textured &#39;Air vif&#39; showcases Brüggen&#39;s ability to blend rhythmic momentum with lush harmonic colour, while the Overture to Zoroastre, with its pounding timpani, demonstrates the ensemble&#39;s virtuosic edge. The recording&#39;s vivid acoustic places every detail in relief, letting the listener hear the interplay of winds, timpani and continuo. This set stands out for its rhythmic drive, lucid texture and an infectious enthusiasm that makes even the most elaborate suite feel fresh. It is a compelling argument for period performance and a must‑have for anyone exploring Rameau&#39;s orchestral world.</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Not on Spotify</span>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.06s">
+
+      <div class="art-col">
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b2738beab12d3ddade388a4b08fa" alt="Complete Works for Organ" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Johann Sebastian Bach</div>
+        <h2 class="card-work">Complete Works for Organ</h2>
+        <div class="card-performers">
+          Marie-Claire Alain &middot; Warner Classics &middot; 9029 56345-3
+        </div>
+        <div class="card-tldr">Marie‑Claire Alain&#39;s first recorded anthology of Bach&#39;s organ works, captured in the 1960s for Erato, remains a touchstone of the repertoire. Alain combines a clear, bell‑like tone with a disciplined sense of architecture, allowing each prelude, fugue and chorale to unfold with organic momentum. Her registration choices are imaginative yet never gimmicky, highlighting the work&#39;s contrapuntal dialogue while preserving a warm, resonant acoustic. The 1960s recording strikes an ideal balance between immediacy and space, delivering a vibrant account of the C major Prelude and Fugue BWV 547 that is both sprightly and profound. The collection also features the grand &#39;Offertoire&#39; from the Messe pour les Paroisses, where her registration brings out a kaleidoscope of colours on the Silbermann organ, blending majestic chorales with delicate ornamental filigree. This early traversal remains a reference for its clarity, rhythmic alertness and the way it respects Bach&#39;s rhetorical gestures, standing alongside the more weighty accounts of Helmut Walcha and the introspective readings of Egerton. Compared with her later, broader readings, this set feels the most direct and vital, offering the listener an authoritative yet approachable view of Bach&#39;s organ universe.</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:1XPpW0YQeEEUvK57kxuMUU" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            Open in Spotify
+          </a>
+          <a href="https://open.spotify.com/album/1XPpW0YQeEEUvK57kxuMUU" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.12s">
+
+      <div class="art-col">
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">François Couperin</div>
+        <h2 class="card-work">Complete Works</h2>
+        <div class="card-performers">
+          Various artists (William Christie, Christoph Rousset, Lionel Rogg, Laurence Boulay, etc.) &middot; Erato &middot; 9029 56111-6
+        </div>
+        <div class="card-tldr">The Erato 16‑disc François Couperin Edition gathers a century‑spanning array of performances that illuminate the full breadth of Couperin&#39;s output. Highlights include William Christie&#39;s account of the three Leçons de ténèbres, Christoph Rousset&#39;s gleaming motets with soloists such as Sandrine Piauí, and especially Lionel Rogg&#39;s 1970 Organ Masses on a Silbermann organ—playing that is both technically dazzling and spiritually profound. The collection also features Laurence Boulay&#39;s crisp 1970s harpsichord readings, an archive &#39;bonus&#39; disc with pianist Marcelle Meyer and organist Georges Cziffra, though unaccountably it omits Wanda Landowska&#39;s legendary pre‑war Passacaille. The set also includes the delightful series of instrumental suites Les Nations, performed by an augmented Quadro Amsterdam, whose pioneering period style blends subtle vibrato and expressive nuancing to sound like a modern chamber group. The variety of instruments and interpretative approaches makes this set a valuable resource for anyone seeking to understand Couperin&#39;s expressive world, from intimate chamber works to grand liturgical pieces, and it holds its own alongside the celebrated recordings of Kenneth Gilbert, Gustav Leonhardt and Christoph Rousset.</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Not on Spotify</span>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">Also consider</div>
+          
+          
+          <div class="comp-item">
+            
+            <div class="comp-art-placeholder"></div>
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                François Couperin — Complete Works for Harpsichord
+                
+                
+              </div>
+              <div class="comp-meta">
+                Kenneth Gilbert &middot; Harmonia Mundi
+              </div>
+              
+              <div class="comp-note">Gilbert&#39;s scholarly precision and crisp articulation offer a more academic view of Couperin&#39;s ornamental language.</div>
+              
+            </div>
+          </div>
+          
+          
+          <div class="comp-item">
+            
+            <div class="comp-art-placeholder"></div>
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                François Couperin — Complete Works for Harpsichord
+                
+                
+              </div>
+              <div class="comp-meta">
+                Gustav Leonhardt &middot; Teldec
+              </div>
+              
+              <div class="comp-note">Leonhardt&#39;s lean, incisive sound balances Baroque rhetoric with a contrasting textual clarity.</div>
+              
+            </div>
+          </div>
+          
+          
+          <div class="comp-item">
+            
+            <div class="comp-art-placeholder"></div>
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                François Couperin — Complete Works for Harpsichord
+                
+                
+              </div>
+              <div class="comp-meta">
+                Christoph Rousset &middot; Aparté
+              </div>
+              
+              <div class="comp-note">Rousset&#39;s recording on a French 18th‑century harpsichord brings out the dance‑like qualities and refined ornamentation of Couperin&#39;s music.</div>
+              
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
+    </div>
+    
+  </div>
+  
+
+  
+  <div class="tab-panel"
+       id="tab-features"
+       role="tabpanel">
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Anna Thorvaldsd Ttir</h2>
+      <div class="feature-summary">This feature article profiles Icelandic composer Anna Thorvaldsdóttir, highlighting her distinctive compositional approach and major works. Thorvaldsdóttir begins her creative process by drawing her music before notating it conventionally, using the resulting pencil illustrations as compositional aids that &#34;map where a piece is going.&#34; Her music draws deeply from Icelandic nature—both aesthetically and structurally—with the rhizome imagery of her native landscape influencing the organic development of her compositions. Her orchestral works, particularly Dreaming (2008), which won the Nordic Council Music Prize in 2012, and Aeriality (2011), demonstrate her confident handling of orchestral texture, building on principles of instrumental autonomy to create a single woven texture. Thorvaldsdóttir expands her musical language through quarter-tones and noise music, while her smaller works like Hrím (2009-10) for ensemble and Spectra (2017) for string trio lay bare the same compositional processes found in her larger pieces. Now based in London and holding residencies with the Iceland Symphony Orchestra and as a Kravis Emerging Composer with the New York Philharmonic, Thorvaldsdóttir continues to develop her unique voice that combines humbling vastness, depth of colour, and technical innovation.</div>
+      <div class="feature-recordings">
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div class="art-col">
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Anna Thorvaldsdóttir</div>
+            <h3 class="card-work">Rhízoma</h3>
+            <div class="card-performers">
+              not specified in the article
+            </div>
+            <div class="card-tldr">The first album to feature Thorvaldsdóttir&#39;s music exclusively, featuring the title work Rhízoma inspired by the drawing reproduced on its cover and inside the booklet.</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Not on Spotify</span>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.06s">
+          <div class="art-col">
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Anna Thorvaldsdóttir</div>
+            <h3 class="card-work">Metacosmos (2017)</h3>
+            <div class="card-performers">
+              New York Philharmonic under Esa-Pekka Salonen
+            </div>
+            <div class="card-tldr">The first performance of the work commissioned by the New York Philharmonic as a result of Thorvaldsdóttir&#39;s Kravis Emerging Composer fellowship, given by the orchestra under Salonen in April 2019.</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Not on Spotify</span>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.12s">
+          <div class="art-col">
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Anna Thorvaldsdóttir</div>
+            <h3 class="card-work">Aeriality (2011)</h3>
+            <div class="card-performers">
+              Philharmonia Orchestra under Esa-Pekka Salonen
+            </div>
+            <div class="card-tldr">A performance of Aeriality by the Philharmonia Orchestra under Salonen in September 2017, described as the work taking Thorvaldsdóttir&#39;s music closer to the intersection of symphonic music and sound art.</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Not on Spotify</span>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Bach Busoni Chaconne</h2>
+      <div class="feature-summary">This Gramophone article features an interview with pianist Federico Colli discussing the Bach-Busoni Chaconne, one of the most celebrated piano transcriptions. Colli approaches the work through a theological lens, arguing that Busoni recognized the deep spiritual content of Bach&#39;s original violin piece and created the ideal pianistic medium to reveal this transcendence. He contrasts Busoni&#39;s approach with Brahms&#39;s left-hand transcription, which emphasizes the struggle between content and representation. Colli credits his artistic vision to Michelangeli&#39;s landmark 1948 recording, which he describes as suddenly clarifying his understanding of the work, as well as Pletnev&#39;s Carnegie Hall performance for its exceptional sound quality. Throughout the conversation, Colli emphasizes the importance of Busoni&#39;s detailed markings—sforzandos, tenutos, tempo indications—and how closely studying the score reveals the composer&#39;s soul. He discusses his interpretive choices, including stretching the pulse, achieving extraordinary dynamic range, and his decision to end in D major rather than D minor, viewing it as embracing the possibility of another world beyond our own.</div>
+      <div class="feature-recordings">
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div class="art-col">
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b27300884365877a801234cc64b5" alt="Chaconne (transcription for piano)" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">J.S. Bach/Busoni</div>
+            <h3 class="card-work">Chaconne (transcription for piano)</h3>
+            <div class="card-performers">
+              Arturo Benedetti Michelangeli
+            </div>
+            <div class="card-tldr">A legendary 1948 recording that Colli describes as fundamentally clarifying his understanding of the work, like putting in contact lenses and suddenly seeing clearly.</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:1eF9NDLXb2mA4X3fbd1g0I" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                Open in Spotify
+              </a>
+              <a href="https://open.spotify.com/album/1eF9NDLXb2mA4X3fbd1g0I" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.06s">
+          <div class="art-col">
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">J.S. Bach/Busoni</div>
+            <h3 class="card-work">Chaconne (transcription for piano)</h3>
+            <div class="card-performers">
+              Mikhail Pletnev
+            </div>
+            <div class="card-tldr">A live Carnegie Hall recording praised for its fantastic sound quality, which Colli particularly admires among his favorite accounts.</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Not on Spotify</span>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.12s">
+          <div class="art-col">
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b2737c46117e969ce64cbb6151ee" alt="Chaconne (transcription for piano)" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">J.S. Bach/Busoni</div>
+            <h3 class="card-work">Chaconne (transcription for piano)</h3>
+            <div class="card-performers">
+              Federico Colli &middot; Champs Hill Records
+            </div>
+            <div class="card-tldr">Colli&#39;s own recording, noted for his willingness to stretch the pulse, extraordinary dynamic range, and withdrawal to ethereal pianissimos, reviewed on page 60 of the same issue.</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:5DtZjUjUWyTuJlBIhVSyMp" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                Open in Spotify
+              </a>
+              <a href="https://open.spotify.com/album/5DtZjUjUWyTuJlBIhVSyMp" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Defining Moments</h2>
+      <div class="feature-summary">&#34;Defining Moments&#34; is a Gramophone January 2019 feature that charts the key milestones in the career of an influential early‑music specialist. It opens with his violin and viola studies in Vienna under Ernst Moravec, later continuing with Firmin Touche in Paris while also pursuing musicology at Vienna University (1951‑53). In 1946 he began his association with the Austrian musicologist Josef Mertin, becoming concertmaster of Mertin’s Collegium Musicum and, in 1949, co‑founding the Vienna Viola da Gamba Quartet with future luminaries such as Nikolaus and Alice Harnoncourt. The chronology then records his move to Switzerland in 1955, where he led the New Zurich Quartet and held principal viola positions in Zurich and Winterthur, while still studying the violin with teachers like Alexander Schaichet and Peter Rybar. In 1958 he was appointed professor of violin, baroque violin and viola at the Vienna Academy, a post that allowed him to lecture on style and interpretation of string music. The final entry notes the creation of the Vienna Capella Academica in 1965, a small Baroque orchestra he typically led from the first violin desk, and marks his first recordings for Deutsche Grammophon’s Archiv label—steps that cemented his role in the revival of historically informed performance.</div>
+      <div class="feature-recordings">
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Eduard Melkus</h2>
+      <div class="feature-summary">This article profiles Eduard Melkus, a Viennese violinist and viola player born in 1928 who was approaching his 90th birthday at the time of writing. Celebrated as one of the great Viennese violinists with a distinctive plangent tone and gemütlich style, Melkus traces his musical lineage from a family of amateur pianists in Baden near Vienna. His teachers included Ernst Moravec, Ysaÿe pupil Firmin Touche, Russian Alexander Schaichet, and Peter Rybar, while his key mentor was the musical polymath Josef Mertin, who guided him toward historical performance practices. In 1950, Melkus participated in Mertin&#39;s pioneering Vienna Concentus Musicus recordings of Bach&#39;s Brandenburg Concertos alongside early music pioneers like Nikolaus Harnoncourt and Gustav Leonhardt. Though he faced criticism from Baroque purists for his vibrato and use of modern instruments, his approach combined scholarly research with musical sensitivity. His repertoire spanned from Baroque through Classical to modern works including Bartók&#39;s Viola Concerto and the premiere of Wellesz&#39;s violin concerto in 1962. Working with period instruments including a 1760 Aegidius Klotz violin, Melkus is especially renowned for his 1967 recordings of Biber&#39;s Mystery (Rosary) Sonatas, which the article describes as &#39;epoch-making&#39; and &#39;still the most moving and involving&#39; available.</div>
+      <div class="feature-recordings">
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div class="art-col">
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Biber</div>
+            <h3 class="card-work">Mystery (Rosary) Sonatas</h3>
+            <div class="card-performers">
+              Eduard Melkus (violin), Huguette Dreyfus (harpsichord), Lionel Rogg (organ), Hans-Jürg Lange (bassoon), Karl Scheit (lute), Gerald Sonneck (cello and viola da gamba), Alfred Planyavsky (violone) &middot; Archiv Produktion
+            </div>
+            <div class="card-tldr">The landmark 1967 Vienna recording described as &#39;epoch-making&#39; and &#39;still the most moving and involving&#39; interpretation of Biber&#39;s pictorial Rosary Sonatas, praised for its emotional depth and artistic commitment.</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Not on Spotify</span>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.06s">
+          <div class="art-col">
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Corelli</div>
+            <h3 class="card-work">Op. 5 Violin Sonatas (complete)</h3>
+            <div class="card-performers">
+              Eduard Melkus (violin), Huguette Dreyfus (harpsichord), with other continuo players &middot; Archiv Produktion
+            </div>
+            <div class="card-tldr">A scholarly recording featuring ornaments gathered from Corelli, Geminiani and others, with delightfully varied accompaniments; includes No. 7 performed in Geminiani&#39;s concerto grosso arrangement.</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Not on Spotify</span>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.12s">
+          <div class="art-col">
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Tartini/Nardini</div>
+            <h3 class="card-work">Concerto recordings</h3>
+            <div class="card-performers">
+              Eduard Melkus (1966 recordings)
+            </div>
+            <div class="card-tldr">Comparisons with teacher Rybar&#39;s 1950-52 accounts of Tartini&#39;s D minor and Nardini&#39;s E minor; Melkus adds authentic ornamentation in slow movements while both versions &#39;get under the skin of the music&#39;.</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Not on Spotify</span>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Gramophone Editor S Choice</h2>
+      <div class="feature-summary">This Gramophone Editor&#39;s Choice feature from January 2019 showcases the magazine&#39;s top recording selections reviewed throughout 2018. The curated list spans a wide range of classical repertoire, from Baroque masters like Haydn to twentieth-century innovators such as Stravinsky and Messiaen, demonstrating the breadth of excellence in recent classical releases. The selections highlight performances by world-class artists including pianists Kirill Gerstein, Pierre-Laurent Aimard, and Lars Vogt, violinists Christian Tetzlaff and Alisa Weilerstein, as well as ensembles like the Chiaroscuro Quartet and Colin Currie Group. The collection emphasizes both established masterpieces and lesser-known works, offering listeners a comprehensive guide to the most compelling recordings of the year.</div>
+      <div class="feature-recordings">
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div class="art-col">
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b27376d5ecc85b126a4a3e777e9e" alt="Catalogue d&#39;oiseaux" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Messiaen</div>
+            <h3 class="card-work">Catalogue d&#39;oiseaux</h3>
+            <div class="card-performers">
+              Pierre-Laurent Aimard (piano) &middot; Pentatone
+            </div>
+            <div class="card-tldr">Pierre-Laurent Aimard delivers a brilliant performance of Messiaen&#39;s demanding piano work, showcasing deep knowledge of the composer&#39;s music and rewarding listeners with fascinating exploration of this bird-song cycle.</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:7n4PHyXeROTPosWZQVO8OK" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                Open in Spotify
+              </a>
+              <a href="https://open.spotify.com/album/7n4PHyXeROTPosWZQVO8OK" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.06s">
+          <div class="art-col">
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b27350efa7b08ac5c17b93efe63c" alt="Drumming" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Reich</div>
+            <h3 class="card-work">Drumming</h3>
+            <div class="card-performers">
+              Synergy Vocals; Colin Currie Group &middot; Colin Currie Records
+            </div>
+            <div class="card-tldr">Colin Currie and colleagues deliver a mesmerizing performance of Steve Reich&#39;s minimalism masterpiece, beautifully handling its complex rhythmic patterns and phasing with precision and artistry.</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:5loLlGNtI9zytRE3Xm2qXp" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                Open in Spotify
+              </a>
+              <a href="https://open.spotify.com/album/5loLlGNtI9zytRE3Xm2qXp" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.12s">
+          <div class="art-col">
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b2735d49e01a0d6125db7212cfa5" alt="String Quartets Nos 9 &amp; 14 &#39;Death and the Maiden&#39;" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Schubert</div>
+            <h3 class="card-work">String Quartets Nos 9 &amp; 14 &#39;Death and the Maiden&#39;</h3>
+            <div class="card-performers">
+              Chiaroscuro Quartet &middot; BIS
+            </div>
+            <div class="card-tldr">The Chiaroscuro Quartet performs two Schubert quartets with enormous conviction, delivering extraordinary emotional depth and power in this very stylish ensemble recording.</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:6xh5mjy8nEoEugvWpmhVzR" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                Open in Spotify
+              </a>
+              <a href="https://open.spotify.com/album/6xh5mjy8nEoEugvWpmhVzR" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Hear The Current Generation</h2>
+      <div class="feature-summary">This Gramophone feature from January 2019 spotlights four contemporary pianists who are redefining classical piano performance through their distinctive artistic approaches. The article &#34;Piano&#39;s New Generation&#34; introduces Benjamin Grosvenor, whose sparkling account of Schulz-Evler&#39;s virtuosic Arabesques on Johann Strauss&#39;s &#39;Blue Danube&#39; demonstrates his deep awareness of pianistic tradition. Igor Levit&#39;s recording of Busoni&#39;s arrangement of Liszt&#39;s Fantasia and Fugue showcases his remarkable ability to clarify complex music while maintaining fluency and nuance. Beatrice Rana&#39;s passionate interpretation of Schumann&#39;s Études symphoniques, which earned her a silver medal at the 2013 Van Cliburn competition, reveals her imaginative musical range and attention to texture. Finally, Yuja Wang&#39;s elegant rendition of Gluck/Sgambati&#39;s Mélodie illustrates her extraordinary ability to sustain a singing line with flexible rubato and a gorgeous tonal quality. Together, these artists represent how today&#39;s pianists honor classical inheritance while bringing fresh creative perspectives to standard repertoire.</div>
+      <div class="feature-recordings">
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div class="art-col">
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Schulz-Evler</div>
+            <h3 class="card-work">Arabesques on Johann Strauss&#39;s &#39;By the Beautiful Blue Danube&#39;</h3>
+            <div class="card-performers">
+              Benjamin Grosvenor &middot; Decca
+            </div>
+            <div class="card-tldr">A sparkling virtuoso showpiece that demonstrates Grosvenor&#39;s awareness of pianistic inheritance and technical brilliance.</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Not on Spotify</span>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.06s">
+          <div class="art-col">
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Liszt/Busoni</div>
+            <h3 class="card-work">Fantasia and Fugue on &#39;Ad nos, ad salutarem undam&#39;, S259</h3>
+            <div class="card-performers">
+              Igor Levit &middot; Sony Classical
+            </div>
+            <div class="card-tldr">A fluent and nuanced performance showing Levit&#39;s ability to clarify complex music with remarkable musicality.</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Not on Spotify</span>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.12s">
+          <div class="art-col">
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Schumann</div>
+            <h3 class="card-work">Études symphoniques, Op 13</h3>
+            <div class="card-performers">
+              Beatrice Rana &middot; Harmonia Mundi
+            </div>
+            <div class="card-tldr">Free and passionate interpretations alive with care for texture and inner voicing, evoking memories of Cortot and Argerich.</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Not on Spotify</span>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Home From Home</h2>
+      <div class="feature-summary">This feature article celebrates conductor Kirill Karabits&#39;s 10-year tenure with the Bournemouth Symphony Orchestra, highlighting his commitment to adventurous programming and discovery. The piece opens with the world premiere of Mark-Anthony Turnage&#39;s Testament, a new song-cycle co-commissioned by the BSO and Weimar Staatskapelle, which Karabits describes as deeply personal given his Ukrainian heritage. The article then pivots to his new recording of Boris Lyatoshinsky&#39;s massive Third Symphony (1951), a work Karabits feels uniquely qualified to interpret given that his composer father studied with Lyatoshinsky while his musicologist mother is a leading authority on the composer&#39;s work. The article explores Karabits&#39;s philosophy of building trust with audiences through challenging repertoire, noting that the BSO has tackled Messiaen&#39;s Turangalîla-symphonie, Shostakovich&#39;s Symphony No. 14, and Prokofiev&#39;s Second Piano Concerto to enthusiastic responses. Karabits also discusses his parallel role as General Music Director of the Weimar Staatskapelle, where he conducted the world premiere of Liszt&#39;s unfinished opera Sardanapolo, and his work with the youth orchestra I, Culture.</div>
+      <div class="feature-recordings">
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div class="art-col">
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Boris Lyatoshinsky</div>
+            <h3 class="card-work">Symphony No. 3</h3>
+            <div class="card-performers">
+              Bournemouth Symphony Orchestra conducted by Kirill Karabits
+            </div>
+            <div class="card-tldr">A massive post-Romantic symphony from 1951 that Karabits feels uniquely positioned to interpret given his Ukrainian heritage and family connections to the composer. Rozhdestvensky famously said that if Lyatoshinsky had lived in Moscow, his name would stand alongside Shostakovich&#39;s.</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Not on Spotify</span>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Marvel At Where It All Began</h2>
+      <div class="feature-summary">This feature article from Gramophone magazine&#39;s January 2019 issue celebrates the legacy of four legendary pianists from the Golden Age of piano recording. Titled &#34;Marvel At Where It All Began,&#34; the piece highlights exceptional archival recordings that showcase the distinctive interpretive approaches of these masters. Ignaz Friedman&#39;s 1936 recording of Chopin&#39;s Nocturne in E flat major exemplifies the &#34;singing line, subtle rubato and succulently extravagant tone&#34; that defined the old school of piano playing. Josef Hofmann&#39;s performance of the Andante spianato et Grande Polonaise, taken from his 1937 Golden Jubilee Concert at the Met, demonstrates his effortlessly fanciful technique. Benno Moiseiwitsch&#39;s 1941 rendition of Liszt&#39;s La leggierezza showcases remarkable tonal control and &#34;old-school charm,&#34; while Sergei Rachmaninov&#39;s 1929 recording of Schumann&#39;s Carnaval illustrates his inimitable rubato and emotional freedom. Together, these recordings offer modern listeners a window into an era when pianists possessed an unmistakable combination of technique and temperament that has become increasingly rare.</div>
+      <div class="feature-recordings">
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div class="art-col">
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Frédéric Chopin</div>
+            <h3 class="card-work">Nocturne in E flat major, Op. 55 No. 2</h3>
+            <div class="card-performers">
+              Ignaz Friedman &middot; Naxos Historical
+            </div>
+            <div class="card-tldr">Friedman&#39;s 1936 recording exemplifies the ideal blend of technique and temperament, featuring the singing line, subtle rubato and succulently extravagant tone that marked the greatest pianists of the old school.</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Not on Spotify</span>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.06s">
+          <div class="art-col">
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Frédéric Chopin</div>
+            <h3 class="card-work">Andante spianato et Grande Polonaise, Op. 22</h3>
+            <div class="card-performers">
+              Josef Hofmann &middot; VAI
+            </div>
+            <div class="card-tldr">Taken from Hofmann&#39;s legendary 1937 Golden Jubilee Concert at the Met, this recording contrasts a beautifully lyrical Andante spianato with an effortlessly free and fanciful Grande Polonaise.</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Not on Spotify</span>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.12s">
+          <div class="art-col">
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Franz Liszt</div>
+            <h3 class="card-work">La leggierezza</h3>
+            <div class="card-performers">
+              Benno Moiseiwitsch &middot; Naxos Historical
+            </div>
+            <div class="card-tldr">Moiseiwitsch&#39;s 1941 recording showcases exceptional tonal control, fluid rhetoric, soaring ardency and old-school charm, with masterful handling of the step-wise bass line.</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Not on Spotify</span>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Mirroring The Piano S Golden Age</h2>
+      <div class="feature-summary">This feature article examines how a new generation of pianists, including Daniil Trifonov, Yuja Wang, Benjamin Grosvenor and Beatrice Rana, are reviving the aesthetic values of the 19th-century Romantic piano tradition. The author Jed Distler argues that these young artists combine the golden age characteristics of tonal beauty, textural diversity, textual freedom and singing melody with impeccable modern technique. The article draws parallels between these contemporary performers and legendary pianists like Josef Hofmann, Benno Moiseiwitsch, Arturo Benedetti Michelangeli and Vladimir Horowitz, whose playing emphasized individuality over literal interpretation. Notably, Trifonov&#39;s extraordinary 2013 Carnegie Hall debut is highlighted as evidence that Romantic pianism remains alive, while Wang&#39;s free-spirited approach and Grosvenor&#39;s luminous Bach playing further demonstrate this revival. The piece contextualizes this trend as a reaction against the objective, textually faithful approach that dominated late 20th-century piano performance, influenced by Artur Schnabel&#39;s legacy. Despite Schnabel&#39;s sway, outliers like Shura Cherkassky, Georges Cziffra and Horowitz kept the Romantic flame alive until today&#39;s resurgence.</div>
+      <div class="feature-recordings">
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div class="art-col">
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Franz Liszt</div>
+            <h3 class="card-work">Piano Sonata in B minor, S178</h3>
+            <div class="card-performers">
+              Daniil Trifonov &middot; Deutsche Grammophon
+            </div>
+            <div class="card-tldr">Trifonov&#39;s 2013 Carnegie Hall debut performance, featuring hair-trigger octaves and fanciful dynamic manipulation that drew comparisons to historic pianists like Hofmann and Moiseiwitsch.</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Not on Spotify</span>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.06s">
+          <div class="art-col">
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Frédéric Chopin</div>
+            <h3 class="card-work">24 Preludes, Op. 28</h3>
+            <div class="card-performers">
+              Daniil Trifonov &middot; Deutsche Grammophon
+            </div>
+            <div class="card-tldr">Trifonov&#39;s varied pedal effects brought new urgency to Chopin&#39;s daring harmonies and intricate cross-rhythmic writing in these preludes.</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Not on Spotify</span>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.12s">
+          <div class="art-col">
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Robert Schumann</div>
+            <h3 class="card-work">Symphonic Etudes, Op. 13</h3>
+            <div class="card-performers">
+              Beatrice Rana
+            </div>
+            <div class="card-tldr">Rana&#39;s 2013 Cliburn Competition performance at age 20, described as one of the most memorable listening experiences, combining youthful passion with an old soul&#39;s expressive depth.</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Not on Spotify</span>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Rahms S Violin Concerto 1878</h2>
+      <div class="feature-summary">The Gramophone feature from January 2019, written by James Jolly, uses Brahms’s 1878 Violin Concerto as its point of departure. It points out that, like Beethoven’s Eroica for the symphony, Brahms’s concerto raised the technical and expressive stakes for violinists, becoming a central repertoire work after its premiere by Joseph Joachim. Early virtuoso challenges such as Wieniawski gave way to its universal acceptance.
+Jolly selects several complementary works to deepen the listener’s journey: Brahms’s Piano Quartet No 1 with its famous gypsy‑inflected rondo, the Double Concerto (a reconciliation piece between Brahms and Joachim) and the Third Violin Sonata in D minor, all sharing thematic or emotional connections with the concerto. He then turns to Joachim’s own output, highlighting the rarely performed Second Concerto and the salon‑like Notturno, as well as Bruch’s ever‑popular First Concerto, whose finale draws on Hungarian rhythms reminiscent of Joachim’s heritage.
+The article also surveys a range of larger Austro‑German concertos, from Goldmark’s melodious 1877 work to Reger’s hour‑long masterpiece, Hindemith’s 1939 concerto and Schoenberg’s 1936 twelve‑note Violin Concerto. Across these works Jolly references notable recordings, recommending the Kavakos/Chailly Decca version as the standout Brahms account, while also endorsing the Argerich/Kremer/Bashmet/Maisky DG piano quartet and the Capuçon brothers’ Erato Double Concerto as exemplary companion discs. The piece serves as a curated guide for anyone eager to explore beyond the familiar Brahms concerto.</div>
+      <div class="feature-recordings">
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div class="art-col">
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b2731be01921580e5b6d6651a881" alt="Violin Concerto in D major, Op. 77" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Johannes Brahms</div>
+            <h3 class="card-work">Violin Concerto in D major, Op. 77</h3>
+            <div class="card-performers">
+              Leonidas Kavakos (violin), Leipzig Gewandhaus Orchestra / Riccardo Chailly &middot; Decca
+            </div>
+            <div class="card-tldr">A radiant, lyric account of Brahms’s only Violin Concerto, praised for its warmth and structural clarity.</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:7BVZaoTcidBZfNZ1WxtOzH" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                Open in Spotify
+              </a>
+              <a href="https://open.spotify.com/album/7BVZaoTcidBZfNZ1WxtOzH" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.06s">
+          <div class="art-col">
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Johannes Brahms</div>
+            <h3 class="card-work">Piano Quartet No. 1 in G minor, Op. 25</h3>
+            <div class="card-performers">
+              Martha Argerich (piano), Gidon Kremer (violin), Yuri Bashmet (viola), Mischa Maisky (cello) &middot; DG
+            </div>
+            <div class="card-tldr">A performance that balances lyrical grace with the work’s fiery gypsy finale.</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Not on Spotify</span>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.12s">
+          <div class="art-col">
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Johannes Brahms</div>
+            <h3 class="card-work">Double Concerto for Violin and Cello in A minor, Op. 102</h3>
+            <div class="card-performers">
+              Renaud Capuçon (violin), Gautier Capuçon (cello), Gustav Mahler Youth Orchestra / Myung‑Whun Chung &middot; Erato
+            </div>
+            <div class="card-tldr">An intimate reading that captures the work’s resolution and emotional dialogue between the two soloists.</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Not on Spotify</span>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Star Storyteller</h2>
+      <div class="feature-summary">This Gramophone article profiles soprano Diana Damrau, exploring her remarkable career spanning from Mozart&#39;s Queen of the Night to Verdi&#39;s Violetta at the Met. The feature highlights her recent activities including a world premiere of Iain Bell&#39;s &#39;The Hidden Place&#39; at the Barbican, a new Traviata production at the Metropolitan Opera under Yannick Nézet-Séguin, and a live recording of Hugo Wolf&#39;s Italienisches Liederbuch with Jonas Kaufmann on a 12-city tour for Erato. Damrau discusses her artistic philosophy, emphasizing that &#39;music is not loudness&#39; and advocating for subtle, emotionally communicative performances over spectacle. She addresses the challenges of modern opera productions that prioritize dramatic staging over musical pacing, and reflects on her physical approach to singing that integrates movement with vocal technique. Now 47 and based in Zurich, Damrau credits her passion for opera to hearing Teresa Stratas in Zeffirelli&#39;s La Traviata film at age 12, and cites Maria Callas, Joan Sutherland, Edita Gruberová, and Kiri Te Kanawa as key influences. The article showcases her uninhibited spontaneity through anecdotes of her playful collaborations with Kaufmann, including a dramatically motivated gesture during their Wolf recitals.</div>
+      <div class="feature-recordings">
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div class="art-col">
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b27316e6c2dab56a9fb788d25103" alt="Italienisches Liederbuch" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Hugo Wolf</div>
+            <h3 class="card-work">Italienisches Liederbuch</h3>
+            <div class="card-performers">
+              Diana Damrau (soprano), Jonas Kaufmann (tenor), Helmut Deutsch (piano) &middot; Erato/Warner Classics
+            </div>
+            <div class="card-tldr">A live recording of Wolf&#39;s compact character sketches made during a 12-city tour in early 2018, showcasing Damrau&#39;s and Kaufmann&#39;s dramatic interpretation and spontaneous chemistry.</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:6vVqvUcL1rOyNRZxmusmmz" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                Open in Spotify
+              </a>
+              <a href="https://open.spotify.com/album/6vVqvUcL1rOyNRZxmusmmz" target="_blank" rel="noopener" class="btn-web">Web Player</a>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.06s">
+          <div class="art-col">
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Iain Bell</div>
+            <h3 class="card-work">The Hidden Place (world premiere)</h3>
+            <div class="card-performers">
+              Diana Damrau, with poetry by Christa Palmer
+            </div>
+            <div class="card-tldr">A new song cycle commissioned for Damrau, with poems by her aunt reflecting intimate moments between lovers across four seasons, premiered at the Barbican in January 2019.</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Not on Spotify</span>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.12s">
+          <div class="art-col">
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Richard Strauss</div>
+            <h3 class="card-work">Zerbinetta aria &#39;Grossmächtige Prinzessin&#39;</h3>
+            <div class="card-performers">
+              Diana Damrau, Met Orchestra, James Levine (conductor)
+            </div>
+            <div class="card-tldr">Damrau&#39;s breakthrough 2010 Carnegie Hall performance in a wild patchwork dress, where she encored the challenging aria while interacting spontaneously with the audience.</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Not on Spotify</span>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Thorvaldsd Ttir Facts</h2>
+      <div class="feature-summary">The Gramophone January 2019 feature on Icelandic composer Thorvaldsdóttir introduces her life and artistic outlook. Born in 1977 in Borgarnes, she studied composition at the University of California, San Diego, and has been recognized with the Nordic Council Music Prize in 2012 for her orchestral piece Dreaming, as well as Icelandic Music Awards in 2011, 2012 and 2015. Since January 2018 she holds the composer‑in‑residence position with the Iceland Symphony Orchestra, having previously been the Kravis Emerging Composer at the New York Philharmonic, a tenure that culminated in the orchestral work Metacosmos. The article includes a personal performance note in which Thorvaldsdóttir likens a long sustained pitch to a fragile flower that must be carried carefully across a thin rope, emphasizing the need for absolute tranquility and concentrated attention. This metaphor encapsulates her approach to texture, time and subtle sonic nuance, reflecting a compositional style that balances delicate stillness with precise articulation. The feature highlights her role as a leading voice in contemporary Icelandic music and underscores the growing international visibility of her work.</div>
+      <div class="feature-recordings">
+        
+      </div>
+    </div>
+    
+  </div>
+  
+
+</main>
+
+<script>
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+      tabPanels.forEach(p => p.classList.remove('active'));
+
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+
+      const panel = document.getElementById(btn.dataset.tab);
+      if (panel) {
+        panel.classList.add('active');
+        // Re-trigger animations
+        panel.querySelectorAll('.recording-card').forEach((card, i) => {
+          card.classList.remove('animate');
+          void card.offsetWidth; // reflow
+          card.style.animationDelay = (i * 0.06) + 's';
+          card.classList.add('animate');
+        });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
