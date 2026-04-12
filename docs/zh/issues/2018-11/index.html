@@ -1,0 +1,2936 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gramophone November 2018 — 古典乐目录</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Serif+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:          #0d0b09;
+      --surface:     #161210;
+      --surface2:    #1e1a16;
+      --gold:        #c9a56a;
+      --gold-dim:    rgba(201,165,106,0.12);
+      --gold-border: rgba(201,165,106,0.25);
+      --cream:       #ede4d4;
+      --muted:       #7a6a58;
+      --border:      #2a2420;
+      --green:       #1DB954;
+      --text-body:   #cdc0b0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Serif SC', 'EB Garamond', Georgia, serif;
+      background: var(--bg);
+      color: var(--cream);
+      min-height: 100vh;
+      font-size: 17px;
+    }
+
+    .site-header {
+      background: #090706;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .back-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--gold); }
+
+    .lang-switch a {
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      border-bottom: 1px solid var(--gold-border);
+      padding-bottom: 1px;
+      transition: border-color 0.15s;
+    }
+    .lang-switch a:hover { border-color: var(--gold); }
+
+    .header-body {
+      padding: 1rem 2rem 0;
+    }
+
+    .issue-eyebrow {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      margin-bottom: 0.2rem;
+    }
+
+    .issue-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--cream);
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+    }
+
+    .tabs-bar {
+      display: flex;
+      overflow-x: auto;
+      padding: 0 2rem;
+      margin-top: 0.9rem;
+      scrollbar-width: none;
+      gap: 0;
+    }
+    .tabs-bar::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--muted);
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.88rem;
+      letter-spacing: 0.04em;
+      padding: 0.55rem 1.1rem 0.55rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .tab-btn:hover { color: var(--cream); }
+    .tab-btn.active {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+    }
+
+    .tab-count {
+      font-size: 0.7rem;
+      background: var(--gold-dim);
+      color: var(--gold);
+      padding: 0.05rem 0.45rem;
+      border-radius: 999px;
+    }
+
+    main {
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 5rem;
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .recording-card {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 1.6rem;
+      padding: 1.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .recording-card:last-child { border-bottom: none; }
+    .recording-card.animate {
+      animation: cardIn 0.35s ease both;
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .album-art {
+      width: 130px;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 3px;
+      display: block;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+    .album-art:hover {
+      transform: scale(1.04);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 0 1px var(--gold-border);
+    }
+
+    .art-placeholder {
+      width: 130px;
+      height: 130px;
+      background: var(--surface2);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--border);
+      font-size: 2.5rem;
+    }
+
+    .card-badges {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+      min-height: 1.4rem;
+    }
+
+    .badge-rotm {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      background: var(--gold);
+      color: #0d0b09;
+      padding: 2px 9px;
+      border-radius: 2px;
+      font-weight: 700;
+    }
+
+    .badge-ec {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      border: 1px solid var(--gold-border);
+      color: var(--gold);
+      padding: 2px 9px;
+      border-radius: 2px;
+    }
+
+    .card-composer {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      margin-bottom: 0.2rem;
+      font-family: 'EB Garamond', serif;
+    }
+
+    .card-work {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1.3;
+      margin-bottom: 0.35rem;
+    }
+
+    .card-performers {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-bottom: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .card-tldr {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--text-body);
+      margin-bottom: 1rem;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+      margin-bottom: 0.9rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-app {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--green);
+      color: #000;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.38rem 1rem;
+      border-radius: 999px;
+      transition: filter 0.15s;
+    }
+    .btn-app:hover { filter: brightness(1.12); }
+    .btn-app svg { width: 12px; height: 12px; fill: #000; }
+
+    .btn-web {
+      display: inline-flex;
+      align-items: center;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      border: 1px solid var(--border);
+      padding: 0.38rem 0.85rem;
+      border-radius: 999px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .btn-web:hover { color: var(--cream); border-color: var(--muted); }
+
+    .no-spotify {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .comparisons {
+      border-top: 1px solid var(--border);
+      padding-top: 0.8rem;
+    }
+
+    .comp-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .comp-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.35rem 0;
+    }
+
+    .comp-art {
+      width: 38px;
+      height: 38px;
+      object-fit: cover;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .comp-art-placeholder {
+      width: 38px;
+      height: 38px;
+      background: var(--surface2);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .comp-text { flex: 1; min-width: 0; }
+
+    .comp-work {
+      font-size: 0.9rem;
+      color: var(--cream);
+      line-height: 1.4;
+    }
+
+    .comp-meta {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.1rem;
+    }
+
+    .comp-note {
+      font-size: 0.8rem;
+      color: #a09080;
+      margin-top: 0.15rem;
+      line-height: 1.4;
+    }
+
+    .comp-spotify {
+      color: var(--green);
+      text-decoration: none;
+      font-size: 0.8rem;
+      margin-left: 0.4rem;
+      opacity: 0.8;
+      transition: opacity 0.15s;
+    }
+    .comp-spotify:hover { opacity: 1; }
+
+    .feature-block {
+      background: var(--surface);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 4px 4px 0;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .feature-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 0.75rem;
+    }
+
+    .feature-summary {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--text-body);
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.25rem;
+    }
+
+    .feature-recordings .recording-card {
+      grid-template-columns: 90px 1fr;
+    }
+    .feature-recordings .album-art,
+    .feature-recordings .art-placeholder {
+      width: 90px;
+      height: 90px;
+    }
+
+    @media (max-width: 600px) {
+      .recording-card { grid-template-columns: 80px 1fr; gap: 1rem; }
+      .album-art, .art-placeholder { width: 80px; height: 80px; }
+      .header-body { padding: 0.75rem 1rem 0; }
+      .header-top { padding: 0.6rem 1rem; }
+      .tabs-bar { padding: 0 1rem; }
+      main { padding: 1.5rem 1rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="../../index.html" class="back-link">← 返回所有期刊</a>
+    <span class="lang-switch"><a href="../../../en/issues/2018-11/index.html">English</a></span>
+  </div>
+  <div class="header-body">
+    <div class="issue-eyebrow">留声机杂志</div>
+    <h1 class="issue-title">Gramophone November 2018</h1>
+  </div>
+  <nav class="tabs-bar" role="tablist" aria-label="版块">
+    
+    <button class="tab-btn active"
+            data-tab="tab-recording_of_the_month"
+            role="tab"
+            aria-selected="true">
+      月度最佳录音<span class="tab-count">1</span>
+    </button>
+    
+    <button class="tab-btn"
+            data-tab="tab-orchestral"
+            role="tab"
+            aria-selected="false">
+      管弦乐<span class="tab-count">12</span>
+    </button>
+    
+    <button class="tab-btn"
+            data-tab="tab-chamber"
+            role="tab"
+            aria-selected="false">
+      室内乐<span class="tab-count">5</span>
+    </button>
+    
+    <button class="tab-btn"
+            data-tab="tab-vocal"
+            role="tab"
+            aria-selected="false">
+      声乐<span class="tab-count">3</span>
+    </button>
+    
+    <button class="tab-btn"
+            data-tab="tab-opera"
+            role="tab"
+            aria-selected="false">
+      歌剧<span class="tab-count">3</span>
+    </button>
+    
+    <button class="tab-btn"
+            data-tab="tab-reissues"
+            role="tab"
+            aria-selected="false">
+      再版与档案<span class="tab-count">3</span>
+    </button>
+    
+    
+    <button class="tab-btn"
+            data-tab="tab-features"
+            role="tab"
+            aria-selected="false">
+      专题<span class="tab-count">15</span>
+    </button>
+    
+  </nav>
+</header>
+
+<main>
+
+  
+  <div class="tab-panel active"
+       id="tab-recording_of_the_month"
+       role="tabpanel">
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.0s">
+
+      <div>
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b273deacd2df5f25e1471646c229" alt="Solo Violin Sonatas No. 1 &amp; 2, BWV 1001 &amp; 1003; Solo Violin Partita No. 1, BWV 1002" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+          <span class="badge-rotm">月度最佳录音</span>
+          
+        </div>
+        <div class="card-composer">JS Bach</div>
+        <h2 class="card-work">Solo Violin Sonatas No. 1 &amp; 2, BWV 1001 &amp; 1003; Solo Violin Partita No. 1, BWV 1002</h2>
+        <div class="card-performers">
+          Hilary Hahn (violin) &middot; Decca &middot; F 483 3954DH; F 2 6 483 4181DH2
+        </div>
+        <div class="card-tldr">希拉里·哈恩在暌违二十年后重返巴赫独奏小提琴作品，精彩演绎了完整套曲中的三首作品。评论者对G小调奏鸣曲的赋格段落给予最高赞誉，哈恩在处理巴赫的琶音写作时表现出丰富的表情变化，绝无刺耳之感。她的演奏将坦率的表达与精准把控的节奏完美结合，温润的连音以及强劲而绝不粗糙的和弦。评论称A小调奏鸣曲的行板“堪称奇迹”——哈恩让轻柔跳动的伴奏声部清晰支撑主旋律，音色始终温暖而饱满。她在五年间（2012-2017）分阶段录制这些作品，反复打磨。评论者注意到，相比她少年时期在索尼的录音，哈恩如今在速度处理上更具流动性，音色层次和表情幅度也更加丰富多元。评论提及的比较录音包括伊布拉吉莫娃、尤利娅·费舍尔和雷切尔·波德格，但评论者个人更偏爱哈恩那种直击心灵的演绎方式。这是令人叹为观止的小提琴演奏，让听者确信这些音乐不可能以其他方式呈现。</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:2ot197WiXh41pOZaY726OZ" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            在 Spotify 播放
+          </a>
+          <a href="https://open.spotify.com/album/2ot197WiXh41pOZaY726OZ" target="_blank" rel="noopener" class="btn-web">网页版</a>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">可参考录音</div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b27309e6fe8d841ae4d56a776b1b" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                JS Bach — Solo Violin Sonatas and Partitas (selected)
+                
+                <a href="spotify:album:5gzKd5EbDnnuSdxSZyTK94" class="comp-spotify" title="在 Spotify 播放">▶</a>
+                
+                
+                <a href="https://open.spotify.com/album/5gzKd5EbDnnuSdxSZyTK94" class="btn-web" target="_blank" rel="noopener" title="Web Player">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Alina Ibragimova &middot; Hyperion
+              </div>
+              
+              <div class="comp-note">Ibragimova&#39;s ascetic tone and more demonstrable flexibility represent a period-savvy approach preferred by those favoring historically informed performance.</div>
+              
+            </div>
+          </div>
+          
+          
+          <div class="comp-item">
+            
+            <div class="comp-art-placeholder"></div>
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                JS Bach — Solo Violin Sonatas and Partitas
+                
+                
+              </div>
+              <div class="comp-meta">
+                Julia Fischer &middot; Pentatone
+              </div>
+              
+              <div class="comp-note">Fischer offers an imaginative approach that steers a course between Hahn&#39;s expressiveness and Ibragimova&#39;s period style.</div>
+              
+            </div>
+          </div>
+          
+          
+          <div class="comp-item">
+            
+            <div class="comp-art-placeholder"></div>
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                JS Bach — Solo Violin Sonatas and Partitas (selected)
+                
+                
+              </div>
+              <div class="comp-meta">
+                Rachel Podger &middot; Channel Classics
+              </div>
+              
+              <div class="comp-note">Podger&#39;s cool, limpid handling of the music provides an alternative period-performance perspective that also works well.</div>
+              
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class="tab-panel"
+       id="tab-orchestral"
+       role="tabpanel">
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.0s">
+
+      <div>
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Rachmaninov</div>
+        <h2 class="card-work">Piano Concertos No. 2 &amp; No. 4</h2>
+        <div class="card-performers">
+          Daniil Trifonov pfa The Philadelphia Orchestra / Yannick Nézet-Séguin &middot; DG &middot; 483 5335GH
+        </div>
+        <div class="card-tldr">特里福诺夫的拉赫玛尼诺夫第四钢琴协奏曲堪称出色——技艺精湛、充满活力，节奏把握恰到好处。费城交响乐团的音色和音准令人愉悦，是这张录音的亮点所在。第二协奏曲的演绎更具争议：他采用中强开篇并加入了作曲家未标注的装饰音，但凭借特里福诺夫的卓越演奏、乐团天生的音乐性以及涅泽-塞甘细腻的句法处理，这张专辑仍值得一听。中间的巴赫改编曲则相对逊色。</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Spotify 上暂无此录音</span>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.06s">
+
+      <div>
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b27331e187f0b208bdf6b5cfb53f" alt="Symphony No. 3 &#39;Scottish&#39; / Violin Concerto / Relief" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Mendelssohn / Berg / Schleiermacher</div>
+        <h2 class="card-work">Symphony No. 3 &#39;Scottish&#39; / Violin Concerto / Relief</h2>
+        <div class="card-performers">
+          Baiba Skride vn Leipzig Gewandhaus Orchestra / Andris Nelsons &middot; Accentus &middot; ACC20443
+        </div>
+        <div class="card-tldr">斯基蕾以「安魂曲」般的姿态演绎伯格的小提琴协奏曲——沉稳自持，音色纯净，乐队细节低调而富有表现力。尼尔森斯与莱比锡格万特豪斯管弦乐团展现出高度的默契与互信。这张2018年现场录音中，「苏格兰」交响曲的演绎刻意偏向传统，铜管音色庄严壮丽，线条处理典雅内敛。尼尔森斯选择保守而非创新，守护乐团的传统。斯基蕾晶莹透亮的音色在此得到完美展现。</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:6AKIz29da11wr9G5haiIFN" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            在 Spotify 播放
+          </a>
+          <a href="https://open.spotify.com/album/6AKIz29da11wr9G5haiIFN" target="_blank" rel="noopener" class="btn-web">网页版</a>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">可参考录音</div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b27350c0a50c9f20c5504c0ff4b2" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Berg — Violin Concerto
+                
+                <a href="spotify:album:6FgvUT2N7jrGBIozyJWqYM" class="comp-spotify" title="在 Spotify 播放">▶</a>
+                
+                
+                <a href="https://open.spotify.com/album/6FgvUT2N7jrGBIozyJWqYM" class="btn-web" target="_blank" rel="noopener" title="Web Player">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Isabelle Faust, Leipzig Gewandhaus Orchestra / Andris Nelsons &middot; Accentus
+              </div>
+              
+              <div class="comp-note">Faust&#39;s memorial recording for Abbado digs deeper into the score&#39;s emotional content.</div>
+              
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
+    </div>
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.12s">
+
+      <div>
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b2731909602d02e1b3f7b2d5f4f4" alt="Symphonies No. 2 &amp; No. 6 / Tango jalousie" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Langgaard / Gade</div>
+        <h2 class="card-work">Symphonies No. 2 &amp; No. 6 / Tango jalousie</h2>
+        <div class="card-performers">
+          Vienna Philharmonic Orchestra / Sakari Oramo &middot; Dacapo &middot; 6 220653
+        </div>
+        <div class="card-tldr">继成功演绎诺加德交响曲之后，奥拉莫与维也纳爱乐乐团呈现两部风格迥异的朗格作品。第二交响曲抒情段落处理得极具感染力，缓慢乐章以虔诚的内省展开。第六「撕裂天堂」交响曲以五段变奏曲构成「如幻想曲」结构，在最后的宇宙终曲中以戏剧性的即时感震撼人心。乐团演奏精湛、音效逼真，堪称必收之作。达科波公司还附赠朗格第十四交响曲第二乐章及著名的「嫉妒探戈」。</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:35SqCjdu8q43wGGsOhaB1e" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            在 Spotify 播放
+          </a>
+          <a href="https://open.spotify.com/album/35SqCjdu8q43wGGsOhaB1e" target="_blank" rel="noopener" class="btn-web">网页版</a>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">可参考录音</div>
+          
+          
+          <div class="comp-item">
+            
+            <div class="comp-art-placeholder"></div>
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Langgaard — Symphony No. 6
+                
+                
+              </div>
+              <div class="comp-meta">
+                Danish National RSO / Thomas Dausgaard &middot; Dacapo
+              </div>
+              
+              <div class="comp-note">Dausgaard favors overt incisiveness versus Oramo&#39;s expressive rhetoric.</div>
+              
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
+    </div>
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.18s">
+
+      <div>
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Mahler</div>
+        <h2 class="card-work">Symphony No. 3</h2>
+        <div class="card-performers">
+          Anna Larsson contr Clara Schumann Youth Choir; Women&#39;s Choir of the Musikverein, Düsseldorf; Düsseldorf Symphony Orchestra / Adám Fischer &middot; AVI-Music &middot; M 2 AVI8553399
+        </div>
+        <div class="card-tldr">菲舍尔以清新自发的方式诠释马勒的自然颂歌，语调和伸缩处理「即兴」般地贴近马勒风格。八支圆号以同度音齐奏震撼开场。带有艾夫斯风格的发展段达到「真正令人震惊」的效果，高潮处正是所谓的「喧哗」段落。安娜·拉尔松在尼采文本的演唱中展现出完美的智者之声。不过在双簧管与英国管上运用滑音的写法仍有争议。终曲在无羊肠弦的情况下仍达到了柔和流畅的句法效果。</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Spotify 上暂无此录音</span>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">可参考录音</div>
+          
+          
+          <div class="comp-item">
+            
+            <div class="comp-art-placeholder"></div>
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Mahler — Symphony No. 3
+                
+                
+              </div>
+              <div class="comp-meta">
+                NYPO / Leonard Bernstein &middot; Sony
+              </div>
+              
+              <div class="comp-note">Bernstein&#39;s 1961 recording remains the finest—still electrifying and transcendentally visionary.</div>
+              
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
+    </div>
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.24s">
+
+      <div>
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b273499b25b956e7b06f8be57c04" alt="Symphony No. 5" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Mahler</div>
+        <h2 class="card-work">Symphony No. 5</h2>
+        <div class="card-performers">
+          Swedish Radio Symphony Orchestra / Daniel Harding &middot; Harmonia Mundi &middot; HMM90 2366
+        </div>
+        <div class="card-tldr">哈丁正面迎接马勒频繁的极致表达。葬礼进行曲从阴郁的黑土中掘出，节奏刻意宽广。第二乐章的力度达到「极致狂猛」，谐谑曲则深及马里亚纳海沟般的犀利，断奏弓弦和定音鼓击打穿插其间。柔板乐章以温柔的方式歌唱爱情而非死亡，句法自然带有延音，长休止如反思的间隙。录音室制作的铜管主导终曲以真实现场的累积冲击感到达。乐团能量和色彩超越菲舍尔版，音响清晰度更远胜罗斯版。</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:2POYlLaL1CrxzPZwMKjlm0" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            在 Spotify 播放
+          </a>
+          <a href="https://open.spotify.com/album/2POYlLaL1CrxzPZwMKjlm0" target="_blank" rel="noopener" class="btn-web">网页版</a>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">可参考录音</div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b273ccab243a5c29c7f79438dce0" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Mahler — Symphony No. 5
+                
+                <a href="spotify:album:1XdxlmmXykJoZ9Nn4Y9g4s" class="comp-spotify" title="在 Spotify 播放">▶</a>
+                
+                
+                <a href="https://open.spotify.com/album/1XdxlmmXykJoZ9Nn4Y9g4s" class="btn-web" target="_blank" rel="noopener" title="Web Player">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Gürzenich Orchestra / François-Xavier Roth
+              </div>
+              
+              <div class="comp-note">Roth&#39;s recording suffers from surprisingly muddy engineering compared to Harding&#39;s vivid sound.</div>
+              
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
+    </div>
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.3s">
+
+      <div>
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Brahms / Schubert</div>
+        <h2 class="card-work">Serenade No. 2 / Symphony No. 5</h2>
+        <div class="card-performers">
+          Orchestre Révolutionnaire et Romantique / Sir John Eliot Gardiner &middot; Soli Deo Gloria &middot; SDG729
+        </div>
+        <div class="card-tldr">加迪版是一张纯粹的愉悦享受。他在A大调小夜曲中将五度和声「植入勃拉姆斯的土壤」中让它成熟——这一个小细节证明了每个小节的精心雕琢。对比阿巴多1963年DG专辑：加迪在小夜曲的谐谑曲中带来更乡土的豪迈，音型重音更多风吹叶落般的弱音。施瓦布第五交响曲的行板乐句逐一被珍视加权——可与克莱姆佩勒的爱乐乐团版本并列欣赏，因其温柔、庄重与春日的欢乐完美融合。录音为2016年11月阿姆斯特丹音乐厅现场版。</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Spotify 上暂无此录音</span>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">可参考录音</div>
+          
+          
+          <div class="comp-item">
+            
+            <div class="comp-art-placeholder"></div>
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Brahms — Serenade No. 2
+                
+                
+              </div>
+              <div class="comp-meta">
+                BPO / Claudio Abbado &middot; DG
+              </div>
+              
+              <div class="comp-note">Abbado&#39;s 1963 recording is almost identically balanced and paced but Gardiner brings more rustic swagger.</div>
+              
+            </div>
+          </div>
+          
+          
+          <div class="comp-item">
+            
+            <div class="comp-art-placeholder"></div>
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Schubert — Symphony No. 5
+                
+                
+              </div>
+              <div class="comp-meta">
+                Philharmonia Orch / Otto Klemperer &middot; EMI/Warner
+              </div>
+              
+              <div class="comp-note">Klemperer&#39;s recording offers comparable tenderness, gravity and springtime joys.</div>
+              
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
+    </div>
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.36s">
+
+      <div>
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">JS Bach</div>
+        <h2 class="card-work">Six Brandenburg Concertos, BWV1046-1051 / Orchestral Suite No. 2, BWV1067</h2>
+        <div class="card-performers">
+          Zefiro / Alfredo Bernardini ob &middot; Arcana &middot; F 2 A452
+        </div>
+        <div class="card-tldr">贝尔纳迪尼充满活力的乐团带来欢乐的巴赫勃兰登堡协奏曲和 orchestral 组曲唱片。令人难忘的是每位独奏家都被允许寻找属于自己的诠释——塞西莉亚·贝尔纳迪尼在第四协奏曲外乐章中大幅拉动节奏，弗朗切斯科·科尔蒂将第五协奏曲的疯狂羽管键琴独奏弹奏得灵活人性化。贝尔纳迪尼以渐强的乐句塑造、独特的终曲处理。科尔蒂在 orchestral 组曲中演奏清晰、速度恰当。偶尔的合奏混浊瑕不掩瑜，因为「实在太过有趣了」。</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Spotify 上暂无此录音</span>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.42s">
+
+      <div>
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Haydn</div>
+        <h2 class="card-work">Violin Concerto in C major, Hob.VIIa:1 / Violin Concerto in G major, Hob.VIIa:4 / Cello Concerto, Hob.VIIb:1</h2>
+        <div class="card-performers">
+          Marco Ceccato vc Gli Incogniti / Amandine Beyera vn &middot; Harmonia Mundi &middot; HMM90 2314
+        </div>
+        <div class="card-tldr">贝耶尔与「未知」乐团以接地气、充满事件性的方式诠释海顿的小提琴协奏曲，将其演绎得仿佛拥有中期交响曲的所有动机凝聚力。这比诺斯基与 Handel and Haydn Society 的直率版本更为激动人心。仅十把弦乐的室内氛围中，独奏家是同侪中的首席。大提琴协奏曲独奏家切卡托的音色比更抒情的奎亚拉斯更深沉、更粗砺——切卡托在中央柔板更显修辞性，而奎亚拉斯则更为冥想。两位独奏家都激发同事提供超越简单伴奏的音乐内容。</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Spotify 上暂无此录音</span>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">可参考录音</div>
+          
+          
+          <div class="comp-item">
+            
+            <div class="comp-art-placeholder"></div>
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Haydn — Violin Concertos
+                
+                
+              </div>
+              <div class="comp-meta">
+                Aisslinn Nosky, Handel and Haydn Society / Harry Christophers &middot; CORO
+              </div>
+              
+              <div class="comp-note">Nosky&#39;s live recording takes a straighter, less eventful approach than Beyer and Gli Incogniti.</div>
+              
+            </div>
+          </div>
+          
+          
+          <div class="comp-item">
+            
+            <div class="comp-art-placeholder"></div>
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Haydn — Cello Concerto, Hob.VIIb:1
+                
+                
+              </div>
+              <div class="comp-meta">
+                Jean-Guihen Queyras, Freiburg Baroque Orchestra / Petra Müllejans &middot; Harmonia Mundi
+              </div>
+              
+              <div class="comp-note">Queyras is more songful and meditative where Ceccato is deeper and more rhetorical.</div>
+              
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
+    </div>
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.48s">
+
+      <div>
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b273b503f2b9514509bb6134ee06" alt="Violin Concerto / Violin Concerto No. 1, Op. 19" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Nielsen / Prokofiev</div>
+        <h2 class="card-work">Violin Concerto / Violin Concerto No. 1, Op. 19</h2>
+        <div class="card-performers">
+          Liya Petrova vn Odense Symphony Orchestra / Kristiina Poska &middot; Orchid &middot; ORC100086
+        </div>
+        <div class="card-tldr">佩特罗娃与李智允分享2016年尼尔森国际小提琴比赛一等奖。这张录音证明两人在技术精湛和情感投入上旗鼓相当。佩特罗娃的音色比李明亮甜美的声音更有肌肉感和力量；她的诠释风格更坚韧，在尼尔森的十六分音符排射中拧出更多戏剧性。最令人印象深刻的是她如何将乐句凝聚在一起——这一特质在普罗科菲耶夫协奏曲中同样明显，她将其处理为连贯段落而非美声展示。终曲抒情段落的「惊人音色」令人赞叹；谐谑曲的分量感——1分05秒处的粘稠音色「奇妙地怪诞」——现已欣然接受。奥登斯交响乐团在波斯卡指挥下自信且有特色地演奏。</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:6eH692GqnjXsdtlHrbdZ4A" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            在 Spotify 播放
+          </a>
+          <a href="https://open.spotify.com/album/6eH692GqnjXsdtlHrbdZ4A" target="_blank" rel="noopener" class="btn-web">网页版</a>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.54s">
+
+      <div>
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Elgar</div>
+        <h2 class="card-work">Short Orchestral Works (Air de ballet; Three Bavarian Dances; Three Characteristic Pieces; etc.)</h2>
+        <div class="card-performers">
+          Charles Mutter vn BBC Concert Orchestra / David Lloyd-Jones &middot; Dutton Epoch &middot; CDLX7354
+        </div>
+        <div class="card-tldr">埃尔加是一位出色的微雕作曲家，本专辑收录两部首发录音：作曲家已知最早的管弦作品「芭蕾舞曲」（意外使用上低音号），以及《性格舞曲》作品10中嘉禾舞舞曲简介的简短引子。劳埃德-琼斯演绎的「米娜」不仅充满温情，更比埃尔加去世前一周制作的粗纹唱片更快——「我确信埃尔加会喜爱它」。查尔斯·马特在「恳求」中的演绎精确把握时代风格，兼具节制与表情的雄辩。福斯塔夫间奏曲仅可通过SACD格式播放，但「与这张值得推荐唱片的其他部分一样出色」。</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Spotify 上暂无此录音</span>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.6s">
+
+      <div>
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b2735abd84c281015390b6916198" alt="Swan Lake, Op. 20 (1877 original version)" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Tchaikovsky</div>
+        <h2 class="card-work">Swan Lake, Op. 20 (1877 original version)</h2>
+        <div class="card-performers">
+          State Academic Symphony Orchestra of Russia &#39;Evgeny Svetlanov&#39; / Vladimir Jurowski &middot; Pentatone &middot; PTC5186 640
+        </div>
+        <div class="card-tldr">尤洛夫斯基对芭蕾公司和1895年版《天鹅湖》修订版的不满，促使他录制柴可夫斯基1877年原版。他认为音乐结构「像是写交响曲一样」构建。斯韦特兰诺夫乐团——本质上就是前苏联国家交响乐团——血管里流淌着这部音乐，弦乐浑厚丰满，木管极其出色（性格舞曲三重奏引子的贵族式单簧管颤音「好得惊人」）。尤洛夫斯基的速度强劲有力；各国民俗舞曲真正有气派和活力。小提琴独奏有老派魅力和雄辩。终曲有狂热的紧张感。就纯粹刺激而言，尼尔森版勉强领先，但这是最优秀版本之一。</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:58fV8lPdzNmBVKeG8fth2W" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            在 Spotify 播放
+          </a>
+          <a href="https://open.spotify.com/album/58fV8lPdzNmBVKeG8fth2W" target="_blank" rel="noopener" class="btn-web">网页版</a>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">可参考录音</div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d0000b2736f8ee8d5a6f84a8d24f29fc6" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Tchaikovsky — Swan Lake
+                
+                <a href="spotify:album:4YfRvyWqoqK6EWosdfxHGO" class="comp-spotify" title="在 Spotify 播放">▶</a>
+                
+                
+                <a href="https://open.spotify.com/album/4YfRvyWqoqK6EWosdfxHGO" class="btn-web" target="_blank" rel="noopener" title="Web Player">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Bergen Philharmonic Orchestra / Neeme Järvi &middot; Chandos
+              </div>
+              
+              <div class="comp-note">Järvi&#39;s bracing account romps home a good six minutes faster, but Jurowski&#39;s Swan Lake is up there with the very best.</div>
+              
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
+    </div>
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.6599999999999999s">
+
+      <div>
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Watkins</div>
+        <h2 class="card-work">Flute Concerto / Violin Concerto / Symphony</h2>
+        <div class="card-performers">
+          Adam Walker fl Alina Ibragimova vn BBC Symphony Orchestra / Edward Gardner; Hallé Orchestra / Ryan Wigglesworth &middot; NMC &middot; NMCD224
+        </div>
+        <div class="card-tldr">沃特金斯的《长笛协奏曲》（2013年）是「罗伯特·辛普森和约翰·麦凯布（均作于1989-90年代）以来最出色的英国长笛协奏曲」，充满活力的节奏感和推进感被亚当·沃克完美捕捉。小提琴协奏曲（2010年）反映伊布拉吉莫娃「动态、强烈、极度智慧的演奏」，采用相同的快-慢-快结构但情感景观截然不同——更严肃戏剧化却同样敏锐抒情。交响曲（2016-17）是双联画结构，以「绊脚」结尾。马克·威格沃斯的演绎与Hallé乐团的崇高演奏「卓越」。又一部伟大的英国交响曲，强烈推荐。</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Spotify 上暂无此录音</span>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class="tab-panel"
+       id="tab-chamber"
+       role="tabpanel">
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.0s">
+
+      <div>
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d0000b2736c2a95fe0b38e712c7f31393" alt="Les trois sonates – The Late Works (Violin Sonata, Cello Sonata, Sonata for Flute, Viola and Harp) plus Four Late Piano Pieces" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Debussy</div>
+        <h2 class="card-work">Les trois sonates – The Late Works (Violin Sonata, Cello Sonata, Sonata for Flute, Viola and Harp) plus Four Late Piano Pieces</h2>
+        <div class="card-performers">
+          Magali Mosnier (flute), Isabelle Faust (violin), Antoine Tamestit (viola), Xavier de Maistre (harp), Jean‑Guihen Queyras (cello), Alexander Melnikov (piano), Javier Perianes (piano), Tanguy de Williencourt (piano) &middot; Harmonia Mundi &middot; HMM90 2303
+        </div>
+        <div class="card-tldr">这张2018年的Harmonia Mundi唱片将德彪西晚期三首奏鸣曲与四首罕见的钢琴小品融为一体，呈现出情感丰富而细腻的演绎。伊莎贝尔·福斯特的小提琴音色清亮， 让‑吉恩·克耶拉斯的大提琴庄重而温暖，泽维尔·德·梅斯特的竖琴柔美如丝，亚历山大·梅尔尼科夫与哈维尔·佩里亚内斯两位钢琴家则各展其细腻的音色。唱片将1915至1917年间的三首奏鸣曲与德彪西在战争与病痛中的沉思之作交叉排列，突显出作曲家深沉的哀愁与内省。长笛、中提琴与竖琴的奏鸣曲柔美而富有感官享受；福斯特的《提琴奏鸣曲》在纤细的柔板中蕴藏坚定；克耶拉斯与佩里亚内斯演绎的《大提琴奏鸣曲》规模宏大却保持低调的悲痛。四首钢琴小品的演奏克制而有力量，呈现出静谧的深情。整张唱片的录音温暖而层次分明，适合一次性静心聆听德彪西最后岁月的感伤之美。</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:1Q7FBU8piysR0JxsOsxEEB" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            在 Spotify 播放
+          </a>
+          <a href="https://open.spotify.com/album/1Q7FBU8piysR0JxsOsxEEB" target="_blank" rel="noopener" class="btn-web">网页版</a>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.06s">
+
+      <div>
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02cab0e986bb1bdb34c27f06f3" alt="Violin Sonatas – No 21, K304; No 23, K306; No 35, K526" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Mozart</div>
+        <h2 class="card-work">Violin Sonatas – No 21, K304; No 23, K306; No 35, K526</h2>
+        <div class="card-performers">
+          Isabelle Faust (violin), Alexander Melnikov (fortepiano) &middot; Harmonia Mundi &middot; HMM90 2360
+        </div>
+        <div class="card-tldr">伊莎贝尔·福斯特与亚历山大·梅尔尼科夫在这张《莫扎特钢琴与小提琴奏鸣曲》第一卷中，以古乐思维演绎出全新的亲密感。梅尔尼科夫的1795年沃尔特钢琴复制音透明而共鸣，与福斯特的1704年斯特拉迪瓦里小提琴相得益彰，音色宛如“清脆的铃声”。两人将作品视为家庭音乐，让小提琴在低音线上呼应，钢琴亦如歌声般平等对话。演奏不急不缓，却充满细腻的动态层次，福斯特的极弱音和梅尔尼科夫的抒情连奏令人惊叹。录音温暖且层次分明，使每首奏鸣曲都像私人对话而非舞台表演。相较于伊琳娜·伊布拉吉莫娃与塞德里克·蒂贝根（Hyperion）以现代乐器呈现的版本，这套唱片以古乐色彩提供另一种同样精彩的解读。</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:3sN7Lymz3Hc5sq51NXjghh" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            在 Spotify 播放
+          </a>
+          <a href="https://open.spotify.com/embed/album/3sN7Lymz3Hc5sq51NXjghh" target="_blank" rel="noopener" class="btn-web">网页版</a>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">可参考录音</div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d00001e023fa2e21e1352261dca4bb5dc" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Mozart — Violin Sonatas – No 21, K304; No 23, K306; No 35, K526
+                
+                <a href="spotify:album:7gC0TgLpTUgtXYAEI6zKoV" class="comp-spotify" title="在 Spotify 播放">▶</a>
+                
+                
+                <a href="https://open.spotify.com/album/7gC0TgLpTUgtXYAEI6zKoV" class="btn-web" target="_blank" rel="noopener" title="Web Player">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Alina Ibragimova (violin), Cédric Tiberghien (piano) &middot; Hyperion
+              </div>
+              
+              <div class="comp-note">Recorded on modern instruments with a more projected, hall‑filling sound, providing an equally valid but stylistically different reading.</div>
+              
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
+    </div>
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.12s">
+
+      <div>
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e0232ac5530e2872be096cecf65" alt="Six Flute Quartets, Op 12" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Guillemain</div>
+        <h2 class="card-work">Six Flute Quartets, Op 12</h2>
+        <div class="card-performers">
+          Wilbert Hazelzet (flute), Fantasticus &middot; Resonus &middot; RES10222
+        </div>
+        <div class="card-tldr">威尔伯特·哈泽尔泽特与古乐乐团Fantasticus将路易‑加布里埃尔·吉耶曼的《第六号长笛四重奏，作品12》这张久被遗忘的巴洛克珍品重新唤醒。吉耶曼曾是路易十五宫廷备受尊敬的小提琴家，其作品在此以清澈、活泼的长笛旋律与持续低音交织，展现出交谈般的闪耀光彩。哈泽尔泽特的长笛音色通透而灵巧，Fantasticus的演奏保持均衡，忠实地呈现作曲家对各声部平等对话的追求。整张唱片流畅而富有理性活力，避免过度装饰，捕捉到作品中欢快、如歌的特质。录音温暖且层次分明，为这首被历史埋没的杰作提供了理想的入门聆听，是巴洛克室内乐爱好者不可错过的发现。</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:6MIDpHtKS5UIR052EuCqib" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            在 Spotify 播放
+          </a>
+          <a href="https://open.spotify.com/embed/album/6MIDpHtKS5UIR052EuCqib" target="_blank" rel="noopener" class="btn-web">网页版</a>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+    <div class="recording-card animate" style="animation-delay:0.18s">
+
+      <div>
+        
+        <div class="art-placeholder">♪</div>
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Locke</div>
+        <h2 class="card-work">Consort Music – The Flat Consort, Consort of Four Parts – Six Suites, Canons</h2>
+        <div class="card-performers">
+          Phantasm, Elizabeth Kenny (theorbo) &middot; Linn &middot; CKD594
+        </div>
+        <div class="card-tldr">劳伦斯·德雷fus率领的Phantasm与低音鲁特琴演奏家伊丽莎白·肯尼共同呈现马修·洛克室内乐的精彩演绎。维奥尔合奏团的精准配合产生透明音色，揭示洛克音乐中旋律优美、和声丰富的语言；德雷fus细腻的Rubato与灵活的节奏处理为舞曲注入新意。肯尼的低音鲁特琴低音线条柔和填充，增添色彩而不压制维奥尔。两首六声部卡农在唱片结尾闪耀，展现在对位技巧上的巧妙与清晰。录音捕捉到乐团透明的声响，同时保持温暖的声场，是探索英国合奏曲目不可或缺的佳作，证明了洛克作品被低估的表现力和现代意义。</div>
+
+        <div class="card-actions">
+          
+          <span class="no-spotify">Spotify 上暂无此录音</span>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.24s">
+
+      <div>
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02b2548797c771853d22042f2a" alt="Clarinet Quintet, K581 (Mozart); Clarinet Quintet, Op 34 (Weber)" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Mozart / Weber</div>
+        <h2 class="card-work">Clarinet Quintet, K581 (Mozart); Clarinet Quintet, Op 34 (Weber)</h2>
+        <div class="card-performers">
+          Julian Bliss (clarinet), Carducci Quartet &middot; Signum &middot; SIGCD552
+        </div>
+        <div class="card-tldr">朱利安·布利斯使用Leblanc Legacy单簧管与卡杜尔齐四重奏合作，呈现莫扎特与韦伯《单簧管五重奏》的精彩对比。布利斯的乐器在全音域内保持均匀、饱满的音色，在韦伯高难度段落中展现上音域的辉煌，而在莫扎特作品中则凭借低音单簧管的木质感带来温暖的抒情。卡杜尔齐提供稳固的伴奏，捕捉到莫扎特慢乐章中柔美的再现以及韦伯终曲的炫技快感。录音清晰而层次分明，平衡了亲密感与技巧展示，突显单簧管与弦乐四重奏的融合。此碟是进入两部杰作的理想入口，展示了布利斯细腻的音乐性与乐团统一的演绎。</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:1Tjv0ppf7HQAKs98evvuwv" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            在 Spotify 播放
+          </a>
+          <a href="https://open.spotify.com/embed/album/1Tjv0ppf7HQAKs98evvuwv" target="_blank" rel="noopener" class="btn-web">网页版</a>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class="tab-panel"
+       id="tab-vocal"
+       role="tabpanel">
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.0s">
+
+      <div>
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02ab31693a956bc903d82f3043" alt="Aimer et mourir – danses et mélodies" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Duparc / Ravel</div>
+        <h2 class="card-work">Aimer et mourir – danses et mélodies</h2>
+        <div class="card-performers">
+          Magdalena Kozená mez; Deutsches Symphonie-Orchester Berlin / Robin Ticciati &middot; Linn &middot; CKD610
+        </div>
+        <div class="card-tldr">指挥家蒂西亚蒂与柏林德意志交响乐团的第二张唱片延续了他与乐团日益加深的默契，完美契合杜帕克感性的歌曲和拉威尔的管弦乐色彩。科泽娜全程声音状态绝佳，《悲伤之歌》演绎超过四分钟（大多数录音仅两到三分），让杜帕克的声乐线条自然流动而非走向宣叙调。《达夫尼与克洛埃》开篇的平衡偏向低音弦乐，在深处慵懒苏醒后壮丽上升。帕antomime的笛声在弦乐近乎静止中展开得如梦似幻，集体舞则稳步积累动力而非匆忙赶拍。《旅行之邀》洋溢着印象派风情，《战争之地》充满恐惧与渴望。之后的《高贵圆舞曲》如冷水淋浴，在冷峻怀旧与略带脆弱的优雅中精准拿捏。一张华丽的唱片。</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:6BitZ30kU6SWNfrpavbiJ5" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            在 Spotify 播放
+          </a>
+          <a href="https://open.spotify.com/embed/album/6BitZ30kU6SWNfrpavbiJ5" target="_blank" rel="noopener" class="btn-web">网页版</a>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.06s">
+
+      <div>
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02404e161dcc44aa17a508dfa8" alt="Das Lied von der Erde" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Mahler</div>
+        <h2 class="card-work">Das Lied von der Erde</h2>
+        <div class="card-performers">
+          Magdalena Kozená mez; Stuart Skelton ten; Bavarian Radio Symphony Orchestra / Sir Simon Rattle &middot; BR-Klassik &middot; 900172
+        </div>
+        <div class="card-tldr">2018年1月现场录制于慕尼黑，这张新版《大地之歌》捕捉了拉特尔时隔二十余年后的演绎——其处理手法明显成熟。巴伐利亚广播交响乐团的演奏令人赞叹：每一个颤舌的震颤、每一个钢片琴伴奏的战栗，都比早期CBSO录音更加鲜明。拉特尔的处理更趋极端，更大胆地挖掘深度，驻留于秋日阳光的骤然闪现。斯凯尔顿自首次录制这些独唱段落后十年，展现了敏感性，但声音略显不够聚焦。科泽娜的演唱美轮美奂，虽偶有冷淡之嫌。然而最令人印象深刻的是拉特尔的成就——在半小时的篇幅中展现了大师级的控制力，尤其在中间段落（约16&#39;00&#34;起）的荒凉音景中，清晰与耐心构筑了毁灭性的静谧力量。虽非传统《大地之歌》，却引人入胜、魅力无穷：强烈推荐。</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:6L2aMLoVV2UxQSmVwVPDlX" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            在 Spotify 播放
+          </a>
+          <a href="https://open.spotify.com/embed/album/6L2aMLoVV2UxQSmVwVPDlX" target="_blank" rel="noopener" class="btn-web">网页版</a>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">可参考录音</div>
+          
+          
+          <div class="comp-item">
+            
+            <div class="comp-art-placeholder"></div>
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Mahler — Das Lied von der Erde
+                
+                
+              </div>
+              <div class="comp-meta">
+                Thomas Hampson bar; CBSO / Simon Rattle &middot; EMI/Warner
+              </div>
+              
+              <div class="comp-note">This 1997 recording predates Rattle&#39;s current approach by over two decades and features the alternative alto casting with Hampson.</div>
+              
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
+    </div>
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.12s">
+
+      <div>
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e026c1cb28ab624a50bb6c97467" alt="The Complete Songs, Vol 5" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Liszt</div>
+        <h2 class="card-work">The Complete Songs, Vol 5</h2>
+        <div class="card-performers">
+          Allan Clayton ten; Julius Drake pf &middot; Hyperion &middot; CDA68179
+        </div>
+        <div class="card-tldr">朱利叶斯·德雷克的李斯特艺术歌曲全集巡礼第五卷由艾伦·克莱顿担纲，这位抒情男高音兼 vocal actor 的双重才华完美契合这张充满高度戏剧张力与忧郁内省气质的唱片。专辑主要聚焦于李斯特在魏玛的岁月（1848-1861年）及之前的时期。两首风格迥异的歌德歌曲设置立即确立了基调——第一首尽是深情的内省，第二首则变幻莫测、热烈冲动。随后的曲目风格范围令人惊叹地广泛。在1860年创作的第四首《罗蕾莱》中，德雷克掀起技术大师级的风暴，描绘船只在岩石上毁灭，而克莱顿那着迷的声乐线条碎裂成惊恐的表现主义说白。《哦，只要还能爱》的高音位置极具挑战，但由此产生的张力提醒我们：这首耳熟能详的旋律与其说是浪漫爱情的宣言，不如说是将感官享乐作为抵御死亡预兆的紧迫建议。克莱顿对风险的意愿获得了巨大回报；他那用精准的半声演绎的《你如一朵花》令人屏息。德雷克一如既往地卓越。</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:52GqJ9VhflWzg5IpCTvMxH" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            在 Spotify 播放
+          </a>
+          <a href="https://open.spotify.com/embed/album/52GqJ9VhflWzg5IpCTvMxH" target="_blank" rel="noopener" class="btn-web">网页版</a>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class="tab-panel"
+       id="tab-opera"
+       role="tabpanel">
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.0s">
+
+      <div>
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02bbe218b8543266d4b74624dc" alt="Der fliegende Holländer" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Wagner</div>
+        <h2 class="card-work">Der fliegende Holländer</h2>
+        <div class="card-performers">
+          George London (Holländer), Leonie Rysanek (Senta), Josef Greindl (Daland), Chorus and Orchestra of the Bayreuth Festival / Wolfgang Sawallisch &middot; Orfeo &middot; C936182I
+        </div>
+        <div class="card-tldr">这张1959年拜罗伊特广播录音捕捉了维兰德·瓦格纳的传奇制作，萨瓦利施呈现了一份启示性的德累斯顿原谱版本——摒弃了科西玛虚构的无幕间休息版本，恢复了一切令柏辽兹恐惧的震音、号角的爆发，以及霍兰德尔/达兰德二重唱和第三幕合唱的删节部分。乔治·伦敦演绎了或许是史上最伟大的录音，将荷兰人的「人们称我为漂泊的荷兰人」注入了可怕的力量、痛苦和惊悚。莱奥妮·里萨内克同样出色——在叙事曲中表现出惊人的冒险精神，最后的高音令人惊叹。格雷因德尔饰演贪婪的达兰德，提供了喜剧效果。单声道录音充分展现了乐团和合唱的力量。对于研究瓦格纳表演历史以及诠释如何根本性转变的收藏家来说，这是不可或缺的。</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:3tUK6pubBoOkGsaxRMtMfn" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            在 Spotify 播放
+          </a>
+          <a href="https://open.spotify.com/embed/album/3tUK6pubBoOkGsaxRMtMfn" target="_blank" rel="noopener" class="btn-web">网页版</a>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">可参考录音</div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d00001e02a09f698bac4194f7c09dbce0" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Wagner — Der fliegende Holländer
+                
+                <a href="spotify:album:4rjGC2xKOCGiOzlh1JPosh" class="comp-spotify" title="在 Spotify 播放">▶</a>
+                
+                
+                <a href="https://open.spotify.com/album/4rjGC2xKOCGiOzlh1JPosh" class="btn-web" target="_blank" rel="noopener" title="Web Player">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Various principals / Wolfgang Sawallisch &middot; Philips
+              </div>
+              
+              <div class="comp-note">The Philips release from 1961 with different principals is also excellent but features slightly less orchestral punch than this 1959 performance.</div>
+              
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
+    </div>
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.06s">
+
+      <div>
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02237138dccebac8272c316eef" alt="La bohème" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Puccini</div>
+        <h2 class="card-work">La bohème</h2>
+        <div class="card-performers">
+          Nicole Car (Mimì), Michael Fabiano (Rodolfo), Simona Mihai (Musetta), Mariusz Kwiecień (Marcello), Chorus and Orchestra of the Royal Opera House / Sir Antonio Pappano &middot; Opus Arte &middot; OA1272D
+        </div>
+        <div class="card-tldr">帕帕诺爵士继续以精湛的普契尼指挥，与理查德·琼斯的皇家歌剧院制作。妮科尔·卡尔的咪咪令人惊艳——她既有邻家女孩的亲切感，又有一种朴素的魅力，随着第一幕咏叹调立即赢得人心，在情感浓烈的第三幕中以从容优雅的姿态驾驭普契尼绵长的抒情乐句。她的临终场景令人动容。迈克尔·法比亚诺为鲁道尔夫带来美妙的意大利式声音，但早期偶有过度演唱。玛丽乌斯·克维琴是位优雅的马尔切洛，与西莫娜·米海充满魅力的穆塞塔相得益彰。帕帕诺对乐队细节和节奏的关注一如既往地精湛。虽然这不是一张在演唱方面脱颖而出的波希米亚人，但卡尔对咪咪的诠释令人信服。</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:5b1dUxE8wWIGTyBX5h8CEp" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            在 Spotify 播放
+          </a>
+          <a href="https://open.spotify.com/embed/album/5b1dUxE8wWIGTyBX5h8CEp" target="_blank" rel="noopener" class="btn-web">网页版</a>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.12s">
+
+      <div>
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02adbd7d4359c3fbe7d77fe4ae" alt="Les Horaces" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Salieri</div>
+        <h2 class="card-work">Les Horaces</h2>
+        <div class="card-performers">
+          Judith van Wanroij (Camille), Cyrille Dubois (Curiace), Jean-Sébastien Bou (Old Horace), Les Chantres du Centre de Musique Baroque de Versailles; Les Talens Lyriques / Christophe Rousset &middot; Aparté &middot; AP185
+        </div>
+        <div class="card-tldr">克里斯托夫·鲁塞和他的乐团Les Talens Lyriques揭示了萨列里1786年的实验性歌剧作为一部被遗忘的杰作，展示了通过敏锐的戏剧动量和优美的和声细节呈现的格鲁克改革影响。乐队演奏推动戏剧向前发展，快速转换将合唱和角色融入事件中，创造出前所未有的戏剧统一。朱迪思·范·万罗伊的卡米尔唱得精彩绝伦——第一幕结尾展示了优美的格鲁克式写法。西里尔·杜布瓦在Curiace的矛盾情感中表现出热切的表情。安德鲁·福斯特-威廉姆斯的大祭司以雄浑的气势领衔仪式间奏。这张来自凡尔赛的现场录音将首演时引人发笑的作品转化为引人入胜的重新发现——对于探索标准巴洛克曲目之外的任何人来说都是必备的。</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:0av0lcA7J8Xzz5NmEsdF3j" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            在 Spotify 播放
+          </a>
+          <a href="https://open.spotify.com/embed/album/0av0lcA7J8Xzz5NmEsdF3j" target="_blank" rel="noopener" class="btn-web">网页版</a>
+          
+        </div>
+
+        
+        <div class="comparisons">
+          <div class="comp-label">可参考录音</div>
+          
+          
+          <div class="comp-item">
+            
+            <div class="comp-art-placeholder"></div>
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Handel — Arminio
+                
+                
+              </div>
+              <div class="comp-meta">
+                Il Complesso Barocco / Alan Curtis &middot; Virgin/Erato
+              </div>
+              
+              <div class="comp-note">Curtis&#39;s studio recording lacks the theatrical verve and character integration that live performance brings to Baroque opera.</div>
+              
+            </div>
+          </div>
+          
+          
+            
+          
+          <div class="comp-item">
+            
+            <img class="comp-art" src="https://i.scdn.co/image/ab67616d00001e0206fa17e8c414fe6a246bfca8" alt="" loading="lazy">
+            
+            <div class="comp-text">
+              <div class="comp-work">
+                Handel — Arminio
+                
+                <a href="spotify:album:375QRcZfJaYahSwr0nwiYq" class="comp-spotify" title="在 Spotify 播放">▶</a>
+                
+                
+                <a href="https://open.spotify.com/album/375QRcZfJaYahSwr0nwiYq" class="btn-web" target="_blank" rel="noopener" title="Web Player">▶</a>
+                
+              </div>
+              <div class="comp-meta">
+                Armonia Atenea / George Petrou &middot; Decca
+              </div>
+              
+              <div class="comp-note">Petrou&#39;s Greek ensemble later staged the work at Karlsruhe, but the earlier studio version couldn&#39;t match live dramatic context.</div>
+              
+            </div>
+          </div>
+          
+        </div>
+        
+
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class="tab-panel"
+       id="tab-reissues"
+       role="tabpanel">
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.0s">
+
+      <div>
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e0221bb4eeaac0d030274748d1a" alt="Symphonies Nos. 1-6, Manfred Symphony" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Tchaikovsky</div>
+        <h2 class="card-work">Symphonies Nos. 1-6, Manfred Symphony</h2>
+        <div class="card-performers">
+          Sir Neville Marriner, Academy of St Martin in the Fields / Stuttgart Radio Symphony Orchestra &middot; Capriccio &middot; C7250
+        </div>
+        <div class="card-tldr">马里纳的15张CD合集涵盖柴可夫斯基全套交响曲，展现了指挥家对音乐戏剧架构的非凡掌控。第三交响曲和《曼弗雷德》堪称有史以来最优秀的录音之一，将抒情的温暖与芭蕾舞般的精确管弦乐处理完美结合，构建出强劲而有机的高潮。这套合集的独特之处在于马里纳毫不妥协的诚实——没有放纵，没有拖沓，只有直接而诚实的音乐呈现。附加曲目同样令人印象深刻，包括德沃夏克第七、第八和第九（《自新大陆》）、博伊斯的全套交响曲、门德尔松序曲、埃尔加《谜语变奏曲》以及珀塞尔的配乐作品。对于主要把小提琴家兼指挥家马里纳视为演奏家的听众来说，这是一套具有启示意义的收藏。</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:5zzMVOKWsbktCBXIWbjbJA" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            在 Spotify 播放
+          </a>
+          <a href="https://open.spotify.com/embed/album/5zzMVOKWsbktCBXIWbjbJA" target="_blank" rel="noopener" class="btn-web">网页版</a>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.06s">
+
+      <div>
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02b5bc7bfc84b7b4d9bf243f41" alt="Symphonies Nos. 1-3, Symphonic Dances, The Isle of the Dead, The Rock, Caprice bohémien" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Rachmaninov</div>
+        <h2 class="card-work">Symphonies Nos. 1-3, Symphonic Dances, The Isle of the Dead, The Rock, Caprice bohémien</h2>
+        <div class="card-performers">
+          Edo de Waart, Rotterdam Philharmonic Orchestra / London Philharmonic Orchestra &middot; Decca Eloquence &middot; 482 8981
+        </div>
+        <div class="card-tldr">德·瓦尔特以一种令人耳目一新的方式诠释拉赫玛尼诺夫，优先考虑结构清晰度和向前推进的节奏。他的演绎将作曲家不是呈现为浪漫主义的过度宣泄者，而是一位对建筑结构有敏锐感知、传递紧迫艺术信息的交响作曲家。鹿特丹版本的《交响舞曲》通过现场表演的信念消除了最初的疑虑，结束处的锣与孔德拉申的处理方式相呼应。普罗科菲耶夫的《罗密欧与朱丽叶》组曲作为附加曲目特别成功，另有穆索尔斯基-拉威尔的《图画展览会》。这些演奏明亮、干脆利落，纹理透明，适合寻求更严肃拉赫玛尼诺夫的听众。</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:72q1ZQoy5OjSAS0t1C3Aec" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            在 Spotify 播放
+          </a>
+          <a href="https://open.spotify.com/embed/album/72q1ZQoy5OjSAS0t1C3Aec" target="_blank" rel="noopener" class="btn-web">网页版</a>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+    
+      
+    
+    <div class="recording-card animate" style="animation-delay:0.12s">
+
+      <div>
+        
+        <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02cbf48c2ab1dd9994b53fddd4" alt="Symphonies Nos. 25-41 (complete)" loading="lazy">
+        
+      </div>
+
+      <div class="card-content">
+        <div class="card-badges">
+          
+        </div>
+        <div class="card-composer">Mozart</div>
+        <h2 class="card-work">Symphonies Nos. 25-41 (complete)</h2>
+        <div class="card-performers">
+          Karl Böhm, Berlin Philharmonic &middot; DG &middot; 483 5171
+        </div>
+        <div class="card-tldr">伯姆与柏林爱乐乐团的莫扎特交响曲合集呈现出直接、音乐性强的演绎，巧妙地展示了指挥家富有意义的细腻处理。后期的小步舞曲倾向于庄严风格，在《朱庇特》交响曲中尤为悦耳，而G小调交响曲的第一乐章为了情绪转换的深度牺牲了严格的节奏，从呈示部进入发展部时尤为明显。整张专辑的演奏具有迷人的优雅，不过重复段落略有删减。这些是诚实的演绎，没有可能疏远纯粹主义者的奇特处理。十张CD的重新包装包含一张蓝光纯音频唱片，相比原版CD有音质提升。适合想要端庄替代早期乐器演奏方式的听众。</div>
+
+        <div class="card-actions">
+          
+          <a href="spotify:album:2PnWTHDykg39nGRGsoLdYW" class="btn-app">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            在 Spotify 播放
+          </a>
+          <a href="https://open.spotify.com/embed/album/2PnWTHDykg39nGRGsoLdYW" target="_blank" rel="noopener" class="btn-web">网页版</a>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+    
+  </div>
+  
+
+  
+  <div class="tab-panel"
+       id="tab-features"
+       role="tabpanel">
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Blank Canvas No Boundaries</h2>
+      <div class="feature-summary">这篇专题文章介绍了德国大提琴家丹尼尔·穆勒-肖特，他十五岁时在莫斯科赢得柴可夫斯基大赛，此后二十多年来建立了卓越的职业生涯。采访在他即将于皇家阿尔伯特音乐厅演奏德沃夏克大提琴协奏曲前不久进行。穆勒-肖特回忆了他师从传奇大师姆斯蒂斯拉夫·罗斯特罗波维奇的一年时光，谈到导师对音乐的投入与热情给他留下了深刻印象，至今仍在激励着他的演奏。文章随后转向他新发行的俄罗斯浪漫主义曲目专辑，以柴可夫斯基《洛可可变奏曲》为核心，还包括格拉祖诺夫的乐曲，以及他自己改编的柴可夫斯基小提琴作品《遐想》。他阐述了对改编曲的理念，曾将莫扎特D大调长笛协奏曲改编为大提琴版，认为音乐家应有权自由诠释作品。他热衷于通过&#34;学校狂想曲&#34;教育项目推广古典音乐，让从未接触现场古典音乐的学生有机会体验。他演奏的是一把1727年的马泰奥·戈弗里勒大提琴，原主人是美国大提琴家哈维·夏皮罗。</div>
+      <div class="feature-recordings">
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02bd129bc7d7bc04d464eb0ec1" alt="Rococo Variations, Op. 33" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Tchaikovsky</div>
+            <h3 class="card-work">Rococo Variations, Op. 33</h3>
+            <div class="card-performers">
+              Daniel Müller-Schott (cellist) &middot; Orfeo
+            </div>
+            <div class="card-tldr">穆勒-肖特的新专辑，收录柴可夫斯基《洛可可变奏曲》，以及格拉祖诺夫的作品Op.20和他本人改编的柴可夫斯基《遐想》（采用格拉祖诺夫的配器）。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:7gm2BkyUO67rwdJ5jKu9tS" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/7gm2BkyUO67rwdJ5jKu9tS" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.06s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e021140adbb63c9a7cd220b022f" alt="Cello Sonata in D minor, Op. 40" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Shostakovich</div>
+            <h3 class="card-work">Cello Sonata in D minor, Op. 40</h3>
+            <div class="card-performers">
+              Daniel Müller-Schott (cello) with various pianists including Angela Hewitt, Francesco Piemontesi &middot; Orfeo
+            </div>
+            <div class="card-tldr">穆勒-肖特为Orfeo录制的肖斯塔科维奇大提琴奏鸣曲，这是他与安吉拉·休伊特、弗朗切斯科·皮蒙特西等钢琴家合作的录音项目的一部分。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:3MitivrwjbBuT2MRrC0p1g" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/3MitivrwjbBuT2MRrC0p1g" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.12s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e022264388cd8c871dc07b8828d" alt="Cello Sonatas (Op. 38 and Op. 99)" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Brahms</div>
+            <h3 class="card-work">Cello Sonatas (Op. 38 and Op. 99)</h3>
+            <div class="card-performers">
+              Daniel Müller-Schott (cello) with various pianists &middot; Orfeo
+            </div>
+            <div class="card-tldr">即将发行的两张勃拉姆斯大提琴奏鸣曲专辑，同时收录勃拉姆斯D大调小提琴奏鸣曲的大提琴改编版，体现了穆勒-肖特对曲目的创新探索方式。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:1hjBt9nO7v3Wk2bmzjlsgB" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/1hjBt9nO7v3Wk2bmzjlsgB" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Defining Moments</h2>
+      <div class="feature-summary">朱利叶斯·卡琴是一位美国钢琴家，自幼展现出非凡的音乐天赋，11岁时便与尤金·奥曼迪和费城管弦乐团合作演出莫扎特D小调协奏曲，实现了他的音乐会首演。1946年，他以全班第一名的成绩毕业于哈佛福德学院，获得法国政府奖学金，并与迪卡唱片公司签署了独家合约。卡琴以其深厚的音乐造诣和对钢琴文献的全面诠释而闻名，尤其以演奏巴赫和勃拉姆斯的作品著称。他曾在首届国际联合国教科文组织音乐节上代表美国，之后选择巴黎作为永久居住地。
+
+本文追溯了卡琴职业生涯中的几个决定性时刻，包括1949年他录制的勃拉姆斯F小调第三钢琴奏鸣曲作品5号，该录音成为迪卡公司的首张独奏黑胶唱片，当时正值音乐行业从78转唱片向Long Play技术过渡。1964年，他在伦敦威格摩尔音乐厅举办了四场独奏会，全面演奏勃拉姆斯的钢琴作品全集。值得一提的是，卡琴以直言不讳的政治观点著称；1962年在东德巡演期间，他公开谴责柏林墙，导致苏联官员禁止阿拉姆·哈恰图良与卡琴合作录制钢琴协奏曲。
+
+卡琴的职业生涯在他42岁时戛然而止，于1969年4月29日去世。1968年12月，他曾在滚石乐队的《摇滚马戏团》电视特辑中露面，该节目虽未按计划播出，但于2004年以DVD形式完整发行。他的遗产通过其丰富的唱片录音遗产以及在苏富比和邦瀚斯拍卖行 posthumous sales of his renowned netsuke collection继续传承，展示了他在音乐和艺术方面的持久影响。</div>
+      <div class="feature-recordings">
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e023cdc88ec4329b52e781590f2" alt="Piano Sonata No. 3 in F minor, Op. 5" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Johannes Brahms</div>
+            <h3 class="card-work">Piano Sonata No. 3 in F minor, Op. 5</h3>
+            <div class="card-performers">
+              Julius Katchen &middot; Decca
+            </div>
+            <div class="card-tldr">卡琴于1949年录制的勃拉姆斯F小调第三钢琴奏鸣曲作品5号，在音乐行业从78转唱片向Long Play技术过渡时期，具有里程碑意义，是迪卡公司的首张独奏黑胶唱片。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:5PMafc2FDMMKAtzFcqLWVw" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/5PMafc2FDMMKAtzFcqLWVw" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Eggert Facts</h2>
+      <div class="feature-summary">本文介绍了德国作曲家艾格特（Eggert），他于1965年11月出生于海德堡。作为新音乐的坚定倡导者，艾格特在慕尼黑求学期间，于1991年与 fellow composer Sandeep Bhagwati 共同创立了aDevantgarde 新音乐节。该音乐节至今仍在运营，为当代和 avant-garde 音乐提供展示平台。除了作曲事业，艾格特还经营着“坏音乐博客”（Bad Blog of Musick），撰写音乐产业相关话题，涵盖严肃议题和轻松评论，其中包括他对美国电视剧《嘻哈进军古典乐》的系列犀利点评。
+
+艾格特阐述了一种独特的作曲理念，拒绝将个人音乐世界与周围环境割裂。他对自给自足、封闭的音乐系统持怀疑态度，主张艺术应与更广泛的语境保持联系。他那句颇具挑衅性的格言——“在艺术中，人们必须打破规则才能获胜”——概括了他的创作方法，将艺术成就与游戏中策略性地打破规则相提并论。本文将艾格特呈现为一位活跃的当代作曲家，同时也是古典音乐界一位积极参与的批评观察者。</div>
+      <div class="feature-recordings">
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Facing The Future Head On</h2>
+      <div class="feature-summary">爱德华·加德纳自2015年起担任卑尔根爱乐乐团的首席指挥，将自己在英国国家歌剧院和格林德伯恩歌剧的丰富歌剧经验带到了这个杰出的北欧乐团。在他的领导下，该乐团与钱多斯唱片公司合作开展了一项雄心勃勃的录音计划，录制作品涵盖勋伯格、巴托克、西贝柳斯和格里格等作曲家的作品。加德纳强调挪威独特的工作条件，音乐家在演出前享有四天的排练时间，并连续两晚演奏同一套曲目，这允许深度的艺术思考——尽管批评者偶尔认为这种方法过于安逸。该乐团独特的声音由几代本地培养的音乐家精心培育，既体现了挪威的身份认同，也通过客席指挥和美国演奏家融入了国际元素。加德纳特别投入于柏辽兹宏大的《安魂曲》，乐团在现场演出后为其录制了唱片，加德纳惊叹于作品中非凡的色彩运用和情感深度。文章探讨了这座被峡湾和群山环绕的孤立沿海城市如何促成了乐团空灵、宁静的弦乐之声——这在其标志性的格里格《培尔·金特》中&#34;阿塞之死&#34;的返场曲中尤为明显。</div>
+      <div class="feature-recordings">
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e027701af93b31722f8ce4da3d1" alt="Grande Messe des morts" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Berlioz</div>
+            <h3 class="card-work">Grande Messe des morts</h3>
+            <div class="card-performers">
+              Bergen Philharmonic Orchestra, Edward Gardner (conductor), choir, tenor soloist &middot; Chandos
+            </div>
+            <div class="card-tldr">一部宏大的合唱作品，配备庞大的管弦乐团、合唱团和男高音独唱，包括场外铜管乐队和打击乐，是现场演出录音。加德纳和乐团以全新的视角诠释这部罕见上演的作品，发现了其独特的音色和情感深度。录音捕捉到了作品压倒性的高潮和耳语般轻柔的段落，后者甚至考验着最资深工程师的技艺。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:0xdG6r7UOluS2SYWJ37aKV" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/0xdG6r7UOluS2SYWJ37aKV" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.06s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02857fc4eb64a294d828c94095" alt="Concerto for Orchestra" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Bartók</div>
+            <h3 class="card-work">Concerto for Orchestra</h3>
+            <div class="card-performers">
+              Bergen Philharmonic Orchestra, Edward Gardner (conductor)
+            </div>
+            <div class="card-tldr">在加德纳指挥下展示乐团色彩、态度和气势的最新录音。这张唱片展现了乐团国际化的特质，同时保持其独特的北欧声音，将安德鲁·利顿任期内带来的美国影响与乐团传统的挪威身份完美融合。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:5BxE5vKyEozlpIj6BX9KgE" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/5BxE5vKyEozlpIj6BX9KgE" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.12s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e029f02feaed802f09e77853e81" alt="Selected orchestral works" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Grieg</div>
+            <h3 class="card-work">Selected orchestral works</h3>
+            <div class="card-performers">
+              Bergen Philharmonic Orchestra, Edward Gardner (conductor)
+            </div>
+            <div class="card-tldr">录制挪威最著名作曲家的作品，在卑尔根这片土地上其音乐被视为圣地。尽管音乐家们声称演奏格里格已经令他们感到厌倦，加德纳指出他们仍能呈现出极其美丽和富有灵魂的演绎——被形容为&#34;可爱而富有木质感的，如同环绕这座城市的自然之声&#34;。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:6Wg6lJX2OA5kF0oEIN0EUK" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/6Wg6lJX2OA5kF0oEIN0EUK" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Gramophone Collector Bach For Solo Violin</h2>
+      <div class="feature-summary">本文发表于2018年11月《留声机》杂志，是一篇关于巴赫无伴奏小提琴奏鸣曲和组曲唱片的收藏者专题评论。罗布·考恩审视了四位演奏家的最新录音：登采·兹格蒙德基（73岁时独自在教堂中录制）、克里斯托夫·席克丹茨、哥特弗里德·冯·德尔·戈尔茨以及小林美树。兹格蒙德基的录音是评论者最为推崇的，因其深刻的情感表现力而备受赞扬，被形容为“一位老大师写给巴赫的情书”。评论者指出，只有兹格蒙德基的演奏仿佛“生死攸关”。席克丹茨以对巴洛克演奏实践的关注提供了富有想象力的诠释；冯·德尔·戈尔茨以弗莱堡巴洛克乐团成员的身份，采用更为干涩但扎实的演奏方式。小林的录音则因过度弯曲的旋律线和夸张的姿态而受到批评。文章最后推荐了其他优秀录音，包括海菲茨、格鲁米奥、米尔斯坦的录音，以及1948年艾内斯库的卓越录音，还有近期艺术家如艾琳娜·伊布拉吉莫娃、宁峰和朱莉娅·菲舍尔的录音。</div>
+      <div class="feature-recordings">
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02dabfc4adb3ef359237c9ab4e" alt="Solo Violin Sonatas &amp; Partitas" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">JS Bach</div>
+            <h3 class="card-work">Solo Violin Sonatas &amp; Partitas</h3>
+            <div class="card-performers">
+              Dénes Zsigmondy &middot; Paladino
+            </div>
+            <div class="card-tldr">因情感深度和表现力而受到高度赞扬，被形容为“一位老大师写给巴赫的情书”。兹格蒙德基与音乐的深刻联系在每个乐句中都清晰可见。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:6zRkhB0Kj8KsZMTfd6OTzw" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/6zRkhB0Kj8KsZMTfd6OTzw" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.06s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02587f7607b0b93f764f2da269" alt="Solo Violin Sonatas &amp; Partitas" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">JS Bach</div>
+            <h3 class="card-work">Solo Violin Sonatas &amp; Partitas</h3>
+            <div class="card-performers">
+              Christoph Schickedanz &middot; Audite
+            </div>
+            <div class="card-tldr">一位经验丰富的室内乐演奏家，提供了富有想象力的诠释，关注巴洛克演奏实践，包括对重复材料的实质性变化处理。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:0r6O44UJn3Q7pvb2Ttl2rr" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/0r6O44UJn3Q7pvb2Ttl2rr" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.12s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02143947aa89b7099c32c396b0" alt="Solo Violin Sonatas &amp; Partitas" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">JS Bach</div>
+            <h3 class="card-work">Solo Violin Sonatas &amp; Partitas</h3>
+            <div class="card-performers">
+              Gottfried von der Goltz &middot; Aparté
+            </div>
+            <div class="card-tldr">以与弗莱堡巴洛克乐团的出色合作而闻名，采用更为干涩的处理方式。录音质量优秀，但不是当前市场上最令人难忘的版本。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:7qily1eXsXUoHc98WJjNvS" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/7qily1eXsXUoHc98WJjNvS" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Haydn S Military Symphony 1794</h2>
+      <div class="feature-summary">本文是2018年11月《留声机》杂志的专题文章，以海顿的《军队交响曲》（第100号，1794年作）为切入点，展开一段丰富的音乐探索之旅。文章首先阐述了奥托曼-哈布斯堡冲突如何引发了18世纪维也纳对“土耳其”音乐的潮流，海顿在其著名的交响曲中运用了华丽的近卫军打击乐，并将这种风格带到了伦敦。文章随后拓展至海顿和莫扎特的歌剧、贝多芬的配剧音乐《雅典的废墟》，以及柴可夫斯基的《1812》序曲和肖斯塔科维奇的《列宁格勒》交响曲。伦敦交响曲部分涵盖了海顿的第104号交响曲和沃恩·威廉斯的《伦敦交响曲》，G大调交响曲部分则介绍了德沃夏克的第八交响曲和马勒的第四交响曲。文章最后以当代作曲家法齐尔·赛义的钢琴作品《四座城市》（2012年）作为收尾，提供了现代土耳其视角。整篇文章在历史背景与实用推荐之间取得了平衡，为好奇的音乐爱好者提供了丰富的聆听指南。</div>
+      <div class="feature-recordings">
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02eadb93d1fcfa5e9ddd055f13" alt="Symphony No. 100, &#39;Military&#39;" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Haydn</div>
+            <h3 class="card-work">Symphony No. 100, &#39;Military&#39;</h3>
+            <div class="card-performers">
+              Les Musiciens du Louvre, Grenoble / Marc Minkowski &middot; Naïve
+            </div>
+            <div class="card-tldr">明科夫斯基的精彩录音充满惊喜和震撼，完美契合海顿这一丰产十年的音乐风格。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:7tTNA2BeWLKXNgyIiLh6sm" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/7tTNA2BeWLKXNgyIiLh6sm" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.06s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02c3ae45d3619fd83b56e4422e" alt="Symphony No. 104, &#39;London&#39;" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Haydn</div>
+            <h3 class="card-work">Symphony No. 104, &#39;London&#39;</h3>
+            <div class="card-performers">
+              Heidelberg Symphony Orchestra / Thomas Fey &middot; Hänssler Classic
+            </div>
+            <div class="card-tldr">海顿伦敦之旅中12首交响曲中的最后一部，也可能是最出色的一部，终乐章主题令人联想到街头叫卖声。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:6nFmDHshnLIWNQoKjQg1jp" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/6nFmDHshnLIWNQoKjQg1jp" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.12s">
+          <div>
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Fazıl Say</div>
+            <h3 class="card-work">4 Cities</h3>
+            <div class="card-performers">
+              Nicolas Altstaedt (cello); Fazıl Say (piano) &middot; Warner Classics
+            </div>
+            <div class="card-tldr">当代土耳其作曲家赛义的作品，描绘了锡瓦斯、博德鲁姆、安卡拉和霍帕四座城市，以“有史以来为钢琴和大提琴创作的最激动人心的作品”收尾。</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Spotify 上暂无此录音</span>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Instrumental</h2>
+      <div class="feature-summary">这篇2018年11月《留声机》杂志专题聚焦三张跨越巴洛克与浪漫主义时期的经典录音。核心推荐是冰岛钢琴家 Víkingur Ólafsson 的巴赫钢琴专辑，评论称赞其平衡了&#34;高贵的美感与感染力的能量&#34;，表演&#34;独特但毫不矫揉造作&#34;。Ólafsson 将巴赫原作与布索尼、拉赫玛尼诺夫、肯普夫、西洛蒂改编版相结合，展现了卓越的钢琴传承同时建立了自己独特的音乐语言。专辑包含35首曲目，涵盖《阿里安娜变奏曲》、《平均律键盘曲集》前奏与赋格及各类改编曲。管风琴部分介绍了Philip Rushforth在切斯特大教堂和Colin Walsh在林肯大教堂的两张巴赫管风琴录音。Walsh对G小调幻想曲与赋格的诠释尤获好评，以其建筑感的清晰度和&#34;华丽&#34;的旋律处理著称。肖邦部分评论了挪威钢琴家安斯内斯的《叙事曲与夜曲》专辑，指出技术精湛但相比霍夫、佩拉希亚和鲁宾斯坦等名家，在诗意慷慨与情感释放方面有所欠缺。</div>
+      <div class="feature-recordings">
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02b550c53b4dc7c0c30efcb574" alt="Piano transcriptions including Aria variata BWV989, Well-Tempered Clavier Preludes and Fugues BWV847, BWV850, BWV855, and various transcriptions by Busoni, Rachmaninov, Kempff and Siloti" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">JS Bach</div>
+            <h3 class="card-work">Piano transcriptions including Aria variata BWV989, Well-Tempered Clavier Preludes and Fugues BWV847, BWV850, BWV855, and various transcriptions by Busoni, Rachmaninov, Kempff and Siloti</h3>
+            <div class="card-performers">
+              Víkingur Ólafsson piano &middot; DG
+            </div>
+            <div class="card-tldr">一张开创性的巴赫钢琴专辑，融合原作与改编曲，被誉为将高贵美感与感染力完美平衡，展现了艺术家对巴赫的热爱与敬畏。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:2geJLd7c3hxTvwdlLZT79j" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/2geJLd7c3hxTvwdlLZT79j" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.06s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02a6e33ed5043c69a754fd4656" alt="Passacaglia and Fugue BWV582, Fantasia and Fugue BWV542, Nun komm der Heiden Heiland BWV659-661, Dorian Toccata and Fugue BWV538" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">JS Bach</div>
+            <h3 class="card-work">Passacaglia and Fugue BWV582, Fantasia and Fugue BWV542, Nun komm der Heiden Heiland BWV659-661, Dorian Toccata and Fugue BWV538</h3>
+            <div class="card-performers">
+              Colin Walsh organ &middot; Priory
+            </div>
+            <div class="card-tldr">林肯大教堂管风琴演奏的巴赫管风琴录音，被形容为&#34;最高水平的巴赫演奏&#34;，尤其是《帕萨卡利亚与赋格》和G小调幻想曲与赋格的诠释备受赞誉。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:3i6stgqobWTaiLTvig03mv" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/3i6stgqobWTaiLTvig03mv" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.12s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02b071f86f2b752f9cf2532a98" alt="Four Ballades, Nocturnes Op 15 No 1, Op 48 No 1, Op 62 No 1" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Chopin</div>
+            <h3 class="card-work">Four Ballades, Nocturnes Op 15 No 1, Op 48 No 1, Op 62 No 1</h3>
+            <div class="card-performers">
+              Leif Ove Andsnes piano &middot; Sony Classical
+            </div>
+            <div class="card-tldr">一张技术精湛但情感略显拘谨的肖邦录音，缺少霍夫、佩拉希亚和鲁宾斯坦等大师演奏中那份诗意慷慨与升华时刻。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:5Q5m22P7jIwdMSKXqhrpaN" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/5Q5m22P7jIwdMSKXqhrpaN" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Julius Katchen</h2>
+      <div class="feature-summary">朱利乌斯·卡琴（1926-1969）是一位出生于新泽西州朗布兰奇的美国钢琴家，在战后国际乐坛中脱颖而出。他以&#34;宏大钢琴演奏&#34;著称——一种不受刻板精确性束缚的宏伟、沉稳的风格。师从严苛的大卫·萨佩顿后，卡琴掌握了全面的技术，能够驾驭从巴拉基列夫的《伊斯拉美》到李斯特《B小调奏鸣曲》等最具挑战性的作品。他丰富而富有穿透力的音色即使在最大的音乐厅也能清晰呈现。卡琴热衷于马拉松式的演出，曾在单场音乐会中上演三首协奏曲，或将整部贝多芬《热情奏鸣曲》作为加演曲目。他四场独奏会演绎勃拉姆斯全部独奏作品被视为传奇，平衡了理性严谨与抒情冲动。他最引以为傲的成就是1958年与乔治·索尔蒂爵士合作的拉赫玛尼诺夫《第二钢琴协奏曲》录音。1969年4月因癌症去世，享年42岁，卡琴留下的唱片遗产包括内德·罗勒姆《第二钢琴奏鸣曲》的开创性录音，以及生命最后阶段充满活力的普罗科菲耶夫《第三协奏曲》——这部作品完全看不出任何绝症的痕迹。</div>
+      <div class="feature-recordings">
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02a391d0304d361286165cd3bf" alt="Piano Concerto No. 2 in C minor, Op. 18" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Rachmaninoff</div>
+            <h3 class="card-work">Piano Concerto No. 2 in C minor, Op. 18</h3>
+            <div class="card-performers">
+              Julius Katchen (piano), Sir Georg Solti (conductor), orchestra
+            </div>
+            <div class="card-tldr">1958年的录音室杰作，乔治·索尔蒂爵士的乐队框架光彩夺目，音乐厅氛围和独奏与乐队的精妙平衡更为作品增色。这是卡琴最引以为傲的成就之一。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:0PTxe1JTvE79g8q92tjV0w" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/0PTxe1JTvE79g8q92tjV0w" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.06s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02fbfaccd40c5d1bd82e55974d" alt="Piano Concerto No. 3 in C major, Op. 26" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Prokofiev</div>
+            <h3 class="card-work">Piano Concerto No. 3 in C major, Op. 26</h3>
+            <div class="card-performers">
+              Julius Katchen (piano), orchestra (conducted by?)
+            </div>
+            <div class="card-tldr">在卡琴最后录音阶段录制的这部作品，活泼而清脆的演绎完全看不出任何绝症的痕迹。评论家写道：&#34;阿尔格里奇版本在冒烟，但卡琴版本在吸气！&#34;</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:48yVOfJLXmXJgUdy1lyr89" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/48yVOfJLXmXJgUdy1lyr89" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.12s">
+          <div>
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Ned Rorem</div>
+            <h3 class="card-work">Piano Sonata No. 2</h3>
+            <div class="card-performers">
+              Julius Katchen (piano)
+            </div>
+            <div class="card-tldr">卡琴录制了这张开创性的唱片，至今无人能超越。作曲家内德·罗勒姆既赞赏这张诠释，也钦佩卡琴的工作和玩乐能力，他回忆道：&#34;我记得他巡回演出时不带乐谱。但不是因为乐谱都印在了他脑子里：而是印在了他的手指上。&#34;</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Spotify 上暂无此录音</span>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Listen To Eggert</h2>
+      <div class="feature-summary">这篇《留声机》杂志专题介绍了德国作曲家莫里茨·埃格特，重点展示了他独特的当代作曲风格——融合折衷主义与荒诞元素。文章开篇评价了《收藏者们》，这是一部为钢琴和打击乐二重奏创作的重要作品，由康斯坦丁·纳波洛夫和埃克·西蒙斯在TRPTK厂牌录制，该专辑还收录了扬-彼得·德·格拉夫、亚尼斯·基里亚基德斯和塞缪尔·彭德贝恩的作品。专题的核心是埃格特参与巴伐利亚广播交响乐团的&#34;Musica Viva 30&#34;项目，由大卫·罗伯逊和彼得·伦德尔指挥。这张唱片收录了两部重要作品：2016年的《 Muzak》和2008年的《第九号七：群体》，后者提出了一个引人深思的概念问题——如果每位管弦乐手在整部作品中持续不断演奏会怎样？专辑由Neos发行（8/18）。埃格特的多才多艺在《宽解》中得到进一步展现，这是一首融合爵士风格的作品，由歌手塞琳·鲁道夫和小号手史蒂文·伯恩斯坦在&#34;Between the Lines&#34;厂牌录制。评论者一致高度赞扬这些演奏，爵士专辑被形容为&#34;证明其多才多艺的特别刺激之作&#34;，表明埃格特虽难以归类，但在各音乐类型中保持了艺术完整性。</div>
+      <div class="feature-recordings">
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div>
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Moritz Eggert</div>
+            <h3 class="card-work">The Collectors (piano and percussion duo)</h3>
+            <div class="card-performers">
+              Konstantin Napolov (percussion), Eke Simons (piano) &middot; TRPTK
+            </div>
+            <div class="card-tldr">一部为钢琴和打击乐二重奏创作的重要作品，是一张当代作曲家作品专辑中最长的曲目，由两位演奏家以明显娴熟的技巧演绎。</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Spotify 上暂无此录音</span>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.06s">
+          <div>
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Moritz Eggert</div>
+            <h3 class="card-work">Muzak (2016) and Number Nine VII: Masse (2008)</h3>
+            <div class="card-performers">
+              Bavarian Radio Symphony Orchestra / David Robertson, Peter Rundel (conductors) &middot; Neos
+            </div>
+            <div class="card-tldr">两部Musica Viva委约作品，由巴伐利亚广播交响乐团精湛演绎——《Muzak》是近期作品，而《群体》则提出了一个概念性问题：整部作品中每位管弦乐手持续不断演奏会怎样。</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Spotify 上暂无此录音</span>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.12s">
+          <div>
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Moritz Eggert</div>
+            <h3 class="card-work">Wide Unclasp (jazz composition)</h3>
+            <div class="card-performers">
+              Céline Rudolph (vocals), Steven Bernstein (trumpet), Moritz Eggert (piano) et al. &middot; Between the Lines
+            </div>
+            <div class="card-tldr">埃格特展示其多才多艺的爵士作品，由歌手塞琳·鲁道夫和全体乐队的精彩演奏诠释，是一张更具可听性和刺激性的唱片。</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Spotify 上暂无此录音</span>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Moritz Eggert</h2>
+      <div class="feature-summary">本文介绍了德国作曲家莫里茨·艾格特（1965年生），这位居于慕尼黑的艺术家创作惊人，已完成超过250部作品，其中包括至少十二部歌剧。艾格特的创作方式被形容为“奇珍柜”式——收集并展示各种音乐风格与语言，讽刺手法贯穿其大部分作品。然而，他的音乐也能令人意外地真诚，如歌曲套曲《Wide Unclasp》（2002）和《Neue Dichter Lieben》（2000）所展现。文中重点讨论的作品包括《收藏者》（2017），以催眠般的钢琴写作配合多样打击乐；《耳虫》（2010），尝试驱除包括亚历山德拉·斯坦《Mr Saxobeat》在内的洗脑旋律；以及《背景音乐》（2016），一首43分钟的电影交响乐团用流行音乐碎片拼贴作品。作为德国当代音乐界的重要人物，艾格特身兼作曲家与钢琴家，同时在慕尼黑音乐与表演艺术大学担任作曲教授。其音乐影响来自威廉·基尔迈尔和罗伯特·萨克斯顿的指导。</div>
+      <div class="feature-recordings">
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div>
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Moritz Eggert</div>
+            <h3 class="card-work">The Collectors (2017)</h3>
+            <div class="card-performers">
+              Various
+            </div>
+            <div class="card-tldr">以闪烁的重复段落为特色，配以奇异的打击乐声音和喊叫的词语，展现艾格特的音乐风格收藏。</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Spotify 上暂无此录音</span>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.06s">
+          <div>
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Moritz Eggert</div>
+            <h3 class="card-work">Ohrwurm (2010) / Bring Me Up, Bring Me Down (2013)</h3>
+            <div class="card-performers">
+              Unknown &middot; Spektral
+            </div>
+            <div class="card-tldr">两部声乐作品，试图驱除洗脑旋律——一个难以辨识的平淡旋律以及亚历山德拉·斯坦的流行金曲《Mr Saxobeat》。</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Spotify 上暂无此录音</span>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="recording-card animate" style="animation-delay:0.12s">
+          <div>
+            
+            <div class="art-placeholder">♪</div>
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Moritz Eggert</div>
+            <h3 class="card-work">Various works including Adagio – An Answered Question (1994) and Drei Seelen (2002)</h3>
+            <div class="card-performers">
+              Unknown &middot; Audite
+            </div>
+            <div class="card-tldr">《渡鸦永不再》专辑呈现了早期优雅的弦乐作品，具有艾夫斯和马勒式的影响，结尾是钢琴与小提琴变奏曲，主题来自其导师威廉·基尔迈尔。</div>
+            <div class="card-actions">
+              
+              <span class="no-spotify">Spotify 上暂无此录音</span>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Recommended Recordings</h2>
+      <div class="feature-summary">本文摘自2018年11月《留声机》杂志，以伊恩·博斯特里奇关于歌曲艺术的专题报道为背景，推荐了四张精选录音。专辑涵盖艺术歌曲的不同表现形式，从钢琴伴奏的德国艺术歌曲到交响乐团伴奏的歌曲，展现了歌曲这一音乐体裁的丰富多样性。推荐名单中的艺术家包括传奇男中音菲舍尔-迪斯考，他以演绎艺术歌曲著称，以及女中音珍妮特·贝克在埃尔加《海上画景》中的精彩演唱。这些录音既包括舒伯特的经典曲目，也涵盖了马勒交响乐规模更大的声乐作品。
+
+录音选择体现了不同的时期和风格。舒伯特的《魔王》是德国艺术歌曲的巅峰之作，以其戏剧性的叙事著称；马勒的《少年魔角》则展现了交响乐团伴奏歌曲的宏大气势，采用民间灵感的主题。珍妮特·贝克的《海上画景》代表了英国艺术歌曲传统的最高水平，以其生动的海洋意象著称。《孤独的心灵》专辑则探讨了艺术歌曲如何跨越体裁界限，连接古典传统与流行音乐表达。这些推荐为声乐音乐爱好者提供了优秀的录音范本。</div>
+      <div class="feature-recordings">
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02eacf9dff1ca8cebddb94efa2" alt="Erlkönig" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Franz Schubert</div>
+            <h3 class="card-work">Erlkönig</h3>
+            <div class="card-performers">
+              Dietrich Fischer-Dieskau / Gerald Moore &middot; Deutsche Grammophon
+            </div>
+            <div class="card-tldr">菲舍尔-迪斯考呈现了舒伯特这首恐怖叙事曲最出色的录音之一，完美捕捉了文本的紧迫戏剧性和情感张力，杰拉尔德·摩尔担任钢琴伴奏。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:4IFBg9LWw9DBbh454KZl7X" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/4IFBg9LWw9DBbh454KZl7X" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.06s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02d53101544a884f59a023ff7a" alt="Sea Pictures" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Edward Elgar</div>
+            <h3 class="card-work">Sea Pictures</h3>
+            <div class="card-performers">
+              Janet Baker / John Barbirolli &middot; Warner Classics
+            </div>
+            <div class="card-tldr">珍妮特·贝克在约翰·巴比罗利指挥下深情细腻地演绎了埃尔加的歌曲套曲，捕捉了海洋意象和作品的情感深度。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:0b40AMmZPt7sjgw17WGk1s" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/0b40AMmZPt7sjgw17WGk1s" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.12s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e023838c18d5602c410ca3e36bb" alt="Des Knaben Wunderhorn" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Gustav Mahler</div>
+            <h3 class="card-work">Des Knaben Wunderhorn</h3>
+            <div class="card-performers">
+              Fischer-Dieskau, Schwarzkopf / Szell &middot; Warner Classics
+            </div>
+            <div class="card-tldr">这是一张经典录音，菲舍尔-迪斯考与伊丽莎白·施瓦茨科普夫在马勒的民间风格歌曲集中合作，克里夫兰交响乐团在乔治·塞尔的指挥下提供了交响乐的深度。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:6onAKKjUnPnhbwmWnGIhZi" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/6onAKKjUnPnhbwmWnGIhZi" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">Schubert S Death And The Maiden</h2>
+      <div class="feature-summary">这篇文章探讨了Chiaroscuro四重奏在BIS新发行的舒伯特第十四弦乐四重奏《死亡与少女》唱片，搭配第九G小调四重奏。记者在伦敦佩克纳姆一家咖啡馆与小提琴家阿丽娜·伊布拉吉莫娃和巴勃罗·埃南·贝内迪共进早午餐时进行采访，揭示了该四重奏独特的演奏方式：站立演奏，使用羊肠弦和古弓演奏。伊布拉吉莫娃形容舒伯特的世界是&#34;模糊的、非常微妙、非常快乐又悲伤的，就像含着泪微笑&#34;，称赞羊肠弦的敏感度允许在单个音符内完全改变性格。该乐团在录音前与约翰·艾略特·加迪恩爵士合作，后者推动他们达到新的极限。讨论涵盖了详细的诠释要点：著名开场五个音符之后沉默的重要性、舒伯特与贝多芬处理重音的区别、发展部中动态造成的张力、以及第二乐章精神气质中关于速度的争论。贝内迪回忆加迪恩对和弦段落的比喻：&#34;仿佛是互相争斗的树妖&#34;。文章最后反思了终曲塔兰泰拉风格的挑战以及作品在欢乐与悲伤之间独特的对比。</div>
+      <div class="feature-recordings">
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e02a8244dd075cb7352f836f8b9" alt="String Quartet No. 14 in G minor, D 810 &#39;Death and the Maiden&#39;; String Quartet No. 9 in G minor, D 173" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Franz Schubert</div>
+            <h3 class="card-work">String Quartet No. 14 in G minor, D 810 &#39;Death and the Maiden&#39;; String Quartet No. 9 in G minor, D 173</h3>
+            <div class="card-performers">
+              Chiaroscuro Quartet (Alina Ibragimova, Pablo Hernán Benedí, Emilie Hörnlund, Claire Thirion) &middot; BIS
+            </div>
+            <div class="card-tldr">Chiaroscuro四重奏的全舒伯特专辑将古乐演奏理念——羊肠弦、古弓、站立演奏——与约翰·艾略特·加迪恩爵士的指导相结合，诠释了这首标志性的《死亡与少女》四重奏及第九号作品。专题记录了详细的诠释讨论，涵盖开场小节的沉默、重音处理、第二乐章速度争议以及终曲急板的演奏要求。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:5yFmwclr4SVf6WtwuaMO2k" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/5yFmwclr4SVf6WtwuaMO2k" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">The Children By William Soutar</h2>
+      <div class="feature-summary">本期《留声机》杂志&#34;伊恩·博斯特里奇谈艺术歌曲&#34;专栏呈现了威廉·萨outar的诗作《孩子们》，这是一首关于被暴力与冲突摧毁的童真所作的深刻沉思。这首创作于20世纪末的诗歌，以其鲜明的意象——血迹斑斑的孩子躺在破碎的石块旁，死亡从明朗的午后天空降临——构成了对战争毁灭性的有力控诉。全诗从直接的暴力场景，经过宇宙般的冷漠，最终走向一种顺从的沉默，最后以孩子们恐惧面容的控诉性意象作结，暗示人类对孩子们命运的道德责任。著名英国男高音伊恩·博斯特里奇在讨论这首歌曲的改编时，探索了英国艺术歌曲曲目，突出了萨outar如何将复杂的情感和伦理关怀凝练成简洁、令人难忘的诗句，使其持续与表演者和观众产生共鸣。</div>
+      <div class="feature-recordings">
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">The Essential Recording</h2>
+      <div class="feature-summary">本文是《留声机》杂志&#34;必备录音&#34;系列的专题，聚焦于朱利乌斯·卡琴在迪卡唱片公司录制的勃拉姆斯C大调第一钢琴奏鸣曲，作品1。文章指出，尽管这部奏鸣曲在勃拉姆斯钢琴作品中相对被忽视，但它在卡琴的演绎下得到了出色的诠释。作者强调，卡琴为这部作品注入了充满能量的雄心壮志，以精湛的技艺和交响性的厚重感驾驭其复杂的织体和棘手的段落。本文将其呈现为卡琴伟大勃拉姆斯全集中的核心推荐曲目，表明这是对该作曲家早期钢琴作品一次卓越且值得关注的诠释。这一专题为寻求这部具有挑战性但极有价值之作品的权威版本的听众提供了精心挑选的推荐。</div>
+      <div class="feature-recordings">
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e023cdc88ec4329b52e781590f2" alt="Piano Sonata No. 1 in C major, Op. 1" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Brahms</div>
+            <h3 class="card-work">Piano Sonata No. 1 in C major, Op. 1</h3>
+            <div class="card-performers">
+              Julius Katchen &middot; Decca
+            </div>
+            <div class="card-tldr">卡琴的录音在勃拉姆斯钢琴文献中脱颖而出，以其充满能量的雄心壮志和精湛技艺著称，以交响性的厚重感驾驭这部奏鸣曲复杂的织体和棘手的段落。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:5PMafc2FDMMKAtzFcqLWVw" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/5PMafc2FDMMKAtzFcqLWVw" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="feature-block">
+      <h2 class="feature-title">The Power Of The Human Voice</h2>
+      <div class="feature-summary">在这篇专题文章中，备受赞誉的男高音伊恩·博斯特里奇探索了人声的强大力量，追溯了他从童年歌曲到德国艺术歌曲深处的个人音乐之旅。他首先审视了嗓音作为自文艺复兴以来艺术个性核心隐喻的重要性，反思了喉部如何进化以创造语言的世界。博斯特里奇回忆起他最早的音乐记忆，从唱给婴儿孩子们听的不太合适的民歌，到披头士的&#34;黄色潜水艇&#34;，以及影响他的流行歌手，包括弗兰克·辛纳屈。他在十四五岁时通过菲舍尔-迪斯考的舒伯特《魔王》录音发现了德国艺术歌曲，这次经历挑战了通常强调文本而非声音的常规观念。文章深入探讨了录音室录音与现场表演之间的张力，认为这两种形式代表了根本不同的艺术，需要不同的处理方式。博斯特里奇反思了他与朱利叶斯·德雷克在威格莫尔音乐厅录制现场演出的经历，承认文献记录中固有的妥协。他探讨了留声机如何在提高完美要求的同时，可能抑制了现场表演中激动人心的冒险精神，最终赞美了丰富艺术歌曲传统中多元的诠释方法。</div>
+      <div class="feature-recordings">
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.0s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e0267604119991945e450110b87" alt="Erlkönig, D. 328" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Franz Schubert</div>
+            <h3 class="card-work">Erlkönig, D. 328</h3>
+            <div class="card-performers">
+              Dietrich Fischer-Dieskau (baritone), Gerald Moore (piano)
+            </div>
+            <div class="card-tldr">这张具有开创意义的唱片在博斯特里奇十四五岁时向他介绍了德国艺术歌曲，展示了菲舍尔-迪斯考非凡的角色塑造能力，通过人声音色和诠释才华将戏剧张力带入歌曲之中。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:0mgzkW1ff8QDdQ0GVX26IB" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/0mgzkW1ff8QDdQ0GVX26IB" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.06s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e026027fa8157e87be3c3a6f466" alt="Liederkreis, Op. 39" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Robert Schumann</div>
+            <h3 class="card-work">Liederkreis, Op. 39</h3>
+            <div class="card-performers">
+              Dietrich Fischer-Dieskau (baritone), Alfred Brendel (piano)
+            </div>
+            <div class="card-tldr">一张1980年代的后期录音，被博斯特里奇列为艺术歌曲曲目中最感人的作品之一，展示了嗓音衰退如何悖论性地成为一种艺术财富。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:5PCxFU9Csrc58JNIpaSyC6" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/5PCxFU9Csrc58JNIpaSyC6" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+          
+        
+        <div class="recording-card animate" style="animation-delay:0.12s">
+          <div>
+            
+            <img class="album-art" src="https://i.scdn.co/image/ab67616d00001e0267604119991945e450110b87" alt="Meerestille (Becalmed at Sea), D. 216" loading="lazy">
+            
+          </div>
+          <div class="card-content">
+            <div class="card-composer">Franz Schubert</div>
+            <h3 class="card-work">Meerestille (Becalmed at Sea), D. 216</h3>
+            <div class="card-performers">
+              Dietrich Fischer-Dieskau (baritone), Hartmut Höll (piano)
+            </div>
+            <div class="card-tldr">在伊丽莎白女王音乐厅现场演出的返场曲，展示了菲舍尔-迪斯考所掌控的超凡宁静与寂静，创造出一种如此深沉的静谧，甚至可以听到针落的声音。</div>
+            <div class="card-actions">
+              
+              <a href="spotify:album:0mgzkW1ff8QDdQ0GVX26IB" class="btn-app">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                在 Spotify 播放
+              </a>
+              <a href="https://open.spotify.com/embed/album/0mgzkW1ff8QDdQ0GVX26IB" target="_blank" rel="noopener" class="btn-web">网页版</a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+  </div>
+  
+
+</main>
+
+<script>
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+      tabPanels.forEach(p => p.classList.remove('active'));
+
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+
+      const panel = document.getElementById(btn.dataset.tab);
+      if (panel) {
+        panel.classList.add('active');
+        panel.querySelectorAll('.recording-card').forEach((card, i) => {
+          card.classList.remove('animate');
+          void card.offsetWidth;
+          card.style.animationDelay = (i * 0.06) + 's';
+          card.classList.add('animate');
+        });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
